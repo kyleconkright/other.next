@@ -1,0 +1,7 @@
+a {
+  cursor: pointer;
+  transition: opacity .2s;
+  &:hover { 
+    opacity: .75;
+  }
+}
