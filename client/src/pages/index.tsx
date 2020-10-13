@@ -1,28 +1,17 @@
 import axios from 'axios';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import Layout from '../components/layouts';
 import Button from '../components/button/button';
+import { UserContext } from '../contexts/user.context';
 
 function HomePage() {
 
-  const [tokens, setTokens] = useState({token: undefined, tokenSecret: undefined});
-  const [user, setUser] = useState({username: undefined, id: undefined});
-  const [wantList, setWantList] = useState([]);
+  const { user } = useContext(UserContext)
 
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const { token, tokenSecret, username, id } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
-        console.log({token}, {tokenSecret}, {username}, {id});
-        setTokens({token, tokenSecret});
-        setUser({username, id});
-      } catch(error) {
-        console.error(error);
-      }
-    }
-    getUser();
-  }, [])
+  const tokens = { token: user.token, tokenSecret: user.tokenSecret }
+  
+  const [wantList, setWantList] = useState([]);
 
   async function getWantList() {
     const { wants } = (await axios.post('http://localhost:5001/account/wants', { tokens, user })).data;
@@ -31,7 +20,7 @@ function HomePage() {
   }
 
   async function removeItem(id) {
-    const { data } = await axios.post('http://localhost:5001/account/wants/remove', { tokens, user, id });
+    const { data } = await axios.post('http://localhost:5001/account/wants/remove', { tokens, user: user.username, id });
     console.log(data);
   }
 

@@ -22,21 +22,31 @@ class Routes {
         });
         const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
         app.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { data } = yield axios_1.default.get(`https://api.discogs.com/oauth/identity?&oauth_token=${req.user.token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${req.user.tokenSecret}`);
-            res.send(Object.assign(Object.assign({}, req.user), data));
+            if (req.user) {
+                try {
+                    const { data } = yield axios_1.default.get(`https://api.discogs.com/oauth/identity?&oauth_token=${req.user.token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${req.user.tokenSecret}`);
+                    res.send(Object.assign(Object.assign({}, req.user), data));
+                }
+                catch (error) {
+                    console.error(error);
+                }
+            }
+            else {
+                res.send({ user: undefined });
+            }
         }));
         app.get('/account', auth_1.isUserAuthenticated, (req, res) => {
             res.json('hello');
+        });
+        app.get('/auth/logout', (req, res) => {
+            req.logout();
+            res.json(req.user);
         });
         app.get('/auth/discogs', passport.authenticate('discogs'));
         app.get('/auth/discogs/confirm', passport.authenticate('discogs', {
             successRedirect: 'http://localhost:5000',
             failureRedirect: '/login',
         }));
-        app.get('/logout', (req, res) => {
-            req.logout();
-            res.redirect('/');
-        });
         app.post('/account/wants', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { tokens, user } = req.body;
             const signature = auth(tokens.token, tokens.tokenSecret);
@@ -50,7 +60,6 @@ class Routes {
         }));
         app.post('/account/wants/remove', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { tokens, user, id } = req.body;
-            console.log(id);
             const signature = auth(tokens.token, tokens.tokenSecret);
             try {
                 const { data } = yield axios_1.default.delete(`https://api.discogs.com/users/${user.username}/wants/${id}?${signature}`);
