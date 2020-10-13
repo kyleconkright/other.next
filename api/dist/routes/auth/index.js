@@ -23,11 +23,9 @@ function initialize(passport) {
         done(null, { token, tokenSecret });
     }));
     passport.serializeUser((user, done) => {
-        console.log('serialize');
         done(null, user);
     });
     passport.deserializeUser((id, done) => {
-        console.log('deserialize');
         done(null, id);
     });
 }

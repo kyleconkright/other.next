@@ -1,12 +1,13 @@
 import styles from './button.module.scss'
 
-export default function Button() {
+export default function Button(props) {
   return (
     <button
       type="button"
-      className={styles.error}
+      className={styles.otherButton}
+      onClick={props.onClick}
     >
-      Destroy
+      { props.text }
     </button>
   )
 }
