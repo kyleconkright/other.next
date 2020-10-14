@@ -8,7 +8,7 @@ import User from './../schemas/user';
 const passport = require('passport');
 initialize(passport);
 
-mongoose.connect('mongodb+srv://other:mpXlYlYNPudYxW4O@cluster0.txwlf.mongodb.net/othersupply?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, () => {

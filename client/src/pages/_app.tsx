@@ -11,15 +11,14 @@ export default function OtherApp({ Component, pageProps }) {
     async function getUser() {
       try {
         // const { token, tokenSecret, username, id } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
-        const { data } = (await axios.get('http://localhost:5001/', { withCredentials :true }));
-        console.log({data})
-        setUser({...data.user});
+        const { user } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
+        setUser({...user});
       } catch(error) {
         console.error(error);
       }
     }
     getUser();
-  }, [])
+  }, [setUser])
 
   return (
     <UserContext.Provider value={{user, setUser}}>

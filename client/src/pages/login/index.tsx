@@ -16,8 +16,8 @@ function LoginPage() {
       if(user.email) {
         const res = await axios.post('http://localhost:5001/auth/login', {username: user.email, password: user.password}, { withCredentials: true });
         if (res.status === 200) router.push('/');
-        console.log(res);
-        setUser(res.data.user);
+        console.log(res.data.user);
+        setUser({...res.data.user});
       } else {
         alert('add user');
       }
