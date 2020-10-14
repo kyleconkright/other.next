@@ -1,6 +1,8 @@
+@import './../../styles/colors';
+
 button.otherButton {
-  color: #1d1d1d;
-  background-color: #d7d9ca;
+  color: $black;
+  background-color: $off-white;
   border: none;
   padding: .65rem 1rem;
   border-radius: 2px;

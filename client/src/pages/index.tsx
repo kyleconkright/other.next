@@ -15,13 +15,11 @@ function HomePage() {
 
   async function getWantList() {
     const { wants } = (await axios.post('http://localhost:5001/account/wants', { tokens, user })).data;
-    console.log(wants);
     setWantList(wants);
   }
 
   async function removeItem(id) {
     const { data } = await axios.post('http://localhost:5001/account/wants/remove', { tokens, user: user.username, id });
-    console.log(data);
   }
 
   return (

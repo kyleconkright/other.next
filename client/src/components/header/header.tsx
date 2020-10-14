@@ -11,7 +11,7 @@ export default function Header(props) {
 
   const router = useRouter()
 
-  function auth(event) {
+  async function auth(event) {
     event.preventDefault();
     router.push('http://localhost:5001/auth/discogs');
   }
@@ -20,7 +20,6 @@ export default function Header(props) {
     event.preventDefault();
     try {
       const res = await axios.get('http://localhost:5001/auth/logout');
-      console.log(res);
       setUser({user: undefined});
     } catch(error) {
       console.error(error);
@@ -34,7 +33,10 @@ export default function Header(props) {
         { user.username ? (
           <a onClick={logout}>Logout { user.username }</a>
         ) : (
-          <a onClick={auth}>Discogs Login</a>
+          <div>
+            <a onClick={() => router.push('/login')}>Login</a>
+            <a onClick={auth}>Discogs</a>
+          </div>
         ) }
       </div>
     </header>

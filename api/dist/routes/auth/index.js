@@ -11,22 +11,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isUserAuthenticated = exports.initialize = void 0;
 const OAuthStrategy = require('passport-oauth').OAuthStrategy;
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require("bcrypt");
+const user_1 = require("./../../schemas/user");
 function initialize(passport) {
-    passport.use('discogs', new OAuthStrategy({
-        requestTokenURL: 'https://api.discogs.com/oauth/request_token',
-        accessTokenURL: 'https://api.discogs.com/oauth/access_token',
-        userAuthorizationURL: 'https://www.discogs.com/oauth/authorize',
-        consumerKey: process.env.DISCOGS_KEY,
-        consumerSecret: process.env.DISCOGS_SECRET,
-        callbackURL: process.env.AUTH_CALLBACK_URL,
-    }, function (token, tokenSecret, profile, done) {
-        done(null, { token, tokenSecret });
-    }));
+    // passport.use('discogs', new OAuthStrategy({
+    //   requestTokenURL: 'https://api.discogs.com/oauth/request_token',
+    //   accessTokenURL: 'https://api.discogs.com/oauth/access_token',
+    //   userAuthorizationURL: 'https://www.discogs.com/oauth/authorize',
+    //   consumerKey: process.env.DISCOGS_KEY,
+    //   consumerSecret: process.env.DISCOGS_SECRET,
+    //   callbackURL: process.env.AUTH_CALLBACK_URL,
+    // },
+    //   function(token, tokenSecret, profile, done) {
+    //     done(null, {token, tokenSecret});
+    //   }
+    // ));
+    const authenticateUser = (email, password, done) => __awaiter(this, void 0, void 0, function* () {
+        user_1.default.findOne({ username: email }, (err, user) => __awaiter(this, void 0, void 0, function* () {
+            if (err)
+                throw err;
+            if (!user)
+                done('no user', undefined);
+            if (yield bcrypt.compare(password, user.password)) {
+                return done(null, user);
+            }
+            else {
+                return done('wrong password', undefined, { message: 'Password Incorrect' });
+            }
+        }));
+    });
+    passport.use(new LocalStrategy(authenticateUser));
     passport.serializeUser((user, done) => {
-        done(null, user);
+        return done(null, user.id);
     });
     passport.deserializeUser((id, done) => {
-        done(null, id);
+        user_1.default.findOne({ _id: id }, (err, user) => {
+            return done(err, user);
+        });
     });
 }
 exports.initialize = initialize;

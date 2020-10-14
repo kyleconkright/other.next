@@ -10,8 +10,10 @@ export default function OtherApp({ Component, pageProps }) {
   useEffect(() => {
     async function getUser() {
       try {
-        const { token, tokenSecret, username, id } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
-        setUser({username, id, token, tokenSecret});
+        // const { token, tokenSecret, username, id } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
+        const { data } = (await axios.get('http://localhost:5001/', { withCredentials :true }));
+        console.log({data})
+        setUser({...data.user});
       } catch(error) {
         console.error(error);
       }
