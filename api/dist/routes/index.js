@@ -13,16 +13,9 @@ exports.Routes = void 0;
 const auth_1 = require("./auth");
 const axios_1 = require("axios");
 const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
 const user_1 = require("./../schemas/user");
 const passport = require('passport');
 auth_1.initialize(passport);
-mongoose.connect('mongodb+srv://other:mpXlYlYNPudYxW4O@cluster0.txwlf.mongodb.net/othersupply?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, () => {
-    console.log('mongoose is connected');
-});
 class Routes {
     routes(app) {
         axios_1.default.interceptors.request.use((config) => {
@@ -31,23 +24,13 @@ class Routes {
         });
         const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
         app.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            console.log(req.user);
             if (req.user) {
                 res.send({ user: req.user });
-                // try {
-                //   const { data } = await axios.get(`https://api.discogs.com/oauth/identity?&oauth_token=${req.user.token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${req.user.tokenSecret}`);
-                //   res.send({...req.user, ...data});
-                // } catch(error) {
-                //   console.error(error);
-                // }
             }
             else {
                 res.send({ user: undefined });
             }
         }));
-        // app.get('/account', isUserAuthenticated, (req: Request, res: Response) => {
-        //   res.json('hello');
-        // });
         app.post('/auth/login', passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: 'http://localhost:5000/login',
@@ -76,15 +59,23 @@ class Routes {
                 res.json(error);
             }
         }));
-        // app.get('/auth/logout', (req, res) => {
-        //   req.logout();
-        //   res.json(req.user);
-        // });
-        // app.get('/auth/discogs', passport.authenticate('discogs'));
-        // app.get('/auth/discogs/confirm', passport.authenticate('discogs', {
-        //   successRedirect: 'http://localhost:5000',
-        //   failureRedirect: 'http://localhost:5000/login',
-        // }))
+        app.get('/auth/logout', (req, res) => {
+            console.log('pre logout user ', req.user);
+            req.logout();
+            console.log('lost logout user ', req.user);
+            res.json(req.user);
+        });
+        app.get('/auth/discogs', passport.authorize('discogs'));
+        app.get('/auth/discogs/confirm', passport.authorize('discogs', {
+            failureRedirect: 'http://localhost:5000/login'
+        }), (req, res) => {
+            if (req.user) {
+                res.redirect('http://localhost:5000/account');
+            }
+            else {
+                res.redirect('http://localhost:5000');
+            }
+        });
         app.post('/account/wants', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { tokens, user } = req.body;
             const signature = auth(tokens.token, tokens.tokenSecret);

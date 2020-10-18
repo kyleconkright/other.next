@@ -6,9 +6,9 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as session from "express-session";
 import * as cookieParser from "cookie-parser";
-import * as cookieSession from "cookie-session";
 import * as passport from "passport";
 import * as cors from 'cors';
+import * as mongoose from 'mongoose';
 
 import { Routes } from './routes';
 
@@ -24,6 +24,15 @@ class App {
   }
   
   private config(): void {
+
+    mongoose.connect(process.env.DB, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    }, () => {
+      console.log('mongoose is connected');
+    });
+    
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
     this.app.use(cors({
@@ -31,13 +40,6 @@ class App {
       credentials: true
     }));
 
-    // this.app.use(
-    //   cookieSession({
-    //     name: "session",
-    //     keys: ['other_cookie'],
-    //     maxAge: 24 * 60 * 60 * 100
-    //   })
-    // );
     this.app.use(cookieParser(process.env.SESSION_SECRET));
     this.app.use(session({
       resave: false,

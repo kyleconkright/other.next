@@ -4,38 +4,29 @@ import axios from 'axios';
 
 import styles from './header.module.scss';
 import { UserContext } from '../../contexts/user.context';
+import { DefaultUserState } from '../../models/user';
+
+import Button from './../../components/button/button';
 
 export default function Header(props) {
 
-  const { user, setUser } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext);
 
-  const router = useRouter()
+  const router = useRouter();
 
   async function auth(event) {
-    event.preventDefault();
     router.push('http://localhost:5001/auth/discogs');
-  }
-  
-  async function logout(event) {
-    event.preventDefault();
-    try {
-      const res = await axios.get('http://localhost:5001/auth/logout');
-      setUser({user: undefined});
-    } catch(error) {
-      console.error(error);
-    }
   }
 
   return (
     <header className={styles.header}>
-      <h1>Other Supply Co.</h1>
+      <h1><a onClick={() => router.push('./')}>Other Supply Co.</a></h1>
       <div>
         { user.username ? (
-          <a onClick={logout}>Logout { user.username }</a>
+          <a onClick={() => router.push('/account')}><Button text="Account"></Button></a>
         ) : (
           <div>
             <a onClick={() => router.push('/login')}>Login</a>
-            <a onClick={auth}>Discogs</a>
           </div>
         ) }
       </div>

@@ -1,24 +1,15 @@
 import { Request, Response } from "express";
-import { initialize, isUserAuthenticated } from './auth';
+import { initialize, ifAuthenticated, ifNotAuthenticated } from './auth';
 import axios from 'axios';
 import * as bcrypt from 'bcrypt';
-import * as mongoose from 'mongoose';
 import User from './../schemas/user';
 
 const passport = require('passport');
 initialize(passport);
 
-mongoose.connect(process.env.DB, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, () => {
-  console.log('mongoose is connected');
-})
-
 export class Routes {
 
   public routes(app: any) {
-
     axios.interceptors.request.use((config) => {
       config.params = {
         ...config.params,
@@ -34,23 +25,12 @@ export class Routes {
     const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
 
     app.get('/', async (req: Request, res: Response) => {
-      console.log(req.user);
       if(req.user) {
         res.send({user: req.user});
-        // try {
-        //   const { data } = await axios.get(`https://api.discogs.com/oauth/identity?&oauth_token=${req.user.token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${req.user.tokenSecret}`);
-        //   res.send({...req.user, ...data});
-        // } catch(error) {
-        //   console.error(error);
-        // }
       } else {
         res.send({user: undefined})
       }
     });
-
-    // app.get('/account', isUserAuthenticated, (req: Request, res: Response) => {
-    //   res.json('hello');
-    // });
 
     app.post('/auth/login', passport.authenticate('local', {
       successRedirect: '/',
@@ -76,19 +56,28 @@ export class Routes {
         res.json('success');
       } catch (error) {
         console.error(error);
-        res.json(error);
+        res.json(error);  
       }
     });
 
-    // app.get('/auth/logout', (req, res) => {
-    //   req.logout();
-    //   res.json(req.user);
-    // });
-    // app.get('/auth/discogs', passport.authenticate('discogs'));
-    // app.get('/auth/discogs/confirm', passport.authenticate('discogs', {
-    //   successRedirect: 'http://localhost:5000',
-    //   failureRedirect: 'http://localhost:5000/login',
-    // }))
+
+    app.get('/auth/logout', (req, res) => {
+      console.log('pre logout user ', req.user);
+      req.logout();
+      console.log('lost logout user ', req.user);
+      res.json(req.user);
+    });
+
+    app.get('/auth/discogs', passport.authorize('discogs'));
+    app.get('/auth/discogs/confirm', passport.authorize('discogs', {
+      failureRedirect: 'http://localhost:5000/login'
+    }), (req, res) => {
+      if(req.user) {
+        res.redirect('http://localhost:5000/account');
+      } else {
+        res.redirect('http://localhost:5000');
+      }
+    })
 
     app.post('/account/wants', async (req, res) => {
       const { tokens, user } = req.body;

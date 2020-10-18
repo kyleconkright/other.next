@@ -9,24 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isUserAuthenticated = exports.initialize = void 0;
+exports.ifNotAuthenticated = exports.ifAuthenticated = exports.initialize = void 0;
 const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcrypt");
 const user_1 = require("./../../schemas/user");
 function initialize(passport) {
-    // passport.use('discogs', new OAuthStrategy({
-    //   requestTokenURL: 'https://api.discogs.com/oauth/request_token',
-    //   accessTokenURL: 'https://api.discogs.com/oauth/access_token',
-    //   userAuthorizationURL: 'https://www.discogs.com/oauth/authorize',
-    //   consumerKey: process.env.DISCOGS_KEY,
-    //   consumerSecret: process.env.DISCOGS_SECRET,
-    //   callbackURL: process.env.AUTH_CALLBACK_URL,
-    // },
-    //   function(token, tokenSecret, profile, done) {
-    //     done(null, {token, tokenSecret});
-    //   }
-    // ));
     const authenticateUser = (email, password, done) => __awaiter(this, void 0, void 0, function* () {
         user_1.default.findOne({ username: email }, (err, user) => __awaiter(this, void 0, void 0, function* () {
             if (err)
@@ -42,6 +30,18 @@ function initialize(passport) {
         }));
     });
     passport.use(new LocalStrategy(authenticateUser));
+    passport.use('discogs', new OAuthStrategy({
+        requestTokenURL: 'https://api.discogs.com/oauth/request_token',
+        accessTokenURL: 'https://api.discogs.com/oauth/access_token',
+        userAuthorizationURL: 'https://www.discogs.com/oauth/authorize',
+        consumerKey: process.env.DISCOGS_KEY,
+        consumerSecret: process.env.DISCOGS_SECRET,
+        callbackURL: process.env.AUTH_CALLBACK_URL,
+        passReqToCallback: true
+    }, (req, token, tokenSecret, profile, done) => __awaiter(this, void 0, void 0, function* () {
+        const user = yield user_1.default.findOneAndUpdate({ _id: req.user.id }, { 'discogs.token': token, 'discogs.tokenSecret': tokenSecret }, { upsert: true });
+        done(null, req.user);
+    })));
     passport.serializeUser((user, done) => {
         return done(null, user.id);
     });
@@ -52,12 +52,18 @@ function initialize(passport) {
     });
 }
 exports.initialize = initialize;
-exports.isUserAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.ifAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.user) {
         next();
     }
     else {
         res.redirect('/login');
     }
+});
+exports.ifNotAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.user) {
+        res.redirect('http://localhost:5000');
+    }
+    next();
 });
 //# sourceMappingURL=index.js.map
