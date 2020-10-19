@@ -11,16 +11,19 @@ import * as cors from 'cors';
 import * as mongoose from 'mongoose';
 
 import { Routes } from './routes';
+import Discogs from './routes/discogs';
 
 class App {
 
   public app: express.Application;
   public routes: Routes = new Routes();
+  public discogs: Routes = new Discogs();
 
   constructor() {
     this.app = express();
     this.config();
     this.routes.routes(this.app);
+    this.discogs.routes(this.app);
   }
   
   private config(): void {

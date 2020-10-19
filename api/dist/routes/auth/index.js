@@ -39,8 +39,11 @@ function initialize(passport) {
         callbackURL: process.env.AUTH_CALLBACK_URL,
         passReqToCallback: true
     }, (req, token, tokenSecret, profile, done) => __awaiter(this, void 0, void 0, function* () {
-        const user = yield user_1.default.findOneAndUpdate({ _id: req.user.id }, { 'discogs.token': token, 'discogs.tokenSecret': tokenSecret }, { upsert: true });
-        done(null, req.user);
+        const user = yield user_1.default.findOneAndUpdate({ _id: req.user.id }, { 'discogs.token': token, 'discogs.tokenSecret': tokenSecret }, {
+            upsert: true,
+            new: true
+        });
+        done(null, user);
     })));
     passport.serializeUser((user, done) => {
         return done(null, user.id);

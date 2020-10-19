@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const discogs = new mongoose.Schema({
     token: String,
     tokenSecret: String,
+    username: String,
 });
 const user = new mongoose.Schema({
     username: String,

@@ -11,18 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Routes = void 0;
 const auth_1 = require("./auth");
-const axios_1 = require("axios");
 const bcrypt = require("bcrypt");
 const user_1 = require("./../schemas/user");
 const passport = require('passport');
 auth_1.initialize(passport);
 class Routes {
     routes(app) {
-        axios_1.default.interceptors.request.use((config) => {
-            config.params = Object.assign(Object.assign({}, config.params), { oauth_consumer_key: process.env.DISCOGS_KEY, oauth_signature_method: 'PLAINTEXT', oauth_timestamp: Date.now(), oauth_nonce: Date.now(), oauth_version: '1.0' });
-            return config;
-        });
-        const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
         app.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
             if (req.user) {
                 res.send({ user: req.user });
@@ -65,39 +59,16 @@ class Routes {
             console.log('lost logout user ', req.user);
             res.json(req.user);
         });
-        app.get('/auth/discogs', passport.authorize('discogs'));
-        app.get('/auth/discogs/confirm', passport.authorize('discogs', {
-            failureRedirect: 'http://localhost:5000/login'
-        }), (req, res) => {
-            if (req.user) {
-                res.redirect('http://localhost:5000/account');
-            }
-            else {
-                res.redirect('http://localhost:5000');
-            }
-        });
-        app.post('/account/wants', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { tokens, user } = req.body;
-            const signature = auth(tokens.token, tokens.tokenSecret);
-            try {
-                const { data } = yield axios_1.default.get(`https://api.discogs.com/users/${user.username}/wants?${signature}`);
-                res.json(data);
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }));
-        app.post('/account/wants/remove', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { tokens, user, id } = req.body;
-            const signature = auth(tokens.token, tokens.tokenSecret);
-            try {
-                const { data } = yield axios_1.default.delete(`https://api.discogs.com/users/${user.username}/wants/${id}?${signature}`);
-                res.json(data);
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }));
+        // app.post('/account/wants', async (req, res) => {
+        //   const { discogs } = req.body;
+        //   const signature = auth(discogs.token, discogs.tokenSecret);
+        //   try {
+        //     const { data } = await axios.get(`https://api.discogs.com/users/${discogs.username}/wants?${signature}`);
+        //     res.json(data);
+        //   } catch(error) {
+        //     console.log(error);
+        //   }
+        // })
     }
 }
 exports.Routes = Routes;

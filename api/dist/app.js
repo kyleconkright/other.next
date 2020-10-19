@@ -11,12 +11,15 @@ const passport = require("passport");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const routes_1 = require("./routes");
+const discogs_1 = require("./routes/discogs");
 class App {
     constructor() {
         this.routes = new routes_1.Routes();
+        this.discogs = new discogs_1.default();
         this.app = express();
         this.config();
         this.routes.routes(this.app);
+        this.discogs.routes(this.app);
     }
     config() {
         mongoose.connect(process.env.DB, {

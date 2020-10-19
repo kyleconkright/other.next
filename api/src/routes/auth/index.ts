@@ -32,10 +32,12 @@ export function initialize(passport) {
       const user: any = await User.findOneAndUpdate(
         {_id: req.user.id},
         {'discogs.token': token, 'discogs.tokenSecret': tokenSecret},
-        {upsert: true}
+        {
+          upsert: true,
+          new: true
+        },
       );
-
-      done(null, req.user);
+      done(null, user);
     }
   ));
 

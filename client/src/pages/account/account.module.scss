@@ -1,3 +1,5 @@
+@import './../../styles/colors';
+
 .sidebar {
   display: flex;
   flex-direction: column;
@@ -5,5 +7,26 @@
   padding: 0 2rem 2rem;
   p {
     margin: 0 0 .825rem;
+  }
+  ul {
+    border-top: 1px solid $green2;
+    padding: 1rem 0 0;
+  }
+}
+
+.wants {
+  h2 {
+    margin: 0 0 .5rem;
+  }
+  ul li {
+    display: flex;
+    margin: 0 0 .5rem;
+    img {
+      margin: 0 .5rem 0 0;
+    }
+    p.title {
+      font-size: .825rem;
+      opacity: .825;
+    }
   }
 }
