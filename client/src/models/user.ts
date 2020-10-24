@@ -1,6 +1,8 @@
 export interface User {
   email: string,
   username: string,
+  loading: boolean,
+  loaded: boolean,
   discogs: {
     username?: string,
     token?: string,
@@ -11,5 +13,7 @@ export interface User {
 export const DefaultUserState: User = {
   email: undefined,
   username: undefined,
+  loading: false,
+  loaded: false,
   discogs: {}
 }

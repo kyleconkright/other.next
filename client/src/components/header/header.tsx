@@ -1,16 +1,18 @@
 import { useRouter } from 'next/router'
-import { useContext } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
 import styles from './header.module.scss';
 import { UserContext } from '../../contexts/user.context';
-import { DefaultUserState } from '../../models/user';
+import { DefaultHttpState } from '../../models/http';
+import httpReducer from '../../reducers/http.reducer.';
 
 import Button from './../../components/button/button';
 
-export default function Header(props) {
+export default function Header() {
 
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
+  const [ http ] = useReducer(httpReducer, DefaultHttpState);
 
   const router = useRouter();
 
@@ -22,13 +24,17 @@ export default function Header(props) {
     <header className={styles.header}>
       <h1><a onClick={() => router.push('./')}>Other Supply Co.</a></h1>
       <div>
-        { user.username ? (
+        {user.username && !user.loading ? (
           <a onClick={() => router.push('/account')}><Button text="Account"></Button></a>
         ) : (
-          <div>
-            <a onClick={() => router.push('/login')}>Login</a>
-          </div>
-        ) }
+          user.loading ? (
+            null
+          ) : (
+            <div>
+              <a onClick={() => router.push('/login')}>Login</a>
+            </div>
+          )
+        )}
       </div>
     </header>
   )

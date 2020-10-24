@@ -13,6 +13,10 @@ export class Routes {
     });
 
     discogsHttp.interceptors.request.use((config) => {
+      config.headers = {
+        ...config.headers,
+        'User-Agent': 'Other-Supply 1.0'
+      }
       config.params = {
         ...config.params,
         oauth_consumer_key: process.env.DISCOGS_KEY,

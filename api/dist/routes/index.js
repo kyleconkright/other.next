@@ -59,16 +59,6 @@ class Routes {
             console.log('lost logout user ', req.user);
             res.json(req.user);
         });
-        // app.post('/account/wants', async (req, res) => {
-        //   const { discogs } = req.body;
-        //   const signature = auth(discogs.token, discogs.tokenSecret);
-        //   try {
-        //     const { data } = await axios.get(`https://api.discogs.com/users/${discogs.username}/wants?${signature}`);
-        //     res.json(data);
-        //   } catch(error) {
-        //     console.log(error);
-        //   }
-        // })
     }
 }
 exports.Routes = Routes;

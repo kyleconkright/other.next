@@ -19,6 +19,7 @@ class Routes {
             baseURL: 'https://api.discogs.com'
         });
         discogsHttp.interceptors.request.use((config) => {
+            config.headers = Object.assign(Object.assign({}, config.headers), { 'User-Agent': 'Other-Supply 1.0' });
             config.params = Object.assign(Object.assign({}, config.params), { oauth_consumer_key: process.env.DISCOGS_KEY, oauth_signature_method: 'PLAINTEXT', oauth_timestamp: Date.now(), oauth_nonce: Date.now(), oauth_version: '1.0' });
             return config;
         });

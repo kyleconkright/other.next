@@ -10,7 +10,7 @@ import { UserContext } from '../../contexts/user.context';
 
 function LoginPage() {
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
   const [form, setForm] = useState({email: undefined, password: undefined});
 
   useEffect(() => {
@@ -18,11 +18,12 @@ function LoginPage() {
   }, [user])
 
   async function login() {
+    dispatch({type: 'SET', isLoading: true});
     try {
       if(form.email) {
         const res = await axios.post('http://localhost:5001/auth/login', {username: form.email, password: form.password}, { withCredentials: true });
         if (res.status === 200) router.push('/');
-        setUser({...res.data.user});
+        dispatch({type: 'SET', user: {...res.data.user, isLoading: false}});
       } else {
         alert('add user');
       }
