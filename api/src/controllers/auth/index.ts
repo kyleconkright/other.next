@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 const LocalStrategy = require('passport-local').Strategy;
 import * as bcrypt from 'bcrypt';
-import User from './../../schemas/user';
+import User from '../../schemas/user';
 
 export function initialize(passport) {
   const authenticateUser = async (email, password, done) => {

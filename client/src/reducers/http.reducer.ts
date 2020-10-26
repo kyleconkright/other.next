@@ -1,4 +1,4 @@
-import { DefaultHttpState, Http } from './../models/http';
+import { DefaultHttpState, Http } from '../models/http';
 
 function httpReducer(state, action): Http {
   const { payload, type } = action;

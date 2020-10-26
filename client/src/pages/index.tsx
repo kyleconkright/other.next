@@ -1,9 +1,13 @@
+import { Fragment } from 'react';
 import Layout from '../components/layouts';
+import Feed from './feed';
 
 function HomePage() {
 
   return (
-    <div></div>
+    <Fragment>
+      <Feed></Feed>
+    </Fragment>
   )
 }
 

@@ -2,8 +2,6 @@ import { createContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import { DefaultUserState } from '../models/user';
 import userReducer from '../reducers/user.reducer';
-import { DefaultHttpState } from '../models/http';
-import httpReducer from '../reducers/http.reducer.';
 
 export const UserContext = createContext({
   user: DefaultUserState, dispatchUser: (user) => {}});

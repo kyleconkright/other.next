@@ -18,6 +18,9 @@
   h2 {
     margin: 0 0 .5rem;
   }
+  a:first-child {
+    display: flex;
+  }
   ul li {
     display: flex;
     margin: 0 0 .5rem;
@@ -29,7 +32,7 @@
     img {
       margin: 0 .5rem 0 0;
     }
-    p.title, a {
+    p.title {
       font-size: .825rem;
       opacity: .825;
     }

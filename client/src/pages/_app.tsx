@@ -1,19 +1,14 @@
 import './../styles/stylesheet.scss';
 import  UserContextProvider, { UserContext } from '../contexts/user.context';
-import { useEffect, useState } from 'react';
+import RecordContextProvider from '../contexts/record/record.context';
 
 export default function OtherApp({ Component, pageProps }) {
 
-  const [user, setUser] = useState({
-    username: undefined,
-    id: undefined,
-    token: undefined,
-    tokenSecret: undefined,
-  });
-
   return (
     <UserContextProvider>
-      <Component {...pageProps} />
+      <RecordContextProvider>
+        <Component {...pageProps} />
+      </RecordContextProvider>
     </UserContextProvider>
   )
 }

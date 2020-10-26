@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Routes = void 0;
-const auth_1 = require("./auth");
+const auth_1 = require("./../controllers/auth");
 const bcrypt = require("bcrypt");
 const user_1 = require("./../schemas/user");
 const passport = require('passport');

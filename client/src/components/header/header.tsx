@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from './header.module.scss';
 import { UserContext } from '../../contexts/user.context';
 import { DefaultHttpState } from '../../models/http';
-import httpReducer from '../../reducers/http.reducer.';
+import httpReducer from '../../reducers/http.reducer';
 
 import Button from './../../components/button/button';
 
@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <h1><a onClick={() => router.push('./')}>Other Supply Co.</a></h1>
+      <h1><a onClick={() => router.push('/')}>Other Supply Co.</a></h1>
       <div>
         {user.username && !user.loading ? (
           <a onClick={() => router.push('/account')}><Button text="Account"></Button></a>

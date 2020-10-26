@@ -16,7 +16,6 @@ function AccountSideBar() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(user);
     if (!user.username && !user.loading && user.loaded) router.push('/');
   }, [user])
 
@@ -40,11 +39,13 @@ function AccountSideBar() {
         { user.discogs?.token && user.discogs?.tokenSecret ? (
             <p>You are synced to Discogs with username {user.discogs.username}</p>
         ) : (
-          <Fragment>
-            <p>This site is meant to work with <a className="underline" href="http://www.discogs.com" target="_blank">Discogs</a>.<br></br>Sync your account for the full experience.</p>
-            <Button text="Sync Discogs" onClick={loginToDiscogs}></Button>
-          </Fragment>
-          )}
+          !user.loading ? (
+            <Fragment>
+              <p>This site is meant to work with <a className="underline" href="http://www.discogs.com" target="_blank">Discogs</a>.<br></br>Sync your account for the full experience.</p>
+              <Button text="Sync Discogs" onClick={loginToDiscogs}></Button>
+            </Fragment>
+          ) : ''
+        )}
           <ul>
             <li>Wantlist</li>
           </ul>

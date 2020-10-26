@@ -13,7 +13,7 @@ exports.ifNotAuthenticated = exports.ifAuthenticated = exports.initialize = void
 const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require("bcrypt");
-const user_1 = require("./../../schemas/user");
+const user_1 = require("../../schemas/user");
 function initialize(passport) {
     const authenticateUser = (email, password, done) => __awaiter(this, void 0, void 0, function* () {
         user_1.default.findOne({ username: email }, (err, user) => __awaiter(this, void 0, void 0, function* () {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { initialize, ifAuthenticated, ifNotAuthenticated } from './auth';
+import { initialize, ifAuthenticated, ifNotAuthenticated } from './../controllers/auth';
 import axios from 'axios';
 import * as bcrypt from 'bcrypt';
 import User from './../schemas/user';

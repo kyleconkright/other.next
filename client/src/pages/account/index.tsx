@@ -1,22 +1,23 @@
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 
 import styles from './account.module.scss';
 import { UserContext } from '../../contexts/user.context';
+import { RecordContext } from '../../contexts/record/record.context';
 import withLayout from '../../components/layouts';
 import withAccountLayout from './accountLayout';
 import { DefaultHttpState } from '../../models/http';
-import httpReducer from '../../reducers/http.reducer.';
+import httpReducer from '../../reducers/http.reducer';
 
 function AccountPage() {
 
-  const router = useRouter();
-
   const { user } = useContext(UserContext);
+  const { dispatchCurrentRecord } = useContext(RecordContext);
   const [ wantList, setWantList ] = useState([]);
   const [ http, dispatchHttp ] = useReducer(httpReducer, DefaultHttpState);
 
+  const router = useRouter();
   
   useEffect(() => {
     if(user.discogs.token && user.discogs.tokenSecret && !user.loading) {
@@ -36,23 +37,28 @@ function AccountPage() {
     }
   }
 
+  function fetchRecord(item) {
+    dispatchCurrentRecord({type: 'SET_CURRENT_RECORD', ...item});
+    router.push(`./records/${item.id}`);
+  }
+
   return (
     <div id="content" className={styles.wants}>
       <h2>Wantlist</h2>
       <ul>
-        { wantList.map(item => (
+        { !http.loading ? wantList.map(item => (
           <li key={item.id}>
-            <div>
+            <a onClick={() => fetchRecord(item)}>
               <img key={item.id} style={{width: '40px'}} src={ item.basic_information.thumb } />
               <div>
                 <p>{ item.basic_information.artists[0].name }</p>
                 <p className={styles.title}>{ item.basic_information.title }</p>
               </div>
-            </div>
+            </a>
             {/* <a href={`https://www.discogs.com/sell/release/${item.id}`} target="_blank">For Sale</a>
             <a href={`https://www.bullmoose.com/search?q=${item.basic_information.title}%20${item.basic_information.artists[0].name}&af=-2003`} target="_blank">Bullmoose</a> */}
           </li>
-        ))}
+        )) : 'Loading...'}
       </ul>
     </div>
   )
