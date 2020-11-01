@@ -18,7 +18,7 @@ function AccountPage() {
     if(user.discogs.token && user.discogs.tokenSecret && !user.loading) {
       getDiscogsWantList();
     }
-  }, [user, wantList])
+  }, [user])
 
 
   async function getDiscogsWantList() {
