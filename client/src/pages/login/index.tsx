@@ -1,29 +1,33 @@
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 import Button from './../../components/button/button';
 
 import Layout from './../../components/layouts';
 import styles from './../../styles/pages/register-login.module.scss';
-import { UserContext } from '../../contexts/user.context';
+import { CHECK_FOR_LOGGED_IN_USER, SET_USER } from '../../store/actions/user.actions';
+import { AppState } from '../../store/reducers';
 
 function LoginPage() {
   const router = useRouter();
-  const { user, dispatchUser } = useContext(UserContext);
+  const user = useSelector((state: AppState) => state.user);
   const [form, setForm] = useState({email: undefined, password: undefined});
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user.username) router.push('/')
   }, [user])
 
   async function login() {
-    dispatchUser({type: 'SET', isLoading: true});
+    dispatch({type: CHECK_FOR_LOGGED_IN_USER, loading: true});
     try {
       if(form.email) {
         const res = await axios.post('http://localhost:5001/auth/login', {username: form.email, password: form.password}, { withCredentials: true });
         if (res.status === 200) router.push('/');
-        dispatchUser({type: 'SET', user: {...res.data.user, isLoading: false}});
+        dispatch({type: SET_USER, ...res.data.user, loading: false });
       } else {
         alert('add user');
       }

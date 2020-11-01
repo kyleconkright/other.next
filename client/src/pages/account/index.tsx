@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 import styles from './account.module.scss';
-import { UserContext } from '../../contexts/user.context';
 import withLayout from '../../components/layouts';
 import withAccountLayout from './accountLayout';
+import { AppState } from '../../store/reducers';
 
 function AccountPage() {
 
-  const { user } = useContext(UserContext);
+  const user = useSelector((state: AppState) => state.user);
   const [ wantList, setWantList ] = useState([]);
 
   const router = useRouter();
