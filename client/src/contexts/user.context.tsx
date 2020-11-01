@@ -1,21 +1,25 @@
-import { createContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { DefaultUserState } from '../models/user';
-import userReducer from '../reducers/user.reducer';
+import { AppState } from '../store/reducers';
+import { CHECK_FOR_LOGGED_IN_USER, SET_USER } from '../store/actions/user.actions';
 
 export const UserContext = createContext({
-  user: DefaultUserState, dispatchUser: (user) => {}});
+  user: DefaultUserState
+});
 
 const AuthContextProvider = props => {
-  const [user, dispatchUser] = useReducer(userReducer, DefaultUserState);
-  const [wants, setWants] = useState([]);
+  const user = useSelector((state: AppState) => state.user);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function getUser() {
-      dispatchUser({type: 'SET', loading: true});
+      dispatch({type: CHECK_FOR_LOGGED_IN_USER});
       try {
         const { user: userRes } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
-        dispatchUser({type: 'SET', ...(userRes ? userRes : DefaultUserState), loading: false, loaded: true });
+        dispatch({type: SET_USER, ...(userRes ? userRes : DefaultUserState), loading: false, loaded: true });
       } catch(error) {
         console.error(error);
       }
@@ -24,7 +28,7 @@ const AuthContextProvider = props => {
   }, [])
 
   return (
-    <UserContext.Provider value={{user, dispatchUser}}>
+    <UserContext.Provider value={{user}}>
       { props.children }
     </UserContext.Provider>
   );

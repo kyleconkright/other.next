@@ -10,6 +10,8 @@ function Record(props) {
   const { record, dispatchCurrentRecord} = useContext(RecordContext);
   console.log(record);
 
+  // TODO: Add redux
+
   return (
     <div id={styles.recordContent}>
       <div>

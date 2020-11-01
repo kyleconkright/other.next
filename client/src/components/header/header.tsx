@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useReducer } from 'react';
+import { useContext, useReducer } from 'react';
 import axios from 'axios';
 
 import styles from './header.module.scss';
@@ -12,7 +12,6 @@ import Button from './../../components/button/button';
 export default function Header() {
 
   const { user } = useContext(UserContext);
-  const [ http ] = useReducer(httpReducer, DefaultHttpState);
 
   const router = useRouter();
 

@@ -1,14 +1,24 @@
 import './../styles/stylesheet.scss';
-import  UserContextProvider, { UserContext } from '../contexts/user.context';
-import RecordContextProvider from '../contexts/record/record.context';
+
+import { Provider } from "react-redux";
+import store from '../store';
+import React from 'react';
+import UserContextProvider from './../contexts/user.context';
 
 export default function OtherApp({ Component, pageProps }) {
 
+  //   async function getInitialProps({Component, ctx}) {
+  //     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+
+  //     //Anything returned here can be access by the client
+  //     return {pageProps: pageProps};
+  // }
+
   return (
-    <UserContextProvider>
-      <RecordContextProvider>
+    <Provider store={store}>
+      <UserContextProvider>
         <Component {...pageProps} />
-      </RecordContextProvider>
-    </UserContextProvider>
+      </UserContextProvider>
+    </Provider>
   )
 }
