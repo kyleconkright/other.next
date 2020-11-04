@@ -1,5 +1,10 @@
 @import './../../../styles/colors';
 
 input.otherSearch {
-  outline-color: $light-gray;
+  border: 2px solid $light-gray;
+  border-radius: 4px;
+}
+ 
+input.otherSearch {
+  outline-color: adjust-color($color: $light-gray, $lightness: -2%);
 }

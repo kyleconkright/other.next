@@ -73,6 +73,15 @@ export class Routes {
     //   }
     // })
 
+    app.get('/discogs/release/:id', async (req: Request, res: Response) => {
+      try {
+        const { data } = await discogsHttp.get(`/releases/${req.params.id}`);
+        res.json(data);
+      } catch(error) {
+        console.log(error);
+      }
+    });
+
   }
 
 }

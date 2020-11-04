@@ -66,6 +66,15 @@ class Routes {
         //     console.log(error);
         //   }
         // })
+        app.get('/discogs/release/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { data } = yield discogsHttp.get(`/releases/${req.params.id}`);
+                res.json(data);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
     }
 }
 exports.Routes = Routes;

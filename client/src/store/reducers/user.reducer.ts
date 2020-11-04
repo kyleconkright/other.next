@@ -1,8 +1,8 @@
 import { USER_LOGIN, USER_LOGIN_SUCCESS, SET_USER, CHECK_FOR_LOGGED_IN_USER, USER_LOGOUT_SUCCESS, USER_UPDATE } from "../actions/user.actions";
-import { User, DefaultUserState } from "../../models/user";
+import { DefaultUserState } from "../../models/user";
 
 
-function reducer(state = DefaultUserState, action: any) {
+function userReducer(state = DefaultUserState, action: any) {
   const { type, ...user } = action;
   switch (type) {
     case CHECK_FOR_LOGGED_IN_USER:
@@ -38,4 +38,4 @@ function reducer(state = DefaultUserState, action: any) {
   }
 }
 
-export default reducer;
+export default userReducer;
