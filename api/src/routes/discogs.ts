@@ -74,8 +74,10 @@ export class Routes {
     // })
 
     app.get('/discogs/release/:id', async (req: Request, res: Response) => {
+      const { discogs } = req.body;
+      const signature = auth(discogs.token, discogs.tokenSecret);
       try {
-        const { data } = await discogsHttp.get(`/releases/${req.params.id}`);
+        const { data } = await discogsHttp.get(`/releases/${req.params.id}?${signature}`);
         res.json(data);
       } catch(error) {
         console.log(error);

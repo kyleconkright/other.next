@@ -7,9 +7,7 @@ import { GET_RECORD, GET_RECORD_SUCCESS } from '../actions/record.actions';
 function* getRecord(action) {
   try {
     const {id} = action;
-    console.log(id);
     const record = yield call(fetchRecordFromServer, id);
-    console.log(record);
     yield put({ type: GET_RECORD_SUCCESS, record });
   } catch (err) {
     console.log(err);

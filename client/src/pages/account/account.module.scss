@@ -11,6 +11,9 @@
   ul {
     border-top: 1px solid $green2;
     padding: 1rem 0 0;
+    h3 {
+      margin: 16px 0 8px;
+    }
   }
 }
 
@@ -20,6 +23,7 @@
   }
   a:first-child {
     display: flex;
+    flex: 2;
   }
   ul li {
     display: flex;
@@ -36,5 +40,16 @@
       font-size: .825rem;
       opacity: .825;
     }
+    > * {
+      flex: 1;
+    }
+  }
+}
+
+.dropdown, .options {
+  display: flex;
+  flex-direction: column;
+  label {
+    font-size: 13px;
   }
 }

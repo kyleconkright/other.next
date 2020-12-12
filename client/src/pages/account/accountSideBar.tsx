@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Link from 'next/link'
 import { Fragment, useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 
@@ -44,7 +45,24 @@ function AccountSideBar() {
           ) : ''
         )}
           <ul>
-            <li>Wantlist</li>
+            <li>
+              <Link href="/account/settings">
+                Settings
+              </Link>
+            </li>
+            <li>
+              <h3>Lists</h3>
+            </li>
+            <li>
+              <Link href="/account/lists/alert">
+                Alerts
+              </Link>
+            </li>
+            <li>
+              <Link href="/account">
+                Wantlist
+              </Link>
+            </li>
           </ul>
         </div>
       <div>

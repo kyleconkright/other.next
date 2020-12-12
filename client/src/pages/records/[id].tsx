@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import withLayout from "../../components/layouts";
@@ -24,12 +24,19 @@ function Record(props) {
       <div>
         <a className={'underline'} onClick={() => router.back()}>Back</a>
       </div>
-      {router.query.id}
-      <h2>{ record.title }</h2>
+
+      { record.loading ? 'loading' : (
+        <Fragment>
+          <h3>{ record.artists ? record.artists[0].name : null }</h3>
+          <h2>{ record.title }</h2>
+        </Fragment>
+      ) }
+      
       {/* <p className={styles.title}>{ record.basic_information.title }</p>
       <img key={record.id} style={{width: '140px'}} src={ record.basic_information.cover_image } /> */}
 
     </div>
+  
   )
 }
 

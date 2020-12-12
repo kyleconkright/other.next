@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-import styles from './account.module.scss';
-import withLayout from '../../components/layouts';
-import withAccountLayout from './accountLayout';
-import { AppState } from '../../store/reducers';
-import { DiscogsMediaConditions } from './../../models/record';
+import styles from './../account.module.scss';
+import withLayout from '../../../components/layouts';
+import withAccountLayout from '../accountLayout';
+import { AppState } from '../../../store/reducers';
+import { DiscogsMediaConditions } from '../../../models/record';
 
 function AccountPage() {
 
@@ -51,6 +51,29 @@ function AccountPage() {
                 <p className={styles.title}>{ item.basic_information.title }</p>
               </div>
             </a>
+           
+            <div className={styles.dropdown}>
+              <label htmlFor="media-condition">Media Condition</label>
+              <select id="media-condition">{
+                options.map(item => <option key={item.id} value={item.value}>{item.name}</option>)
+              }</select>
+            </div>
+            
+            <div className={styles.dropdown}>
+              <label htmlFor="sleeve-condition">Sleeve Condition</label>
+              <select id="sleeve-condition">{
+                options.map(item => <option key={item.id} value={item.value}>{item.name}</option>)
+              }</select>
+            </div>
+
+            <div className={styles.options}>
+              <label htmlFor="price">Max Price</label>
+              <input name="price" type="text"/>
+            </div>
+            
+            <div className={styles.options}>
+              <input type="checkbox" id="alert" name="alert" />
+            </div>
           </li>
         )) : 'Loading...'}
       </ul>
