@@ -67,8 +67,10 @@ class Routes {
         //   }
         // })
         app.get('/discogs/release/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { discogs } = req.body;
+            const signature = auth(discogs.token, discogs.tokenSecret);
             try {
-                const { data } = yield discogsHttp.get(`/releases/${req.params.id}`);
+                const { data } = yield discogsHttp.get(`/releases/${req.params.id}?${signature}`);
                 res.json(data);
             }
             catch (error) {

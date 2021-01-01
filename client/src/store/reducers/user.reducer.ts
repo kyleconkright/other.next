@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGIN_SUCCESS, SET_USER, CHECK_FOR_LOGGED_IN_USER, USER_LOGOUT_SUCCESS, USER_UPDATE } from "../actions/user.actions";
+import { USER_LOGIN, USER_LOGIN_SUCCESS, SET_USER, CHECK_FOR_LOGGED_IN_USER, USER_LOGOUT_SUCCESS, UPDATE_USER } from "../actions/user.actions";
 import { DefaultUserState } from "../../models/user";
 
 
@@ -22,7 +22,7 @@ function userReducer(state = DefaultUserState, action: any) {
         ...user,
         loading: false,
       };
-    case USER_UPDATE:
+    case UPDATE_USER:
       return {
         ...state,
         ...user,

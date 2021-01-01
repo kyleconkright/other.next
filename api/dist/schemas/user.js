@@ -9,6 +9,7 @@ const discogs = new mongoose.Schema({
 });
 const user = new mongoose.Schema({
     username: String,
+    phone: String,
     password: {
         type: String,
         min: [8, 'Not Enough Characters'],

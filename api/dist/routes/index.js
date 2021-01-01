@@ -54,9 +54,7 @@ class Routes {
             }
         }));
         app.get('/auth/logout', (req, res) => {
-            console.log('pre logout user ', req.user);
             req.logout();
-            console.log('lost logout user ', req.user);
             res.json(req.user);
         });
     }

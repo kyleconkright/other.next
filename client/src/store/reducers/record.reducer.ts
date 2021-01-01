@@ -3,7 +3,6 @@ import { DefaultRecordState } from "../../models/record";
 
 function recordReducer(state = DefaultRecordState, action) {
   const { type, error, ...data } = action;
-  console.log(action);
   switch (type) {
     case GET_RECORD:
       return {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { takeLatest, call, put } from 'redux-saga/effects';
-import { USER_LOGIN, USER_LOGIN_SUCCESS, USER_LOGOUT, SET_USER, CHECK_FOR_LOGGED_IN_USER, USER_LOGOUT_SUCCESS } from '../actions/user.actions';
+import { USER_LOGIN, USER_LOGIN_SUCCESS, USER_LOGOUT, SET_USER, CHECK_FOR_LOGGED_IN_USER, USER_LOGOUT_SUCCESS, UPDATE_USER, UPDATE_USER_SUCCESS } from '../actions/user.actions';
 import { DefaultUserState } from '../../models/user';
 
 
@@ -30,8 +30,18 @@ function* userLogout() {
   }
 }
 
+function* userUpdate(action) {
+  const { user} = action;
+  console.log(user);
+  try {
+    yield call(() => axios.post('http://localhost:5001/user/update', { user }));
+    yield put({ type: UPDATE_USER_SUCCESS, user: DefaultUserState})
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 const userSaga = [
- 
   takeLatest(
     USER_LOGIN,
     userLogin
@@ -39,6 +49,10 @@ const userSaga = [
   takeLatest(
     USER_LOGOUT,
     userLogout
+  ),
+  takeLatest(
+    UPDATE_USER,
+    userUpdate
   ),
 ]
 

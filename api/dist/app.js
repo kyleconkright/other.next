@@ -11,16 +11,19 @@ const passport = require("passport");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const routes_1 = require("./routes");
+const user_1 = require("./routes/user");
 const discogs_1 = require("./routes/discogs");
 const search_1 = require("./routes/search");
 class App {
     constructor() {
         this.routes = new routes_1.Routes();
+        this.user = new user_1.default();
         this.discogs = new discogs_1.default();
         this.search = new search_1.default();
         this.app = express();
         this.config();
         this.routes.routes(this.app);
+        this.user.routes(this.app);
         this.search.routes(this.app);
         this.discogs.routes(this.app);
     }

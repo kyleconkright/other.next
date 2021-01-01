@@ -11,6 +11,7 @@ import * as cors from 'cors';
 import * as mongoose from 'mongoose';
 
 import { Routes } from './routes';
+import User from './routes/user';
 import Discogs from './routes/discogs';
 import Search from './routes/search';
 
@@ -18,6 +19,7 @@ class App {
 
   public app: express.Application;
   public routes: Routes = new Routes();
+  public user: Routes = new User();
   public discogs: Routes = new Discogs();
   public search: Routes = new Search();
 
@@ -25,6 +27,7 @@ class App {
     this.app = express();
     this.config();
     this.routes.routes(this.app);
+    this.user.routes(this.app);
     this.search.routes(this.app);
     this.discogs.routes(this.app);
   }

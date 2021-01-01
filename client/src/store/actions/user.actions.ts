@@ -4,7 +4,8 @@ export const USER_LOGIN_SUCCESS = '[USER] Login Success';
 export const USER_LOGOUT = '[USER] Logout';
 export const USER_LOGOUT_SUCCESS = '[USER] Logout Success';
 export const SET_USER = '[USER] Set User';
-export const USER_UPDATE = '[USER] Update User';
+export const UPDATE_USER = '[USER] Update User';
+export const UPDATE_USER_SUCCESS = '[USER] Update User Success';
 
 export function checkForLoggedInUser() {
   return { type: CHECK_FOR_LOGGED_IN_USER }
@@ -27,10 +28,9 @@ export function userLoginSuccess(user) {
 }
 
 export function setUser(user) {
-  console.log(user);
   return { type: SET_USER, user}
 }
 
 export function userUpdate(user) {
-  return { type: USER_UPDATE, user }
+  return { type: UPDATE_USER, user }
 }

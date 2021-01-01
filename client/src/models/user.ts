@@ -3,6 +3,7 @@ export interface User {
   username: string,
   loading: boolean,
   loaded: boolean,
+  phone: string,
   discogs: {
     username?: string,
     token?: string,
@@ -15,5 +16,6 @@ export const DefaultUserState: User = {
   username: undefined,
   loading: false,
   loaded: false,
+  phone: undefined,
   discogs: {}
 }
