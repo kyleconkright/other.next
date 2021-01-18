@@ -15,7 +15,7 @@ const user = new mongoose.Schema({
         min: [8, 'Not Enough Characters'],
         required: [true, 'Please Set A Password']
     },
-    discogs: discogs
+    discogs: discogs,
 });
 exports.Discogs = mongoose.model('discogs', discogs);
 exports.default = mongoose.model('User', user);

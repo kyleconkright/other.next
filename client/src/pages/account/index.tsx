@@ -13,11 +13,12 @@ function AccountPage() {
 
   const user = useSelector((state: AppState) => state.user);
   const [ wantList, setWantList ] = useState([]);
+  const [form, setForm] = useState({price: undefined});
 
   const router = useRouter();
 
   const options = Object.keys(DiscogsMediaConditions).map((key, i) => ({id: i, name: DiscogsMediaConditions[key], value: key}));
-  console.log({options});
+  // console.log({options});
   
   useEffect(() => {
     if(user.discogs.token && user.discogs.tokenSecret && !user.loading) {
@@ -37,6 +38,19 @@ function AccountPage() {
   function fetchRecord(item) {
     router.push(`./records/${item.id}`);
   }
+  
+  function setUpAlert(item) {
+    console.log(user._id);
+    axios.post('http://localhost:5001/user/alerts/create', { item, id: user._id, maxPrice: form.price })
+  }
+
+  const updateForm = (event) => {
+    const {name, value} = event.target;
+    setForm({
+      ...form,
+      [name]: value,  
+    } as any);
+  }
 
   return (
     <div id="content" className={styles.wants}>
@@ -51,6 +65,8 @@ function AccountPage() {
                 <p className={styles.title}>{ item.basic_information.title }</p>
               </div>
             </a>
+            <input onChange={updateForm} name="price" type="text" placeholder="Max Price"/>
+            <a onClick={() => setUpAlert(item)}>Set Up Alert</a>
           </li>
         )) : 'Loading...'}
       </ul>

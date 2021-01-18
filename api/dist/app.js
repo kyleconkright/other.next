@@ -14,18 +14,23 @@ const routes_1 = require("./routes");
 const user_1 = require("./routes/user");
 const discogs_1 = require("./routes/discogs");
 const search_1 = require("./routes/search");
+const messages_1 = require("./routes/messages");
+const alerts_job_1 = require("./jobs/alerts.job");
 class App {
     constructor() {
         this.routes = new routes_1.Routes();
         this.user = new user_1.default();
         this.discogs = new discogs_1.default();
         this.search = new search_1.default();
+        this.messages = new messages_1.default();
+        this.alertJob = new alerts_job_1.AlertJob();
         this.app = express();
         this.config();
         this.routes.routes(this.app);
         this.user.routes(this.app);
         this.search.routes(this.app);
         this.discogs.routes(this.app);
+        this.messages.routes(this.app);
     }
     config() {
         mongoose.connect(process.env.DB, {
@@ -34,14 +39,15 @@ class App {
             useFindAndModify: false,
         }, () => {
             console.log('mongoose is connected');
+            this.alertJob.execute();
         });
+        this.app.use(cookieParser(process.env.SESSION_SECRET));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors({
             origin: "http://localhost:5000",
             credentials: true
         }));
-        this.app.use(cookieParser(process.env.SESSION_SECRET));
         this.app.use(session({
             resave: false,
             saveUninitialized: true,

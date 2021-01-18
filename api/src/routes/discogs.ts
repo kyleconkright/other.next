@@ -3,32 +3,32 @@ import axios from 'axios';
 
 import User from './../schemas/user';
 
+const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
+
+let discogsHttp = axios.create({
+  baseURL: 'https://api.discogs.com'
+});
+
+discogsHttp.interceptors.request.use((config) => {
+  config.headers = {
+    ...config.headers,
+    'User-Agent': 'Other-Supply 1.0'
+  }
+  config.params = {
+    ...config.params,
+    oauth_consumer_key: process.env.DISCOGS_KEY,
+    oauth_signature_method: 'PLAINTEXT',
+    oauth_timestamp: Date.now(),
+    oauth_nonce: Date.now(),
+    oauth_version: '1.0',
+  }
+  return config
+})
+
 export class Routes {
   public routes(app) {
 
     const passport = require('passport');
-
-    let discogsHttp = axios.create({
-      baseURL: 'https://api.discogs.com'
-    });
-
-    discogsHttp.interceptors.request.use((config) => {
-      config.headers = {
-        ...config.headers,
-        'User-Agent': 'Other-Supply 1.0'
-      }
-      config.params = {
-        ...config.params,
-        oauth_consumer_key: process.env.DISCOGS_KEY,
-        oauth_signature_method: 'PLAINTEXT',
-        oauth_timestamp: Date.now(),
-        oauth_nonce: Date.now(),
-        oauth_version: '1.0',
-      }
-      return config
-    })
-
-    const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
 
     app.get('/auth/discogs', passport.authorize('discogs'));
 
@@ -83,9 +83,17 @@ export class Routes {
         console.log(error);
       }
     });
-
   }
-
 }
 
 export default Routes;
+
+export async function getStats(releaseId, discogs) {
+  const signature = auth(discogs.token, discogs.tokenSecret);
+  try {
+    const { data } = await discogsHttp.get(`/marketplace/stats/${releaseId}?${signature}`);
+    return data
+  } catch(error) {
+    console.log(error);
+  }
+}

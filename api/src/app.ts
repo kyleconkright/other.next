@@ -14,6 +14,9 @@ import { Routes } from './routes';
 import User from './routes/user';
 import Discogs from './routes/discogs';
 import Search from './routes/search';
+import Messages from './routes/messages';
+
+import { AlertJob } from './jobs/alerts.job';
 
 class App {
 
@@ -22,6 +25,9 @@ class App {
   public user: Routes = new User();
   public discogs: Routes = new Discogs();
   public search: Routes = new Search();
+  public messages: Routes = new Messages();
+
+  public alertJob: AlertJob = new AlertJob();
 
   constructor() {
     this.app = express();
@@ -30,6 +36,7 @@ class App {
     this.user.routes(this.app);
     this.search.routes(this.app);
     this.discogs.routes(this.app);
+    this.messages.routes(this.app);
   }
   
   private config(): void {
@@ -40,7 +47,10 @@ class App {
       useFindAndModify: false,
     }, () => {
       console.log('mongoose is connected');
+      this.alertJob.execute();
     });
+
+    this.app.use(cookieParser(process.env.SESSION_SECRET));
     
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,7 +59,6 @@ class App {
       credentials: true
     }));
 
-    this.app.use(cookieParser(process.env.SESSION_SECRET));
     this.app.use(session({
       resave: false,
       saveUninitialized: true,

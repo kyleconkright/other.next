@@ -9,21 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Routes = void 0;
+exports.getStats = exports.Routes = void 0;
 const axios_1 = require("axios");
 const user_1 = require("./../schemas/user");
+const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
+let discogsHttp = axios_1.default.create({
+    baseURL: 'https://api.discogs.com'
+});
+discogsHttp.interceptors.request.use((config) => {
+    config.headers = Object.assign(Object.assign({}, config.headers), { 'User-Agent': 'Other-Supply 1.0' });
+    config.params = Object.assign(Object.assign({}, config.params), { oauth_consumer_key: process.env.DISCOGS_KEY, oauth_signature_method: 'PLAINTEXT', oauth_timestamp: Date.now(), oauth_nonce: Date.now(), oauth_version: '1.0' });
+    return config;
+});
 class Routes {
     routes(app) {
         const passport = require('passport');
-        let discogsHttp = axios_1.default.create({
-            baseURL: 'https://api.discogs.com'
-        });
-        discogsHttp.interceptors.request.use((config) => {
-            config.headers = Object.assign(Object.assign({}, config.headers), { 'User-Agent': 'Other-Supply 1.0' });
-            config.params = Object.assign(Object.assign({}, config.params), { oauth_consumer_key: process.env.DISCOGS_KEY, oauth_signature_method: 'PLAINTEXT', oauth_timestamp: Date.now(), oauth_nonce: Date.now(), oauth_version: '1.0' });
-            return config;
-        });
-        const auth = (oauth_token, oauth_token_secret) => `oauth_token=${oauth_token}&oauth_signature=${process.env.DISCOGS_SECRET}%26${oauth_token_secret}`;
         app.get('/auth/discogs', passport.authorize('discogs'));
         app.get('/auth/discogs/confirm', passport.authorize('discogs', {
             failureRedirect: 'http://localhost:5000/login'
@@ -81,4 +81,17 @@ class Routes {
 }
 exports.Routes = Routes;
 exports.default = Routes;
+function getStats(releaseId, discogs) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const signature = auth(discogs.token, discogs.tokenSecret);
+        try {
+            const { data } = yield discogsHttp.get(`/marketplace/stats/${releaseId}?${signature}`);
+            return data;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+}
+exports.getStats = getStats;
 //# sourceMappingURL=discogs.js.map

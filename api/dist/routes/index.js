@@ -25,6 +25,22 @@ class Routes {
                 res.send({ user: undefined });
             }
         }));
+        app.post('/auth/login', function (req, res, next) {
+            passport.authenticate('local', function (err, user, info) {
+                if (err) {
+                    return next(err);
+                }
+                if (!user) {
+                    return res.redirect('http://localhost:5000/login');
+                }
+                req.logIn(user, function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    return res.redirect('/');
+                });
+            })(req, res, next);
+        });
         app.post('/auth/login', passport.authenticate('local', {
             successRedirect: '/',
             failureRedirect: 'http://localhost:5000/login',

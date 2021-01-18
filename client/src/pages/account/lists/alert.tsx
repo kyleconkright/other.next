@@ -9,50 +9,56 @@ import withAccountLayout from '../accountLayout';
 import { AppState } from '../../../store/reducers';
 import { DiscogsMediaConditions } from '../../../models/record';
 
+import { OtherHttp } from './../../../http';
+
 function AccountPage() {
 
   const user = useSelector((state: AppState) => state.user);
-  const [ wantList, setWantList ] = useState([]);
+  const [ AlertList, setAlertList ] = useState([]);
 
   const router = useRouter();
 
+  const http = new OtherHttp();
+
   const options = Object.keys(DiscogsMediaConditions).map((key, i) => ({id: i, name: DiscogsMediaConditions[key], value: key}));
-  console.log({options});
+  // console.log({options});
   
   useEffect(() => {
     if(user.discogs.token && user.discogs.tokenSecret && !user.loading) {
-      getDiscogsWantList();
+      getAlertList();
     }
   }, [user])
 
 
-  async function getDiscogsWantList() {
+  async function getAlertList() {
     try {
-      const { wants } = (await axios.post('http://localhost:5001/account/wants', { discogs: user.discogs })).data;
-      setWantList(wants);
+      const alerts = (await http.instance.get('/user/alerts')).data;
+      console.log(alerts);
+      setAlertList(alerts);
     } catch(error) {
+      console.error(error);
     }
   }
 
   function fetchRecord(item) {
-    router.push(`./records/${item.id}`);
+    router.push(`./../../records/${item.item.id}`);
   }
 
   return (
     <div id="content" className={styles.wants}>
-      <h2>Wantlist</h2>
+      <h2>Alert List</h2>
       <ul>
-        { wantList.length !== 0 ? wantList.map(item => (
-          <li key={item.id}>
-            <a onClick={() => fetchRecord(item)}>
-              <img key={item.id} style={{width: '40px'}} src={ item.basic_information.thumb } />
+        { AlertList.length !== 0 ? AlertList.map(alert => (
+          <li key={alert._id}>
+            <a target="_blank" href={`https://www.discogs.com/sell/release/${alert.item.id}?price1=&price2=${alert.price}&currency=USD`}>
+              <img style={{width: '40px'}} src={ alert.item.cover } />
               <div>
-                <p>{ item.basic_information.artists[0].name }</p>
-                <p className={styles.title}>{ item.basic_information.title }</p>
+                <p>{ alert.item.artist }</p>
+                <p className={styles.title}>{ alert.item.title }</p>
               </div>
             </a>
            
-            <div className={styles.dropdown}>
+            {/* <div className={styles.dropdown}>
               <label htmlFor="media-condition">Media Condition</label>
               <select id="media-condition">{
                 options.map(item => <option key={item.id} value={item.value}>{item.name}</option>)
@@ -64,16 +70,15 @@ function AccountPage() {
               <select id="sleeve-condition">{
                 options.map(item => <option key={item.id} value={item.value}>{item.name}</option>)
               }</select>
-            </div>
+            </div> */}
 
-            <div className={styles.options}>
-              <label htmlFor="price">Max Price</label>
-              <input name="price" type="text"/>
+            <div>
+              <input name="price" value={alert.price} type="text"/>
             </div>
             
-            <div className={styles.options}>
+            {/* <div className={styles.options}>
               <input type="checkbox" id="alert" name="alert" />
-            </div>
+            </div> */}
           </li>
         )) : 'Loading...'}
       </ul>

@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import User from '../../schemas/user';
 
 export function initialize(passport) {
+
   const authenticateUser = async (email, password, done) => {
     User.findOne({username: email}, async (err, user: any) => {
       if (err) throw err;
