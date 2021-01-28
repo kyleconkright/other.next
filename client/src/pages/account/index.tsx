@@ -8,6 +8,7 @@ import withLayout from '../../components/layouts';
 import withAccountLayout from './accountLayout';
 import { AppState } from '../../store/reducers';
 import { DiscogsMediaConditions } from './../../models/record';
+import { OtherHttp } from '../../http';
 
 function AccountPage() {
 
@@ -16,6 +17,7 @@ function AccountPage() {
   const [form, setForm] = useState({price: undefined});
 
   const router = useRouter();
+  const otherHttp = new OtherHttp();
 
   const options = Object.keys(DiscogsMediaConditions).map((key, i) => ({id: i, name: DiscogsMediaConditions[key], value: key}));
   // console.log({options});
@@ -40,8 +42,11 @@ function AccountPage() {
   }
   
   function setUpAlert(item) {
-    console.log(user._id);
     axios.post('http://localhost:5001/user/alerts/create', { item, id: user._id, maxPrice: form.price })
+  }
+  
+  function removeFromWantlist(item) {
+    otherHttp.instance.post('http://localhost:5001/account/wants/remove', { id: item.id })
   }
 
   const updateForm = (event) => {
@@ -67,6 +72,7 @@ function AccountPage() {
             </a>
             <input onChange={updateForm} name="price" type="text" placeholder="Max Price"/>
             <a onClick={() => setUpAlert(item)}>Set Up Alert</a>
+            <a onClick={() => removeFromWantlist(item)}>Remove</a>
           </li>
         )) : 'Loading...'}
       </ul>

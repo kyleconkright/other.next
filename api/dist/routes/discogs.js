@@ -56,16 +56,18 @@ class Routes {
                 console.log(error);
             }
         }));
-        // app.post('/account/wants/remove', async (req, res) => {
-        //   const { tokens, user, id } = req.body;
-        //   const signature = auth(tokens.token, tokens.tokenSecret);
-        //   try {
-        //     const { data } = await axios.delete(`https://api.discogs.com/users/${user.username}/wants/${id}?${signature}`);
-        //     res.json(data);
-        //   } catch(error) {
-        //     console.log(error);
-        //   }
-        // })
+        app.post('/account/wants/remove', (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.body;
+            try {
+                const { user } = yield req;
+                const signature = auth(user.discogs.token, user.discogs.tokenSecret);
+                yield discogsHttp.delete(`/users/${user.discogs.username}/wants/${id}?${signature}`);
+                res.send('Deleted');
+            }
+            catch (error) {
+                console.log(error);
+            }
+        }));
         app.get('/discogs/release/:id', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { discogs } = req.body;
             const signature = auth(discogs.token, discogs.tokenSecret);
@@ -85,7 +87,7 @@ function getStats(releaseId, discogs) {
     return __awaiter(this, void 0, void 0, function* () {
         const signature = auth(discogs.token, discogs.tokenSecret);
         try {
-            const { data } = yield discogsHttp.get(`/marketplace/stats/${releaseId}?${signature}`);
+            const { data } = yield discogsHttp.get(`/marketplace/stats/${releaseId}?curr_abbr=USD&${signature}`);
             return data;
         }
         catch (error) {

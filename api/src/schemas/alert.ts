@@ -3,6 +3,8 @@ import { Schema } from 'mongoose';
 
 const discogsItem = new mongoose.Schema({
   id: String,
+  masterId: String,
+  notes: String,
   artist: String,
   title: String,
   cover: String
@@ -30,55 +32,3 @@ const alert = new mongoose.Schema({
 
 export const DiscogsItem = mongoose.model('DiscogsItem', discogsItem);
 export default mongoose.model('Alert', alert);
-
-// db.alerts.aggregate([
-//   { 
-//     $addFields: {
-//       maxPrice: {
-//         $objectToArray: "$maxPrice"
-//       },
-//     },
-//   },
-//   {
-//     $unwind: "$maxPrice"
-//   },
-//   {
-//     $addFields: {
-//       price: "$maxPrice.k",
-//       maxPrice: {
-//         $objectToArray: "$maxPrice.v"
-//       }
-//     },
-//   },
-//   {
-//     $match: {
-//       "maxPrice.k": "5ff141399409874e3497d76a"
-//     }
-//   },
-//   {
-//     $project: {
-//       price: 1,
-//       item: 1
-//     }
-//   }
-// ])
-
-// {
-//   $addFields: {
-//     maxPrice: {
-//       $objectToArray: "$maxPrice.v"
-//     }
-//   }
-// },
-// {
-//   $match: {
-//     "maxPrice.k": "5f873ca6cff150107d99771f"
-//   }
-// },
-// {
-//   $addFields: {
-//     maxPrice: {
-//       $arrayToObject: "$maxPrice"
-//     }
-//   }
-// },

@@ -22,9 +22,7 @@ export class UserRoutes {
     });
 
     app.get('/user/alerts', async (req: Request, res: Response) => {
-      console.log(req);
       try {
-        // const alerts = await Alert.find({'maxPrice': req.user._id });
         const alerts = await Alert.aggregate([
           { 
             $addFields: {
@@ -64,10 +62,11 @@ export class UserRoutes {
     })
    
     app.post('/user/alerts/create', async (req: Request, res: Response) => {
-      const { item, id, maxPrice } = await req.body;
+      const { item, id: userId, maxPrice } = await req.body;
 
       const discogsItem = {
         id: item.id,
+        masterId: item.basic_information.master_id,
         artist: item.basic_information.artists[0].name,
         title: item.basic_information.title,
         cover: item.basic_information.cover_image,
@@ -76,34 +75,80 @@ export class UserRoutes {
       try {  
         let alert: any = await Alert.findOne({'item.id': item.id});
         if (!alert) {
-          alert = await Alert.create({...discogsItem, maxPrice: {[maxPrice]: {[id]: true}}})
+          alert = await Alert.create({...discogsItem, maxPrice: {[maxPrice]: {[userId]: true}}})
         }
-
         alert.item = discogsItem
 
-        Object.keys(alert.maxPrice).map((key: any) => {
-          delete alert.maxPrice[key][id];
-          if(Object.keys(alert.maxPrice[key]).length === 0) {
-            delete alert.maxPrice[key];
-          }
-        });
-
-        alert.maxPrice = {
-          ...alert.maxPrice,
-          [maxPrice]: {
-            ...alert.maxPrice[maxPrice],
-            [id]: true
-          }};
+        alert.maxPrice = updateMaxPrice(alert, maxPrice, userId);
   
-        alert.save();
+        alert.save()
 
-        res.status(200);
+        res.send('Success');
       } catch(error) {
         console.error(error);
         res.json(error);
+      }
+    })
+
+    app.post('/user/alerts/update', async (req: Request, res: Response) => {
+      try {
+        const { item } = await req.body;
+        const { id: userId } = (await req).user;
+        let alert: any = await Alert.findOne({'item.id': item.id});
+        alert.maxPrice = updateMaxPrice(alert, item.price, userId);
+        alert.item.notes = item.notes;
+        await alert.save();
+        res.send('Success');
+      } catch(err) {
+        console.error(err);
+      }
+    })
+    
+    app.post('/user/alerts/delete', async (req: Request, res: Response) => {
+      try {
+        const { item } = await req.body;
+        const { id: userId } = (await req).user;
+        let alert: any = await Alert.findOne({'item.id': item.item.id});
+        alert.maxPrice = deleteNotification(alert, userId);
+        alert.markModified('maxPrice');
+        alert.save();
+        res.send('Success');
+      } catch(err) {
+        console.error(err);
       }
     })
   }
 }
 
 export default UserRoutes;
+
+function updateMaxPrice(alert, maxPrice, userId) {
+  if(!alert.maxPrice) alert.maxPrice = {};
+
+  Object.keys(alert.maxPrice).map((key: any) => {
+    delete alert.maxPrice[key][userId];
+    deleteEmptyPrices(alert, key);
+  });
+
+  return alert.maxPrice = {
+    ...alert.maxPrice,
+    [maxPrice]: {
+      ...alert.maxPrice[maxPrice],
+      [userId]: true
+    }
+  };
+}
+
+function deleteNotification(alert, userId) {
+  Object.keys(alert.maxPrice).map((key: any) => {
+    delete alert.maxPrice[key][userId];
+    deleteEmptyPrices(alert, key);
+  });
+  return alert.maxPrice;
+}
+
+function deleteEmptyPrices(alert, maxPrice) {
+  if(Object.keys(alert.maxPrice[maxPrice]).length === 0) {
+    delete alert.maxPrice[maxPrice];
+  }
+}

@@ -29,11 +29,6 @@ function SettingsPage() {
     } as any);
   }
 
-  const sendText = () => {
-    console.log('Send Text Message');
-    axios.post('http://localhost:5001/messages/update', {data: {to: user.phone, body: 'Check it out https://www.discogs.com/Charlie-Megira-Tomorrows-Gone/master/1732133'}})
-  }
-
   return (
     <div id="content">
       <h3>Settings</h3>
@@ -41,7 +36,6 @@ function SettingsPage() {
         <div>
           { user.phone }
           <input onChange={updateForm} name="phone" placeholder="Phone Number" type="text" />
-          { user.phone ? <a onClick={() => sendText()}>Test Number</a> : null }
         </div>
         <Button onClick={() => updateSettings()} text="Save"></Button>
       </form>

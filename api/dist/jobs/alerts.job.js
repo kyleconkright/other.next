@@ -13,38 +13,36 @@ exports.AlertJob = void 0;
 const axios_1 = require("axios");
 const alert_1 = require("./../schemas/alert");
 const user_1 = require("./../schemas/user");
-const discogs_1 = require("./../routes/discogs");
+const puppeteer_1 = require("./puppeteer");
 const cron = require("node-cron");
 class AlertJob {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('Running alert jobs every 60 minutes');
-            cron.schedule('*/59 * * * *', () => __awaiter(this, void 0, void 0, function* () {
+            cron.schedule('0 0 */1 * * *', () => __awaiter(this, void 0, void 0, function* () {
                 console.log('Run alert check');
                 const cursor = alert_1.default.find().cursor();
                 for (let alert = yield cursor.next(); alert != null; alert = yield cursor.next()) {
-                    Object.keys(alert.maxPrice).forEach((price) => __awaiter(this, void 0, void 0, function* () {
+                    const lowestPrice = yield puppeteer_1.default(`https://www.discogs.com/sell/release/${alert.item.id}?sort=price%2Casc`, alert.item.artist);
+                    console.log(lowestPrice, alert.item.artist);
+                    for (const [price, userObj] of Object.entries(alert.maxPrice)) {
                         const userId = Object.keys(alert.maxPrice[price])[0];
+                        const user = yield user_1.default.findById(userId);
                         try {
-                            const user = yield user_1.default.findById(userId);
-                            const release = yield discogs_1.getStats(alert.item.id, user.discogs);
-                            if (release.lowest_price.value <= price) {
-                                console.log(`Sent alert to ${user.username} for ${alert.item.artist} ${alert.item.title}. Release Price ${release.lowest_price.value}. Alert Price: ${price}`);
+                            if (lowestPrice && lowestPrice <= parseFloat(price)) {
                                 axios_1.default.post('http://localhost:5001/messages/update', {
                                     data: {
                                         to: user.phone,
                                         body: `
-                      This is Other Supply with some good news.
-                      The record you had your eye on has dropped to your filtered price.
-                      https://www.discogs.com/sell/release/${alert.item.id}?price1=&price2=${price}&currency=USD`
+                    This is Other Supply with some good news.\n${alert.item.artist} - ${alert.item.title} has been listed for ${lowestPrice}.\nhttps://www.discogs.com/sell/release/${alert.item.id}?sort=price%2Casc`
                                     }
-                                });
+                                }).then(() => console.log(`Sent alert to ${user.username} for ${alert.item.artist} ${alert.item.title}. Release Price ${lowestPrice}. Alert Price: ${price}`)).catch(err => console.error(err));
                             }
                         }
                         catch (err) {
                             console.error(err);
                         }
-                    }));
+                    }
                 }
             }));
         });

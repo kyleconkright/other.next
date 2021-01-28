@@ -54,7 +54,7 @@ function AccountSideBar() {
               <h3>Lists</h3>
             </li>
             <li>
-              <Link href="/account/lists/alert">
+              <Link href="/account/lists/alerts">
                 Alerts
               </Link>
             </li>
