@@ -7,7 +7,7 @@ COPY package-lock.json /app/package-lock.json
 
 RUN npm install -q --no-color --no-progress
 
-COPY api ./
+COPY ./ /app/
 
 RUN npm run build
 
