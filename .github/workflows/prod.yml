@@ -18,7 +18,7 @@ jobs:
      -
        name: Console
        run: |
-        echo ${{ secrets.DOCKERHUB_USERNAME }}
+        echo hello
      -
        name: Login to DockerHub
        uses: docker/login-action@v1
