@@ -8,6 +8,4 @@ RUN npm install -q --no-color --no-progress
 
 COPY ./ /app/
 
-RUN npm run build
-
 CMD ["npm", "run", "start"]
