@@ -1,13 +1,11 @@
 FROM node:alpine
 
-RUN mkdir /app
-
 WORKDIR /app
 
-COPY api/package*.json ./
+COPY client/package*.json ./
 
 RUN npm install -q --no-color --no-progress
 
-COPY api ./
+COPY client ./
 
 CMD ["npm", "run", "start:prod"]
