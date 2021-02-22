@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ttl = void 0;
 const puppeteer = require("puppeteer");
 function scrape(url, name) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +30,36 @@ function scrape(url, name) {
         }
     });
 }
+;
+function ttl() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const browser = yield puppeteer.launch();
+        const page = yield browser.newPage();
+        try {
+            yield page.goto('https://www.turntablelab.com/products/run-the-jewels-run-the-jewels-2-vinyl-2lp-turntable-lab-exclusive');
+            try {
+                const element = yield page.$('.out-of-stock');
+                if (element) {
+                    yield browser.close();
+                    return true;
+                }
+                else {
+                    yield browser.close();
+                    return null;
+                }
+            }
+            catch (err) {
+                yield browser.close();
+                return null;
+            }
+        }
+        catch (err) {
+            yield browser.close();
+            return null;
+        }
+    });
+}
+exports.ttl = ttl;
 ;
 exports.default = scrape;
 //# sourceMappingURL=puppeteer.js.map

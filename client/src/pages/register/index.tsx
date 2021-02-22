@@ -20,7 +20,7 @@ function RegisterPage() {
 
   async function register() {
     try {
-      const res = await axios.post('http://localhost:5001/auth/register', { user: form }, { withCredentials: true });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, { user: form }, { withCredentials: true });
       if (res.status === 200) router.push('/login');
     } catch(error) {
       console.error(error);
@@ -30,7 +30,7 @@ function RegisterPage() {
   const updateForm = (event) => {
     const {name, value} = event.target;
     setForm({
-      ...user,
+      ...form,
       [name]: value,
     } as any);
   }
@@ -39,7 +39,7 @@ function RegisterPage() {
     <section className={styles.registerLoginPage}>
       <div className={styles.content}>
         <h2>
-          Register Page
+          Create an Account
         </h2>
         <form>
           <div>

@@ -21,27 +21,13 @@
   h2 {
     margin: 0 0 .5rem;
   }
-  a:first-child {
-    display: flex;
-    flex: 2;
-  }
-  ul li {
-    display: flex;
-    margin: 0 0 .5rem;
-    justify-content: space-between;
-    align-items: center;
-    div:first-child {
-      display: flex;
-    }
-    img {
-      margin: 0 .5rem 0 0;
-    }
-    p.title {
-      font-size: .825rem;
-      opacity: .825;
-    }
-    > * {
-      flex: 1;
+  ul li.header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 80px 1fr;
+    font-size: 0.825rem;
+    opacity: 0.825;
+    .notes {
+      padding: 0 16px;
     }
   }
 }

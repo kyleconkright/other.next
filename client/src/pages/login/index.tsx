@@ -14,6 +14,8 @@ function LoginPage() {
   const router = useRouter();
   const user = useSelector((state: AppState) => state.user);
   const [form, setForm] = useState({email: undefined, password: undefined});
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -25,14 +27,18 @@ function LoginPage() {
     dispatch({type: CHECK_FOR_LOGGED_IN_USER, loading: true});
     try {
       if(form.email) {
-        const res = await axios.post('http://localhost:5001/auth/login', {username: form.email, password: form.password}, { withCredentials: true });
-        if (res.status === 200) router.push('/');
-        dispatch({type: SET_USER, ...res.data.user, loading: false });
+        try {
+          const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {username: form.email, password: form.password}, { withCredentials: true });
+          if (res.status === 200) router.push('/');
+          dispatch({type: SET_USER, ...res.data.user, loading: false });
+        } catch(error) {
+          setError(true);
+        }
       } else {
         alert('add user');
       }
     } catch(error) {
-      console.error(error);
+      console.error({error});
     }
   }
 
@@ -43,22 +49,32 @@ function LoginPage() {
       [name]: value,  
     } as any);
   }
+
+  async function sendResetEmail() {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/forgot_password`, {email: form.email});
+  }
  
 
   return (
     <section className={styles.registerLoginPage}>
       <div className={styles.content}>
-        <h2>
-          Login Page
-        </h2> 
+        <h2>Login Page</h2> 
+        { error ? (
+          <p>Your password or email is incorrect<br></br>Try again or reset your password.</p>
+          ): null }
         <form>
           <div>
             <input onChange={updateForm} placeholder="Email" name="email" type="email"/>
           </div>
           <div>
-            <input onChange={updateForm} placeholder="Password" name="password" type="password"/>
+            <input disabled={forgotPassword} onChange={updateForm} placeholder="Password" name="password" type="password"/>
+            <a onClick={() => setForgotPassword(!forgotPassword)}>Forgot Password?</a>
           </div>
-         <Button onClick={() => login()} text="Log In"></Button>
+          { !forgotPassword ? (
+            <Button onClick={() => login()} text="Log In"></Button>
+            ) : (
+            <Button onClick={() => sendResetEmail()} text="Send Reset Email"></Button>
+          )}
         </form>
         <p>Don't Have an Account? <a className="underline" onClick={() => router.push('/register')}>Register</a></p>
       </div>

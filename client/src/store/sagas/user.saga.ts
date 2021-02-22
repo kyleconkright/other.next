@@ -16,14 +16,14 @@ function* userLogin(action) {
 }
 
 async function loginToApp(email) {
-  await axios.post('http://localhost:5001/login', { email }).then(() => {
+  await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, { email }).then(() => {
     window.localStorage.setItem('print-supply-email', email);
   }).catch(err => console.error(err));
 }
 
 function* userLogout() {
   try {
-    yield call(() => axios.post('http://localhost:5001/logout'));
+    yield call(() => axios.post(`${process.env.NEXT_PUBLIC_API_URL}/logout`));
     yield put({ type: USER_LOGOUT_SUCCESS, user: DefaultUserState})
   } catch (err) {
     console.log(err);
@@ -34,7 +34,7 @@ function* userUpdate(action) {
   const { user} = action;
   console.log(user);
   try {
-    yield call(() => axios.post('http://localhost:5001/user/update', { user }));
+    yield call(() => axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/update`, { user }));
     yield put({ type: UPDATE_USER_SUCCESS, user: DefaultUserState})
   } catch (err) {
     console.log(err);

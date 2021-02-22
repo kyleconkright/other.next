@@ -62,7 +62,7 @@ export class UserRoutes {
     })
    
     app.post('/user/alerts/create', async (req: Request, res: Response) => {
-      const { item, id: userId, maxPrice } = await req.body;
+      const { item, id: userId, maxPrice, notes } = await req.body;
 
       const discogsItem = {
         id: item.id,
@@ -70,6 +70,7 @@ export class UserRoutes {
         artist: item.basic_information.artists[0].name,
         title: item.basic_information.title,
         cover: item.basic_information.cover_image,
+        notes
       }
 
       try {  

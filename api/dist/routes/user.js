@@ -69,13 +69,14 @@ class UserRoutes {
             }
         }));
         app.post('/user/alerts/create', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { item, id: userId, maxPrice } = yield req.body;
+            const { item, id: userId, maxPrice, notes } = yield req.body;
             const discogsItem = {
                 id: item.id,
                 masterId: item.basic_information.master_id,
                 artist: item.basic_information.artists[0].name,
                 title: item.basic_information.title,
                 cover: item.basic_information.cover_image,
+                notes
             };
             try {
                 let alert = yield alert_1.default.findOne({ 'item.id': item.id });

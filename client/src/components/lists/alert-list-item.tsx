@@ -1,13 +1,17 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Fragment } from "react";
 import { OtherHttp } from "../../http";
 import styles from './list-item.module.scss';
 
 
-export default function ListItem(alert) {
+export default function AlertListItem(alert) {
   const { price, notes } = alert.item;
 
   const http = new OtherHttp();
   const [form, setForm] = useState({ price, notes });
+  const [editMode, setEditMode] = useState(false);
+  
+  const disabled = !editMode ? true : null;
 
   const updateForm = (event) => {
     const { name, value } = event.target;
@@ -19,32 +23,49 @@ export default function ListItem(alert) {
 
   async function updateAlert(alert) {
     try {
-      await http.instance.post('/user/alerts/update', { item: {...alert.item, ...form} });
+      const res = await http.instance.post('/user/alerts/update', { item: {...alert.item, ...form} });
+      if (res.status === 200) setEditMode(false)
     } catch (error) {
       console.error(error);
     }
   }
 
+  function toggleEditMode() {
+    const mode = !editMode;
+    setEditMode(mode);
+  }
+
   return (
-    <li>
-      <a target="_blank" href={`https://www.discogs.com/sell/release/${alert.item.id}?price1=&price2=${alert.price}&currency=USD`}>
-        <img style={{ width: '40px' }} src={alert.item.cover} />
+    <li className={styles.listItem}>
+      {/* <div className={styles.edit}>
+      </div> */}
+      <a className={styles.release} onClick={() => toggleEditMode()}>
+        <input checked={editMode} readOnly type="checkbox"></input>
+        <img style={{ width: '40px', height: '40px' }} src={alert.item.cover} />
         <div>
           <p>{alert.item.artist}</p>
           <p className={styles.title}>{ alert.item.title }</p>
         </div>
       </a>
 
-      <div>
-        <input name="notes" onChange={updateForm} defaultValue={alert.item.notes} type="text" />
+      <div className={styles.notes}>
+        <input disabled={disabled} name="notes" onChange={updateForm} defaultValue={alert.item.notes} type="text" />
       </div>
       
-      <div>
-        <input name="price" onChange={updateForm} defaultValue={alert.item.price} type="text" />
+      <div className={styles.price}>
+        <input disabled={disabled} name="price" onChange={updateForm} defaultValue={alert.item.price} type="text" />
       </div>
 
-      <a onClick={() => updateAlert(alert)}>Update</a>
-      <a onClick={() => alert.onDelete(alert)}>Delete</a>
+      <div className={styles.update}>
+        { editMode ? (
+          <Fragment>
+            <a onClick={() => updateAlert(alert)}>Update</a>&nbsp;/&nbsp; 
+            <a onClick={() => alert.onDelete(alert)}>Delete</a>&nbsp;
+            <a className={styles.go} target="_blank" href={`https://www.discogs.com/sell/release/${alert.item.id}?price1=&price2=${alert.price}&currency=USD`}>&#10149;</a>
+          </Fragment>
+        ) : '' }
+      </div>
+      
     </li>
   )
 }

@@ -45,6 +45,22 @@ class AlertJob {
                     }
                 }
             }));
+            cron.schedule("*/30 * * * * *", () => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const notInStock = yield puppeteer_1.ttl();
+                    if (!notInStock) {
+                        axios_1.default.post('http://localhost:5001/messages/update', {
+                            data: {
+                                to: '8122397047',
+                                body: `https://www.turntablelab.com/products/run-the-jewels-run-the-jewels-2-vinyl-2lp-turntable-lab-exclusive`
+                            }
+                        }).then(() => console.log(`In stock. Text sent.`)).catch(err => console.error(err));
+                    }
+                }
+                catch (err) {
+                    console.error(err);
+                }
+            }));
         });
     }
 }

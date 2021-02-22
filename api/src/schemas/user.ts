@@ -7,7 +7,13 @@ const discogs = new mongoose.Schema({
 })
 
 const user = new mongoose.Schema({
-  username: String,
+  username:{
+    type: String,
+    trim: true,
+    lowercase: true,
+    required: 'Email address is required',
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+  },
   phone: String,
   password: {
     type:String,
@@ -15,6 +21,7 @@ const user = new mongoose.Schema({
     required: [true, 'Please Set A Password']
   },
   discogs: discogs,
+  resetToken: String,
 });
 
 export const Discogs = mongoose.model('discogs', discogs);

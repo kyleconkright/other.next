@@ -17,7 +17,7 @@ export default function Header() {
   const router = useRouter();
 
   async function auth(event) {
-    router.push('http://localhost:5001/auth/discogs');
+    router.push('process.env.NEXT_PUBLIC_API_URL/auth/discogs');
   }
 
   return (

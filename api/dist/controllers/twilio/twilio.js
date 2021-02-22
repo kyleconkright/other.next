@@ -16,8 +16,13 @@ class TwilioClient {
         this.accountSid = process.env.TWILIO_ACCOUNTSID;
         this.authToken = process.env.TWILIO_AUTH_TOKEN;
         this.client = new twilio_1.Twilio(this.accountSid, this.authToken);
+        // Allow a reply to update price when published  
+        // public async updatePrice(data) {
+        //   const {to, body} = data;
+        //   await this.client.
+        // }
     }
-    execute(data) {
+    sendAlert(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const { to, body } = data;
             const message = yield this.client.messages.create({

@@ -17,4 +17,28 @@ async function scrape(url, name) {
   }
 };
 
+export async function ttl() {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  try {
+    await page.goto('https://www.turntablelab.com/products/run-the-jewels-run-the-jewels-2-vinyl-2lp-turntable-lab-exclusive');
+    try {
+      const element = await page.$('.out-of-stock');
+      if(element) {
+        await browser.close();
+        return true
+      } else {
+        await browser.close();
+        return null;
+      }
+    } catch(err) {
+      await browser.close();
+      return null;
+    }
+  } catch(err) {
+    await browser.close();
+    return null;
+  }
+};
+
 export default scrape;

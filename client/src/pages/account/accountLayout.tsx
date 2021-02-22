@@ -1,4 +1,4 @@
-import AccountSideBar from './AccountSideBar';
+import AccountSideBar from './accountSideBar';
 import { Fragment } from 'react';
 
 const withAccountLayout = Page => {

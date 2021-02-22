@@ -9,7 +9,7 @@ import { AppState } from '../../../store/reducers';
 import { DiscogsMediaConditions } from '../../../models/record';
 
 import { OtherHttp } from '../../../http';
-import ListItem from '../../../components/lists/alert-list-item';
+import AlertListItem from '../../../components/lists/alert-list-item';
 
 function AccountPage() {
 
@@ -68,10 +68,17 @@ function AccountPage() {
     <div id="content" className={styles.wants}>
       <h2>Alert List</h2>
       <ul>
+        <li className={styles.header}>
+          <span>Release</span>
+          <span className={styles.notes}>Notes</span>
+          <span>Max Price</span>
+          <span></span>
+          <span></span>
+        </li>
         { alertList.length !== 0 ? alertList.map((alert, index) => (
          <ul key={index}>
-           { alert.map(res => (
-             <ListItem item={res} key={res._id} onDelete={deleteAlert}></ListItem>
+           { alert.map(item => (
+             <AlertListItem item={item} key={item._id} onDelete={deleteAlert}></AlertListItem>
            ))}
          </ul>
         )): 'Loading...'}

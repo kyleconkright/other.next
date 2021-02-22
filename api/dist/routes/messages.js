@@ -17,7 +17,7 @@ class MessagesRoutes {
         app.post('/messages/update', (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { data } = yield req.body;
             try {
-                const twilioResponse = yield twilio.execute(data);
+                const twilioResponse = yield twilio.sendAlert(data);
                 res.json(twilioResponse);
             }
             catch (error) {

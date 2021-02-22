@@ -18,7 +18,7 @@ const AuthContextProvider = props => {
     async function getUser() {
       dispatch({type: CHECK_FOR_LOGGED_IN_USER});
       try {
-        const { user: userRes } = (await axios.get('http://localhost:5001/', { withCredentials :true })).data;
+        const { user: userRes } = (await axios.get('process.env.NEXT_PUBLIC_API_URL/', { withCredentials :true })).data;
         dispatch({type: SET_USER, ...(userRes ? userRes : DefaultUserState), loading: false, loaded: true });
       } catch(error) {
         console.error(error);

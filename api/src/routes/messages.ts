@@ -11,7 +11,7 @@ export class MessagesRoutes {
     app.post('/messages/update', async (req: Request, res: Response) => {
       const { data } = await req.body;
       try {
-        const twilioResponse = await twilio.execute(data);
+        const twilioResponse = await twilio.sendAlert(data);
         res.json(twilioResponse);
       } catch(error) {
         console.error(error);

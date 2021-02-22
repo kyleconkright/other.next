@@ -16,7 +16,7 @@ function* getRecord(action) {
 
 async function fetchRecordFromServer(id) {
   try {
-   const { data: record } = await axios.get(`http://localhost:5001/discogs/release/${id}`);
+   const { data: record } = await axios.get(`process.env.NEXT_PUBLIC_API_URL/discogs/release/${id}`);
    return record
   } catch(err) {
     throw new Error(err);

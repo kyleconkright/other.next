@@ -10,3 +10,14 @@ button.otherButton {
   letter-spacing: .05rem;
   font-size: .75rem;
 }
+
+button.otherSecondaryButton {
+  background-color: #ffffff;
+  color: $green;
+  border: $green 1px solid;
+  padding: .65rem 1rem;
+  border-radius: 2px;
+  cursor: pointer;
+  letter-spacing: .05rem;
+  font-size: .75rem;
+}
