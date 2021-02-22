@@ -8,4 +8,4 @@ RUN npm install -q --no-color --no-progress
 
 COPY ./ /app/
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:prod"]
