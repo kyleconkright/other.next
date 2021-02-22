@@ -1,11 +1,11 @@
-FROM node:alpine
+FROM node:alpin
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY api/package*.json ./
 
 RUN npm install -q --no-color --no-progress
 
-COPY ./ /app/
+COPY api ./
 
-CMD ["npx", "run", "dev"]
+CMD ["npm", "run", "dev"]
