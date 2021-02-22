@@ -2,12 +2,13 @@ FROM node:alpine
 
 WORKDIR /app
 
-COPY ../api/package*.json ./
-
-RUN ls -a
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
 RUN npm install -q --no-color --no-progress
 
-COPY ../api ./
+COPY ./ /app/
+
+RUN npm run build
 
 CMD ["npm", "run", "start:prod"]
