@@ -58,3 +58,4 @@ jobs:
           file: client/Dockerfile
           push: true
           tags: user/app:latest
+          
