@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY api/package*.json ./
 
+RUN ls -a
+
 RUN npm install -q --no-color --no-progress
 
-COPY api /.
+COPY api ./
 
 CMD ["npm", "run", "start:prod"]
