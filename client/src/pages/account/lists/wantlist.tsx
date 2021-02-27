@@ -31,7 +31,7 @@ function AccountPage() {
 
   async function getDiscogsWantList() {
     try {
-      const { wants } = (await axios.post('process.env.NEXT_PUBLIC_API_URL/account/wants', { discogs: user.discogs })).data;
+      const { wants } = (await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants`, { discogs: user.discogs })).data;
       setWantList(wants);
     } catch(error) {
     }
@@ -43,7 +43,7 @@ function AccountPage() {
   
  
   function removeFromWantlist(item) {
-    otherHttp.instance.post('process.env.NEXT_PUBLIC_API_URL/account/wants/remove', { id: item.id })
+    otherHttp.instance.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants/remove`, { id: item.id })
   }
 
   const updateForm = (event) => {

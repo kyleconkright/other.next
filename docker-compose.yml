@@ -1,0 +1,7 @@
+version: "1"
+services:
+  client:
+    comtainer_name: other-client
+    image: index.docker.io/kyleconkright/other-supply-client:lastest
+    ports:
+      - "8080:8080"
