@@ -7,8 +7,8 @@ export class MailgunClient {
   public async sendRegistrationCode(to, token) {
     const data = {
       from: 'Other Supply <hello@othersupply.com>',
-      to: 'kyleconkright@gmail.com',
-      subject: 'Hello',
+      to,
+      subject: 'Welcome! Confirm your email',
       html: `
         <h2>Activate Account</h2>
         <p>Click on the link below and sign in with your newly created account.</p>

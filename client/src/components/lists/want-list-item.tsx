@@ -21,7 +21,7 @@ export default function WantListItem(alert) {
 
   function setAlert() {
     try {
-      axios.post('process.env.NEXT_PUBLIC_API_URL/user/alerts/create', { item: alert.item, notes: form.notes, id: user._id, maxPrice: form.price })
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/alerts/create`, { item: alert.item, notes: form.notes, id: user._id, maxPrice: form.price })
     } catch(err) {
       console.error(err);
     }
