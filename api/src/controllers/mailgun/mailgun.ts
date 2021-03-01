@@ -12,7 +12,7 @@ export class MailgunClient {
       html: `
         <h2>Activate Account</h2>
         <p>Click on the link below and sign in with your newly created account.</p>
-        <p>http://localhost:5000/account/activate/${token}</p>
+        <p>${process.env.CLIENT_URL}/account/activate/${token}</p>
       `
     };
     await this.mg.messages().send(data, function (error, body) {
