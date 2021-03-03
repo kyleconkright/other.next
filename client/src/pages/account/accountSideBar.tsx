@@ -20,7 +20,7 @@ function AccountSideBar() {
 
   async function logout(event) {
     try {
-      const res = await axios.get('process.env.NEXT_PUBLIC_API_URL/auth/logout', { withCredentials: true });
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, { withCredentials: true });
       router.push('./');
     } catch (error) {
       console.error(error);
@@ -28,7 +28,7 @@ function AccountSideBar() {
   }
 
   async function loginToDiscogs() {
-    router.push('process.env.NEXT_PUBLIC_API_URL/auth/discogs');
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}/auth/discogs`);
   }
 
   return (
