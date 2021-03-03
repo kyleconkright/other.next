@@ -21,7 +21,12 @@ auth_1.initialize(passport);
 class Routes {
     routes(app) {
         app.get('/', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            res.send('Other Supply API');
+            if (req.user) {
+                res.send({ user: req.user });
+            }
+            else {
+                res.send({ user: undefined });
+            }
         }));
         app.post('/auth/login', function (req, res) {
             passport.authenticate('local', function (error, user, info) {

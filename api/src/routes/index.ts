@@ -16,7 +16,11 @@ export class Routes {
   public routes(app: any) {
 
     app.get('/', async (req: Request, res: Response) => {
-      res.send('Other Supply API')
+      if (req.user) {
+        res.send({ user: req.user });
+      } else {
+        res.send({ user: undefined })
+      }
     });
 
     app.post('/auth/login', function(req, res) {

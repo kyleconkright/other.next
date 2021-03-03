@@ -20,12 +20,12 @@ class MailgunClient {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {
                 from: 'Other Supply <hello@othersupply.com>',
-                to: 'kyleconkright@gmail.com',
-                subject: 'Hello',
+                to,
+                subject: 'Welcome! Confirm your email',
                 html: `
         <h2>Activate Account</h2>
         <p>Click on the link below and sign in with your newly created account.</p>
-        <p>http://localhost:5000/account/activate/${token}</p>
+        <p>${process.env.CLIENT_URL}/account/activate/${token}</p>
       `
             };
             yield this.mg.messages().send(data, function (error, body) {
