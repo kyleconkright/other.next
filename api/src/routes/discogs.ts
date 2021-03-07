@@ -41,7 +41,7 @@ export class Routes {
           const signature = auth(user.discogs.token, user.discogs.tokenSecret);
           const { data: discogsUserInfo } = await discogsHttp.get(`/oauth/identity?${signature}`);
           await User.findOneAndUpdate({_id: req.user.id}, {'discogs.username': discogsUserInfo.username}, {upsert: true});
-          res.redirect(`${process.env.CLIENT_URL}/accoun`);
+          res.redirect(`${process.env.CLIENT_URL}/account`);
         } catch(err) {
           // console.error(err)
           res.redirect(`${process.env.CLIENT_URL}`);
