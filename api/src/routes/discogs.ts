@@ -33,7 +33,7 @@ export class Routes {
     app.get('/auth/discogs', passport.authorize('discogs'));
 
     app.get('/auth/discogs/confirm', passport.authorize('discogs', {
-      failureRedirect: 'http://localhost:5000/login'
+      failureRedirect: `${process.env.CLIENT_URL}/login`
     }), async (req, res) => {
       if(req.user) {
         try {
@@ -41,13 +41,13 @@ export class Routes {
           const signature = auth(user.discogs.token, user.discogs.tokenSecret);
           const { data: discogsUserInfo } = await discogsHttp.get(`/oauth/identity?${signature}`);
           await User.findOneAndUpdate({_id: req.user.id}, {'discogs.username': discogsUserInfo.username}, {upsert: true});
-          res.redirect('http://localhost:5000/account');
+          res.redirect(`${process.env.CLIENT_URL}/accoun`);
         } catch(err) {
           // console.error(err)
-          res.redirect('http://localhost:5000');
+          res.redirect(`${process.env.CLIENT_URL}`);
         }
       } else {
-        res.redirect('http://localhost:5000');
+        res.redirect(`${process.env.CLIENT_URL}`);
       }
     })
 
