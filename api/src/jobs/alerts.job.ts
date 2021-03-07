@@ -22,7 +22,7 @@ export class AlertJob {
           try {
             if (lowestPrice && lowestPrice <= parseFloat(price)) {
               axios.post(
-                'http://localhost:5001/messages/update',
+                `${process.env.CLIENT_URL}/messages/update`,
                 {
                   data: {
                     to: user.phone,
@@ -44,7 +44,7 @@ export class AlertJob {
         const notInStock = await ttl();
         if(!notInStock) {
           axios.post(
-            'http://localhost:5001/messages/update',
+            `${process.env.CLIENT_URL}/messages/update`,
             {
               data: {
                 to: '8122397047',

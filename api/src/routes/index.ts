@@ -26,7 +26,7 @@ export class Routes {
     app.post('/auth/login', function(req, res) {
       passport.authenticate('local', function(error, user, info) {
         if (error) return res.status(401).json({error});
-        if (!user) { return res.redirect('http://localhost:5000/login'); }
+        if (!user) { return res.redirect(`${process.env.CLIENT_URL}/login`); }
         req.logIn(user, function (err) {
           if (err) {return res.json(err)};
           return res.redirect('/');
