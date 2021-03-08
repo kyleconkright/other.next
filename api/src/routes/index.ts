@@ -4,14 +4,12 @@ import * as bcrypt from 'bcrypt';
 import User from './../schemas/user';
 import { MailgunClient } from './../controllers/mailgun/mailgun';
 import * as jwt from 'jsonwebtoken';
-import { reverse } from "dns";
 
 const passport = require('passport');
 const mg = new MailgunClient();
 initialize(passport);
 
 export class Routes {
-
 
   public routes(app: any) {
 

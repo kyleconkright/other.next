@@ -45,6 +45,8 @@ class App {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      user: process.env.DB_USER,
+      pass: process.env.DB_PASS
     }, () => {
       console.log('mongoose is connected');
       this.alertJob.execute();
