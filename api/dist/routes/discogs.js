@@ -26,7 +26,7 @@ class Routes {
         const passport = require('passport');
         app.get('/auth/discogs', passport.authorize('discogs'));
         app.get('/auth/discogs/confirm', passport.authorize('discogs', {
-            failureRedirect: 'http://localhost:5000/login'
+            failureRedirect: `${process.env.CLIENT_URL}/login`
         }), (req, res) => __awaiter(this, void 0, void 0, function* () {
             if (req.user) {
                 try {
@@ -34,15 +34,15 @@ class Routes {
                     const signature = auth(user.discogs.token, user.discogs.tokenSecret);
                     const { data: discogsUserInfo } = yield discogsHttp.get(`/oauth/identity?${signature}`);
                     yield user_1.default.findOneAndUpdate({ _id: req.user.id }, { 'discogs.username': discogsUserInfo.username }, { upsert: true });
-                    res.redirect('http://localhost:5000/account');
+                    res.redirect(`${process.env.CLIENT_URL}/account`);
                 }
                 catch (err) {
                     // console.error(err)
-                    res.redirect('http://localhost:5000');
+                    res.redirect(`${process.env.CLIENT_URL}`);
                 }
             }
             else {
-                res.redirect('http://localhost:5000');
+                res.redirect(`${process.env.CLIENT_URL}`);
             }
         }));
         app.post('/account/wants', (req, res) => __awaiter(this, void 0, void 0, function* () {

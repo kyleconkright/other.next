@@ -33,7 +33,7 @@ class Routes {
                 if (error)
                     return res.status(401).json({ error });
                 if (!user) {
-                    return res.redirect('http://localhost:5000/login');
+                    return res.redirect(`${process.env.CLIENT_URL}/login`);
                 }
                 req.logIn(user, function (err) {
                     if (err) {
