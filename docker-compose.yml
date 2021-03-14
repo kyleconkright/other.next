@@ -1,7 +1,82 @@
-version: "1"
+version: "3.7"
+
+networks:
+  web:
+   external: true
+  internal:
+    external: false
+
+volumes:
+  database:
+    driver: local
+
 services:
-  client:
-    comtainer_name: other-client
-    image: index.docker.io/kyleconkright/other-supply-client:lastest
+  traefik:
+    image: "traefik:v2.2"
+    container_name: "traefik"
+    networks:
+      - web
     ports:
-      - "8080:8080"
+      - "80:80"
+      - "443:443"
+    command:
+      - "--log.level=DEBUG"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/home/ubuntu/other.react/traefik.toml:/traefik.toml"
+      - "/home/ubuntu/other.react/traefik_dynamic.toml:/traefik_dynamic.toml"
+      - "/home/ubuntu/other.react/acme.json:/acme.json"
+    labels:
+      - "traefik.enable=true"
+
+  server:
+    container_name: other-api
+    image: index.docker.io/kyleconkright/other-supply-api:latest
+    restart: always
+    depends_on:
+      - database
+    env_file:
+      - .env.api
+    labels:
+      - traefik.http.routers.other-api.rule=Host(`api.other.supply`)
+      - traefik.http.services.other-api.loadbalancer.server.port=5001
+      - traefik.http.routers.other-api.tls=true
+      - traefik.http.routers.other-api.tls.certresolver=lets-encrypt
+    networks:
+      - web
+      - internal
+
+  client:
+    container_name: other-client
+    image: index.docker.io/kyleconkright/other-supply-client:latest
+    restart: always
+    env_file:
+      - .env.client
+    labels:
+      - traefik.http.routers.other-client.rule=Host(`other.supply`)
+      - traefik.http.services.other-client.loadbalancer.server.port=8080
+      - traefik.http.routers.other-client.tls=true
+      - traefik.http.routers.other-client.tls.certresolver=lets-encrypt
+    depends_on:
+      - server
+    networks:
+      - internal
+      - web
+
+  database:
+    container_name: other-db
+    image: mongo:latest
+    volumes:
+      - database:/data/db
+    networks:
+      - internal
+    command: [--auth]
+    ports:
+      - "27017:27017"
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30

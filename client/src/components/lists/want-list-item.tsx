@@ -55,7 +55,7 @@ export default function WantListItem(alert) {
       <div className={styles.update}>
           <Fragment>
             <a onClick={() => setAlert()}>Setup Alert</a>&nbsp;/&nbsp; 
-            <a onClick={() => alert.removeFromWantlist(alert)}>Remove</a>&nbsp;
+            <a onClick={() => removeFromWantlist(alert)}>Remove</a>&nbsp;
           </Fragment>
       </div>
       
