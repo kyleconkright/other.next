@@ -30,8 +30,8 @@ export default function WantListItem(alert) {
     }
   }
 
-  function removeFromWantlist(item) {
-    otherHttp.instance.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants/remove`, { id: item.id })
+  function removeFromWantlist() {
+    otherHttp.instance.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants/remove`, { id: alert.item.id })
   }
 
   return (
@@ -55,7 +55,7 @@ export default function WantListItem(alert) {
       <div className={styles.update}>
           <Fragment>
             <a onClick={() => setAlert()}>Setup Alert</a>&nbsp;/&nbsp; 
-            <a onClick={() => removeFromWantlist(alert)}>Remove</a>&nbsp;
+            <a onClick={() => removeFromWantlist()}>Remove</a>&nbsp;
           </Fragment>
       </div>
       

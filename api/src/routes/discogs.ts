@@ -70,6 +70,7 @@ export class Routes {
         await discogsHttp.delete(`/users/${user.discogs.username}/wants/${id}?${signature}`);
         res.send('Deleted');
       } catch(error) {
+        res.send('Something Went Wrong');
         console.log(error);
       }
     })
