@@ -35,23 +35,23 @@ export class Routes {
     app.post('/auth/register', async (req, res) => {
 
       const { email, password } = req.body.user;
-      const isValidEmail = validateEmail(email);
-      const isValidPassword = validatePassword(password);
-      if(!email && !password) return res.status(400).send({error: 'Enter your email address and add a password.'})
-      if(email && !isValidEmail) return res.status(400).send({error: 'Please enter a valid email address.'})
-      if(password && !isValidPassword) return res.status(400).send({error: 'Password must be 8 characters.'})
+      const isValidEmail = email ? validateEmail(email) : undefined;
+      const isValidPassword = password ? validatePassword(password) : undefined;
+      if(!email && !password || !req.body.user) return res.status(400).send({message: 'Enter your email address and add a password.'})
+      if(!isValidEmail) return res.status(400).send({message: 'Please enter a valid email address.'})
+      if(!isValidPassword) return res.status(400).send({message: 'Password must be at least 8 characters.'})
 
       try {
         const hashedPassword = await bcrypt.hash(password, 10);
         try {
           const user = await User.findOne({ username: email });
-          if (user) res.send('User Already Exists');
+          if (user) return res.send({message: 'User Already Exists'});
         } catch (error) {
           res.error(error);
         }
         const token = jwt.sign({ email, password: hashedPassword }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' });
         await mg.sendRegistrationCode(email, token);
-        res.json('success');
+        res.json({message: 'Check your email to confirm.'});
       } catch (error) {
         console.error(error);
         res.json(error);

@@ -58,7 +58,7 @@ function LoginPage() {
   return (
     <section className={styles.registerLoginPage}>
       <div className={styles.content}>
-        <h2>Login Page</h2> 
+        <h2>Login</h2> 
         { error ? (
           <p>Your password or email is incorrect<br></br>Try again or reset your password.</p>
           ): null }
