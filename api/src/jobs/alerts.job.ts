@@ -27,7 +27,7 @@ export class AlertJob {
                   data: {
                     to: user.phone,
                     body: `
-                    This is Other Supply with some good news.\n${alert.item.artist} - ${alert.item.title} has been listed for ${lowestPrice}.\nhttps://www.discogs.com/sell/release/${alert.item.id}?sort=price%2Casc`
+                    This is Other Supply with some good news.\n\n${alert.item.artist} - ${alert.item.title} has been listed for ${lowestPrice}.\nhttps://www.discogs.com/sell/release/${alert.item.id}?sort=price%2Casc`
                   }
                 }
               ).then(() => console.log(`Sent alert to ${user.username} for ${alert.item.artist} ${alert.item.title}. Release Price ${lowestPrice}. Alert Price: ${price}`)

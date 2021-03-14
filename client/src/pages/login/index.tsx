@@ -35,7 +35,7 @@ function LoginPage() {
           setError(true);
         }
       } else {
-        alert('add user');
+        
       }
     } catch(error) {
       console.error({error});

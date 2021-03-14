@@ -21,7 +21,7 @@ function AccountSideBar() {
   async function logout(event) {
     try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, { withCredentials: true });
-      router.push('./');
+      router.push('/');
     } catch (error) {
       console.error(error);
     }
