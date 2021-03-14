@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import User from '../schemas/user';
 import { TwilioClient } from '../controllers/twilio/twilio';
 
 export class MessagesRoutes {

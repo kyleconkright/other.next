@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 
 import User from './../schemas/user';
 import Alert from './../schemas/alert';
-import user from './../schemas/user';
 export class UserRoutes {
 
   public routes(app) {
