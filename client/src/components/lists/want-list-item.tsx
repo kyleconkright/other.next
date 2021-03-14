@@ -5,11 +5,14 @@ import { Fragment } from "react";
 import styles from './list-item.module.scss';
 import axios from 'axios';
 import { AppState } from "../../store/reducers";
+import { OtherHttp } from "../../http";
 
 export default function WantListItem(alert) {
   const user = useSelector((state: AppState) => state.user);
 
   const [form, setForm] = useState({ price: '', notes: '' });
+
+  const otherHttp = new OtherHttp();
 
   const updateForm = (event) => {
     const { name, value } = event.target;
@@ -25,6 +28,10 @@ export default function WantListItem(alert) {
     } catch(err) {
       console.error(err);
     }
+  }
+
+  function removeFromWantlist(item) {
+    otherHttp.instance.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants/remove`, { id: item.id })
   }
 
   return (

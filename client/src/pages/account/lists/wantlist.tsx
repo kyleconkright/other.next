@@ -8,7 +8,6 @@ import withLayout from '../../../components/layouts';
 import withAccountLayout from './../accountLayout';
 import { AppState } from '../../../store/reducers';
 import { DiscogsMediaConditions } from './../../../models/record';
-import { OtherHttp } from '../../../http';
 import WantListItem from '../../../components/lists/want-list-item';
 
 function AccountPage() {
@@ -18,7 +17,6 @@ function AccountPage() {
   const [form, setForm] = useState({price: undefined});
 
   const router = useRouter();
-  const otherHttp = new OtherHttp();
 
   const options = Object.keys(DiscogsMediaConditions).map((key, i) => ({id: i, name: DiscogsMediaConditions[key], value: key}));
   
@@ -42,9 +40,7 @@ function AccountPage() {
   }
   
  
-  function removeFromWantlist(item) {
-    otherHttp.instance.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants/remove`, { id: item.id })
-  }
+
 
   const updateForm = (event) => {
     const {name, value} = event.target;
