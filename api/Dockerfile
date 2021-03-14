@@ -1,5 +1,7 @@
 FROM node:alpine
 
+RUN apk add --update other-api
+
 RUN apt-get update
 
 WORKDIR /app
