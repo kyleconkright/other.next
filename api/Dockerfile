@@ -1,5 +1,7 @@
 FROM node:alpine
 
+RUN apt-get update
+
 WORKDIR /app
 
 COPY api/package*.json ./
