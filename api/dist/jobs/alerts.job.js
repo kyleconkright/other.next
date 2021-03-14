@@ -19,7 +19,7 @@ class AlertJob {
     execute() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('Running alert jobs every 60 minutes');
-            cron.schedule('0 0 */1 * * *', () => __awaiter(this, void 0, void 0, function* () {
+            cron.schedule('* * * * *', () => __awaiter(this, void 0, void 0, function* () {
                 console.log('Run alert check');
                 const cursor = alert_1.default.find().cursor();
                 for (let alert = yield cursor.next(); alert != null; alert = yield cursor.next()) {
@@ -30,7 +30,7 @@ class AlertJob {
                         const user = yield user_1.default.findById(userId);
                         try {
                             if (lowestPrice && lowestPrice <= parseFloat(price)) {
-                                axios_1.default.post(`${process.env.CLIENT_URL}/messages/update`, {
+                                axios_1.default.post(`/messages/update`, {
                                     data: {
                                         to: user.phone,
                                         body: `
@@ -49,7 +49,7 @@ class AlertJob {
                 try {
                     const notInStock = yield puppeteer_1.ttl();
                     if (!notInStock) {
-                        axios_1.default.post(`${process.env.CLIENT_URL}/messages/update`, {
+                        axios_1.default.post(`/messages/update`, {
                             data: {
                                 to: '8122397047',
                                 body: `https://www.turntablelab.com/products/run-the-jewels-run-the-jewels-2-vinyl-2lp-turntable-lab-exclusive`
