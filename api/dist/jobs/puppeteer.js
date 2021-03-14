@@ -13,7 +13,12 @@ exports.ttl = void 0;
 const puppeteer = require("puppeteer");
 function scrape(url, name) {
     return __awaiter(this, void 0, void 0, function* () {
-        const browser = yield puppeteer.launch();
+        const browser = yield puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ]
+        });
         const page = yield browser.newPage();
         try {
             yield page.goto(url);
@@ -33,7 +38,12 @@ function scrape(url, name) {
 ;
 function ttl() {
     return __awaiter(this, void 0, void 0, function* () {
-        const browser = yield puppeteer.launch();
+        const browser = yield puppeteer.launch({
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ]
+        });
         const page = yield browser.newPage();
         try {
             yield page.goto('https://www.turntablelab.com/products/run-the-jewels-run-the-jewels-2-vinyl-2lp-turntable-lab-exclusive');
