@@ -1,18 +1,21 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 import { Fragment, useContext, useEffect, useReducer } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import styles from './account.module.scss';
-import { DefaultUserState } from '../../models/user';
 import Button from '../../components/button/button';
 import { UserContext } from '../../contexts/user.context';
+import { SET_USER } from '../../store/actions/user.actions';
+import { DefaultUserState } from '../../models/user';
 
 function AccountSideBar() {
 
   const { user } = useContext(UserContext);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!user.username && !user.loading && user.loaded) router.push('/');
@@ -21,6 +24,7 @@ function AccountSideBar() {
   async function logout(event) {
     try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, { withCredentials: true });
+      dispatch({type: SET_USER, ...DefaultUserState, loading: false });
       router.push('/');
     } catch (error) {
       console.error(error);
