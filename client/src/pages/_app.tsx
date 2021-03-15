@@ -14,8 +14,6 @@ export default function OtherApp({ Component, pageProps }) {
   //     return {pageProps: pageProps};
   // }
 
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-
   return (
     <Provider store={store}>
       <UserContextProvider>

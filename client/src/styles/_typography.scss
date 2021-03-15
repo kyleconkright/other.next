@@ -6,6 +6,10 @@ a {
   }
 }
 
+h1 {
+  font-weight: 400;
+}
+
 ul {
   padding: 0;
   margin: 0;
@@ -14,4 +18,8 @@ ul {
 
 .underline {
   text-decoration: underline;
+}
+
+.number {
+  font-family: "Numbers Claimcheck A", "Numbers Claimcheck B";
 }

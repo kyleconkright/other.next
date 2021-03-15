@@ -34,7 +34,7 @@ function SettingsPage() {
       <h3>Settings</h3>
       <form>
         <div>
-          { user.phone }
+          <p className="number">{ user.phone }</p>
           <input onChange={updateForm} name="phone" placeholder="Phone Number" type="text" />
         </div>
         <Button onClick={() => updateSettings()} text="Save"></Button>

@@ -38,6 +38,7 @@ p.title, .notes {
   .price {
     display: flex;
     align-items: center;
+    font-family: "Numbers Claimcheck A", "Numbers Claimcheck B";
     &:before {
       content: '$';
       z-index: 1;
