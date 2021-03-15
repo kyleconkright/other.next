@@ -1,7 +1,7 @@
 import * as mailgun from "mailgun-js";
 
 export class MailgunClient {
-  DOMAIN = 'sandboxe1d3d29b5b084a8988e494a8ce4bf8bf.mailgun.org';
+  DOMAIN = process.env.MAILGUN_URL;
   mg = mailgun({apiKey: process.env.MAILGUN_API, domain: this.DOMAIN});
 
   public async sendRegistrationCode(to, token) {
@@ -22,7 +22,7 @@ export class MailgunClient {
   
   public async sendResetPassword(to, token) {
     const data = {
-      from: 'Other Supply <hello@othersupply.com>',
+      from: 'Other Supply <confirm@other.supply>',
       to,
       subject: 'Hello',
       html: `
