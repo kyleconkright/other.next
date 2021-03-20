@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const config = {
+export default {
   mongodb: {
     url: process.env.DB_AUTH,
     databaseName: process.env.DB_NAME,
@@ -17,5 +17,3 @@ const config = {
   useFileHash: false
 };
 
-// Return the config as a promise
-module.exports = config;
