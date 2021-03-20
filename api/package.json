@@ -7,8 +7,8 @@
     "build": "tsc",
     "dev": "rm -rf dist && tsc && npm start",
     "start": "node dist/server.js",
-    "migrate:up": "migrate-mongo up -f './src/migrate-mongo-config.js'",
-    "migrate:down": "migrate-mongo down -f './src/migrate-mongo-config.js'"
+    "migrate:up": "migrate-mongo up -f './dist/migrate-mongo-config.js'",
+    "migrate:down": "migrate-mongo down -f './dist/migrate-mongo-config.js'"
   },
   "author": "",
   "license": "ISC",
