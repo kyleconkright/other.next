@@ -40,7 +40,8 @@ function AccountPage() {
             ...acc[alert.item.masterId],
             [alert.item.id]: {
               ...alert.item,
-              price: alert.price
+              price: alert.price,
+              notes: alert.details.notes,
             }
           }
         });

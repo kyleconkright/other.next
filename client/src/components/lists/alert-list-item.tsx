@@ -49,7 +49,7 @@ export default function AlertListItem(alert) {
       </a>
 
       <div className={styles.notes}>
-        <input disabled={disabled} name="notes" onChange={updateForm} defaultValue={alert.item.notes} type="text" />
+        <input disabled={disabled} name="notes" onChange={updateForm} defaultValue={alert.details ? alert.details.notes : alert.item.notes} type="text" />
       </div>
       
       <div className={styles.price}>

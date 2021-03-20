@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import User from './../schemas/user';
 import Alert from './../schemas/alert';
+import AlertDetail from './../schemas/alertDetail';
 export class UserRoutes {
 
   public routes(app) {
@@ -23,7 +24,7 @@ export class UserRoutes {
     app.get('/user/alerts', async (req: Request, res: Response) => {
       try {
         const alerts = await Alert.aggregate([
-          { 
+          {
             $addFields: {
               maxPrice: {
                 $objectToArray: "$maxPrice",
@@ -52,7 +53,33 @@ export class UserRoutes {
               item: 1
             },
           },
+          {
+            $lookup: {
+              from: "alertdetails",
+              let: { id: "$item.id" },
+              pipeline: [
+                {
+                  $match:
+                  {
+                    $expr:
+                    {
+                      $and:
+                        [
+                          { $eq: ["$releaseId", "$$id"] },
+                          { $eq: ["$userId", req.user.id] }
+                        ]
+                    }
+                  }
+                },
+              ],
+              as: "details"
+            },
+          },
+          {
+            $unwind: "$details"
+          },
         ]);
+        console.log('alert ', alerts[0]);
         res.send(alerts);
       } catch(error) {
         console.error(error);
@@ -69,13 +96,20 @@ export class UserRoutes {
         artist: item.basic_information.artists[0].name,
         title: item.basic_information.title,
         cover: item.basic_information.cover_image,
-        notes
+      }
+
+      const alertDetailItem = {
+        notes,
+        userId,
+        releaseId: item.id
       }
 
       try {  
         let alert: any = await Alert.findOne({'item.id': item.id});
-        if (!alert) {
-          alert = await Alert.create({...discogsItem, maxPrice: {[maxPrice]: {[userId]: true}}})
+        let alertDetail: any = await AlertDetail.findOne({releaseId: item.id, userId});
+        if (!alert || !alertDetail) {
+          alert = await Alert.create({...discogsItem, maxPrice: {[maxPrice]: {[userId]: true}}});
+          alertDetail = await AlertDetail.create({...alertDetailItem});
         }
         alert.item = discogsItem
 
@@ -95,9 +129,19 @@ export class UserRoutes {
         const { item } = await req.body;
         const { id: userId } = (await req).user;
         let alert: any = await Alert.findOne({'item.id': item.id});
+        let alertDetail;
+        try {
+          alertDetail = await AlertDetail.findOne({releaseId: item.id, userId});
+          if(!alertDetail) {
+            alertDetail = await AlertDetail.create({userId, releaseId: item.id, notes: item.notes});
+          }
+        } catch(err) {
+          console.error(err);
+        }
+        alertDetail.notes = item.notes;
         alert.maxPrice = updateMaxPrice(alert, item.price, userId);
-        alert.item.notes = item.notes;
         await alert.save();
+        await alertDetail.save();
         res.send('Success');
       } catch(err) {
         console.error(err);

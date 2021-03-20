@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "dev": "rm -rf dist && tsc && npm start",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "migrate:up": "migrate-mongo up -f './src/migrate-mongo-config.js'",
+    "migrate:down": "migrate-mongo down -f './src/migrate-mongo-config.js'"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +32,7 @@
     "express-session": "^1.17.1",
     "jsonwebtoken": "^8.5.1",
     "mailgun-js": "^0.22.0",
+    "migrate-mongo": "^8.2.2",
     "mongoose": "^5.10.9",
     "mongoose-unique-array": "^0.3.4",
     "node-cron": "^2.0.3",
