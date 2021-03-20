@@ -6,7 +6,7 @@ export const alertDetail = new mongoose.Schema({
   alertId: String,
   notes: String,
   frequency: String,
-  paused: Boolean
+  paused: Number
 })
 
 export default mongoose.model('AlertDetail', alertDetail);

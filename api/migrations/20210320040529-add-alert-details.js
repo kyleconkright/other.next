@@ -6,7 +6,7 @@ module.exports = {
         const releaseId = alert.item.id;
         const alertId = alert._id;
         const notes = alert.item.notes;
-        const alertDetail = {alertId, userId, releaseId, notes, frequency: '', paused: false};
+        const alertDetail = {alertId, userId, releaseId, notes, frequency: '', paused: null};
         try {
           await db.collection('alertdetails').updateOne({userId, releaseId}, {$set: {...alertDetail}}, {upsert: true})
         } catch(error) {
