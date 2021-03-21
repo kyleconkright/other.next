@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-export default {
+module.exports = {
   mongodb: {
     url: process.env.DB_AUTH,
     databaseName: process.env.DB_NAME,
