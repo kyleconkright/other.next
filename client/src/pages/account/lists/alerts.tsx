@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -16,7 +15,6 @@ function AccountPage() {
   const user = useSelector((state: AppState) => state.user);
   const [ alertList, setAlertList ] = useState([]);
 
-  const router = useRouter();
 
   const http = new OtherHttp();
 

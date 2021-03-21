@@ -1,0 +1,28 @@
+@import './../../styles/colors';
+
+.feedItem {
+  scroll-snap-align: start;
+  position: relative;
+  width: 225px;
+  padding: 0 0 100%;
+  a {
+    position: absolute;
+    justify-content: space-between;
+    flex-direction: column;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid $green2;
+    border-radius: 2px;
+    box-sizing: border-box;
+  }
+  h4 {
+    text-transform: lowercase;
+  }
+  span {
+    text-transform: lowercase;
+    color: $olive;
+    font-size: .825rem;
+  }
+}

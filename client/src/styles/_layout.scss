@@ -12,7 +12,7 @@ header {
   padding: 0 2rem;
 }
 
-#content {
+[id*=content], [id*=Content] {
   grid-area: main;
   padding: 0 2rem;
 }
