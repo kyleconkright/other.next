@@ -8,7 +8,8 @@ import styles from './feed.module.scss';
 function feed() {
   const http = new OtherHttp();
 
-  const [feed, setFeed] = useState([]);
+  const [releases, setReleases] = useState([]);
+  const [deals, setDeals] = useState([]);
 
   useEffect(() => {
     getFeed();
@@ -16,8 +17,10 @@ function feed() {
 
   async function getFeed() {
     try {
-      const res = await http.instance.get(`/feed/reddit/releases`);
-      setFeed(res.data.feed);
+      const { releases } = (await http.instance.get(`/feed/reddit/releases`)).data;
+      const { deals } = (await http.instance.get(`/feed/reddit/deals`)).data;
+      setReleases(releases);
+      setDeals(deals);
     } catch (error) {
       console.error(error);
     }
@@ -28,7 +31,16 @@ function feed() {
       <section>
         <h3><a href="https://reddit.com/r/VinylReleases/new" target="_blank">r/VinylReleases/new</a></h3>
         <ul>
-          {feed.length != 0 ? feed.map(item => (
+          {releases.length != 0 ? releases.map(item => (
+            <FeedItem key={item._id} item={item}></FeedItem>
+          )) : null}
+        </ul>
+      </section>
+      
+      <section>
+        <h3><a href="https://reddit.com/r/VinylDeals/new" target="_blank">r/VinylDeals/new</a></h3>
+        <ul>
+          {deals.length != 0 ? deals.map(item => (
             <FeedItem key={item._id} item={item}></FeedItem>
           )) : null}
         </ul>

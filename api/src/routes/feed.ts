@@ -7,8 +7,18 @@ export default class FeedRoutes {
   public routes(app) {
     app.get('/feed/reddit/releases', async (req: Request, res: Response) => {
       try {
-        const feed = await FeedItem.find();
-        res.json({ feed });
+        const releases = await FeedItem.find({type: 'reddit-release'});
+        res.json({ releases });
+      } catch(err) {
+        res.status(400).json({message: 'Something went Wrong'})
+        console.error(err);
+      }
+    })
+    
+    app.get('/feed/reddit/deals', async (req: Request, res: Response) => {
+      try {
+        const deals = await FeedItem.find({type: 'reddit-deal'});
+        res.json({ deals });
       } catch(err) {
         res.status(400).json({message: 'Something went Wrong'})
         console.error(err);

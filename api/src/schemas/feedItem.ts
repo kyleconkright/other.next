@@ -5,7 +5,9 @@ export const feedItem = new mongoose.Schema({
   url: String,
   flair: String,
   imageUrl: String,
+  origin: String,
   createdUtc: Number,
+  type: String,
 })
 
 export default mongoose.model('FeedItem', feedItem);
