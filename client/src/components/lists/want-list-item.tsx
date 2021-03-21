@@ -23,6 +23,7 @@ export default function WantListItem(alert) {
   }
 
   function setAlert() {
+    if(!user.phone) return window.alert('you need a phone number on your account')
     try {
       axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/alerts/create`, { item: alert.item, notes: form.notes, id: user._id, maxPrice: form.price })
     } catch(err) {

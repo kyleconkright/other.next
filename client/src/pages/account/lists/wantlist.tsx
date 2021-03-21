@@ -26,7 +26,6 @@ function AccountPage() {
     }
   }, [user])
 
-
   async function getDiscogsWantList() {
     try {
       const { wants } = (await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/account/wants`, { discogs: user.discogs })).data;
@@ -39,9 +38,6 @@ function AccountPage() {
     router.push(`./records/${item.id}`);
   }
   
- 
-
-
   const updateForm = (event) => {
     const {name, value} = event.target;
     setForm({

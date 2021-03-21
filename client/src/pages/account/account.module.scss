@@ -9,7 +9,6 @@
     margin: 0 0 .825rem;
   }
   ul {
-    border-top: 1px solid $green2;
     padding: 1rem 0 0;
     h3 {
       margin: 16px 0 8px;
@@ -32,10 +31,16 @@
   }
 }
 
-.dropdown, .options {
-  display: flex;
-  flex-direction: column;
-  label {
-    font-size: 13px;
-  }
+#accountSettings form div {
+  margin: 1rem 0;
+  border-left: 2px solid $green2;
+  padding: 0 0 0 .5rem;
+}
+
+#discogsSync p {
+  margin: 0 0 .5rem;
+}
+
+#discogsSync b {
+  color: $olive;
 }

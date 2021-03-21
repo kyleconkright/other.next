@@ -79,7 +79,6 @@ export class UserRoutes {
             $unwind: "$details"
           },
         ]);
-        console.log('alert ', alerts[0]);
         res.send(alerts);
       } catch(error) {
         console.error(error);

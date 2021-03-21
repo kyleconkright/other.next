@@ -20,7 +20,7 @@ function LoginPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (user.username) router.push('/')
+    if (user.username) router.push('/account')
   }, [user])
 
   async function login() {
@@ -29,7 +29,7 @@ function LoginPage() {
       if(form.email) {
         try {
           const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {username: form.email, password: form.password}, { withCredentials: true });
-          if (res.status === 200) router.push('/');
+          if (res.status === 200) router.push('/account');
           dispatch({type: SET_USER, ...res.data.user, loading: false });
         } catch(error) {
           setError(true);

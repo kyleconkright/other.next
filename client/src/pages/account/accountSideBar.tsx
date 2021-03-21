@@ -31,14 +31,14 @@ function AccountSideBar() {
     }
   }
 
-  async function loginToDiscogs() {
-    router.push(`${process.env.NEXT_PUBLIC_API_URL}/auth/discogs`);
-  }
+  // async function loginToDiscogs() {
+  //   router.push(`${process.env.NEXT_PUBLIC_API_URL}/auth/discogs`);
+  // }
 
   return (
     <div id="account-sidebar" className={styles.sidebar}>
       <div>
-        { user.discogs?.token && user.discogs?.tokenSecret ? (
+        {/* { user.discogs?.token && user.discogs?.tokenSecret ? (
             <p>You are synced to Discogs with username {user.discogs.username}</p>
         ) : (
           !user.loading ? (
@@ -47,7 +47,7 @@ function AccountSideBar() {
               <Button text="Sync Discogs" onClick={loginToDiscogs}></Button>
             </Fragment>
           ) : ''
-        )}
+        )} */}
           <ul>
             <li>
               <Link href="/account">
