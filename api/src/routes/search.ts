@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import axios from 'axios';
 import { searchAmazon } from './../controllers/amazon/index';
+import Ebay from './../controllers/ebay/ebay';
 
 
 export class Routes {
@@ -8,6 +9,16 @@ export class Routes {
     app.get('/search/amazon', async (req: Request, res: Response) => {
       try {
         const results = await searchAmazon('green day');
+        res.json({results});
+      } catch(err) {
+        res.json({err});
+      }
+    });
+    
+    app.get('/search/ebay', async (req: Request, res: Response) => {
+      const ebay = new Ebay();
+      try {
+        const results = await ebay.search(req.body.query);
         res.json({results});
       } catch(err) {
         res.json({err});

@@ -1,3 +1,7 @@
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
 a {
   cursor: pointer;
   transition: opacity .2s;
@@ -12,6 +16,11 @@ h1 {
 
 h3 {
   margin: 0 0 .5rem;
+}
+
+h4 {
+  font-weight: 400;
+  font-size: 1.025rem;
 }
 
 ul {
