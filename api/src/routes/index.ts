@@ -47,6 +47,7 @@ export class Routes {
           const user = await User.findOne({ username: email });
           if (user) return res.send({message: 'User Already Exists'});
         } catch (error) {
+          console.error(error);
           res.error(error);
         }
         const token = jwt.sign({ email, password: hashedPassword }, process.env.JWT_ACC_ACTIVATE, { expiresIn: '20m' });
