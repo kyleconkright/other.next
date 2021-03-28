@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import axios from 'axios';
 import { searchAmazon } from './../controllers/amazon/index';
-import Ebay from './../controllers/ebay/ebay';
+import { EbayClient } from "../jobs/feeds/ebay.job";
 
 
 export class Routes {
@@ -16,7 +16,7 @@ export class Routes {
     });
     
     app.get('/search/ebay', async (req: Request, res: Response) => {
-      const ebay = new Ebay();
+      const ebay = new EbayClient();
       try {
         const results = await ebay.search(req.body.query);
         res.json({results});

@@ -26,10 +26,10 @@ function feed() {
     try {
       const { releases } = (await http.instance.get(`/feed/reddit/releases`)).data;
       const { deals } = (await http.instance.get(`/feed/reddit/deals`)).data;
-      const { itemSummaries: ebay } = (await http.instance.get(`/search/ebay`)).data.results;
+      const { listings } = (await http.instance.get(`/feed/ebay`)).data;
       setReleases(releases);
       setDeals(deals);
-      setEbay(ebay);
+      setEbay(listings);
     } catch (error) {
       console.error(error);
     }
@@ -57,11 +57,11 @@ function feed() {
      
       <section>
         <h3><a href="https://www.ebay.com/b/Vinyl-Records/176985/bn_1860303" target="_blank">Ebay</a></h3>
-        {/* <ul>
+        <ul>
           {ebay.length != 0 ? ebay.map(item => (
             <SearchItem key={item.itemId} item={item}></SearchItem>
           )) : null}
-        </ul> */}
+        </ul>
       </section>
     </div>
   )

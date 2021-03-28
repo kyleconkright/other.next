@@ -6,6 +6,7 @@ export const feedItem = new mongoose.Schema({
   flair: String,
   imageUrl: String,
   origin: String,
+  price: Number,
   createdUtc: Number,
   type: String,
 })
