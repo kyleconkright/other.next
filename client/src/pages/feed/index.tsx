@@ -5,8 +5,10 @@ const socket = io("http://127.0.0.1:5001")
 
 import FeedItem from './../../components/feed/feed-item';
 import SearchItem from './../../components/search/search-item';
+import SearchInput from './../../components/form/search';
 
 import styles from './feed.module.scss';
+import Button from '../../components/button/button';
 
 function feed() {
   const http = new OtherHttp();
@@ -14,6 +16,7 @@ function feed() {
   const [releases, setReleases] = useState([]);
   const [deals, setDeals] = useState([]);
   const [ebay, setEbay] = useState([]);
+  const [ebaySearchTerm, setEbaySearchTerm] = useState('');
 
   useEffect(() => {
     // socket.emit('getFeed');
@@ -33,6 +36,17 @@ function feed() {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const updateEbaySearch = (event) => {
+    const { value} = event.target;
+    setEbaySearchTerm(value);
+  }
+
+  const searchEbay = async(e) => {
+    e.preventDefault();
+    const { results } = (await http.instance.post('/search/ebay', { query: ebaySearchTerm })).data;
+    setEbay(results);
   }
 
   return (
@@ -57,10 +71,13 @@ function feed() {
      
       <section>
         <h3><a href="https://www.ebay.com/b/Vinyl-Records/176985/bn_1860303" target="_blank">Ebay</a></h3>
+        <form className={styles.search} onSubmit={searchEbay}>
+          <SearchInput placeholder="Search..." type="search" name="ebaySearch" onChange={updateEbaySearch}></SearchInput>
+        </form>
         <ul>
-          {ebay.length != 0 ? ebay.map(item => (
-            <SearchItem key={item.itemId} item={item}></SearchItem>
-          )) : null}
+          {ebay && ebay.length ? ebay.map((item, i) => (
+            <SearchItem key={item._id ? item._id : i} item={item}></SearchItem>
+          )) : 'No results'}
         </ul>
       </section>
     </div>

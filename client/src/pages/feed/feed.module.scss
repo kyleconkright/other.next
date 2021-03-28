@@ -8,7 +8,8 @@
 .feedList ul {
   display: grid;
   grid-auto-flow: column;
-  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 275px);
+  grid-gap: 16px;
   overflow: auto;
   scroll-snap-type: x mandatory;
   padding: 0 0 1rem;
@@ -27,5 +28,14 @@
   margin: 1rem 0 0;
   h3 {
     color: $olive;
+  }
+  form.search {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: 275px 275px;
+    margin: 0 0 16px;
+    input[type="search"] {
+      padding: .5rem 0;
+    }
   }
 }

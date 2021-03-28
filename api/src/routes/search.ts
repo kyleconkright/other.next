@@ -15,7 +15,7 @@ export class Routes {
       }
     });
     
-    app.get('/search/ebay', async (req: Request, res: Response) => {
+    app.post('/search/ebay', async (req: Request, res: Response) => {
       const ebay = new EbayClient();
       try {
         const results = await ebay.search(req.body.query);

@@ -18,49 +18,58 @@ const config = {
   }
 };
 
+let access_token;
+
 export class EbayClient {
   public async execute() {
-    cron.schedule("0 0 */1 * * *", this.update())
+    cron.schedule("0 0 */1 * * *",() => this.update())
   }
-
-  access_token;
 
   public async update() {
     try {
-      this.access_token = (await axios.post(tokenUrl, params, config)).data.access_token;
-      await this.search(this.access_token);
+      access_token = (await axios.post(tokenUrl, params, config)).data.access_token;
+      await this.defaultListings();
     } catch (error) {
       console.error(error.response.data);
     }
   }
 
-  public async search(access_token, q = undefined) {
-    let items;
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-          "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"
-        }
+  public async defaultListings() {
+    const browseConfig = {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"
       }
-      const { data } = await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q ? q : ''}&category_ids=176985&limit=30${!q ? '&filter=sellers:{deepdiscount|moviemars|get_importcds}' : null}`, config);
-      items = data.itemSummaries;
-      const type = q ? 'ebay-search' : 'ebay-listing';
-      await FeedItem.deleteMany({ type }, () => { });
-      items.map(item => handleListing(item, type));
+    }
+    try {
+      const { itemSummaries: items } = (await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=&category_ids=176985&limit=30&filter=sellers:{deepdiscount|moviemars|get_importcds}`, browseConfig)).data;
+      await FeedItem.deleteMany({ type: 'ebay-listing' }, () => { });
+      items.map(async item => handleListing(item, 'ebay-listing'));
     } catch (error) {
       console.error(error.response.data);
     }
-    try {
-    } catch (error) {
-      console.error(error);
+  }
+
+  public async search(query) {
+    const q = query.split(' ').join('+');
+    const browseConfig = {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"
+      }
     }
-    return items;
+    let results;
+    try {
+      const { itemSummaries: items } = (await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=${q}&category_ids=176985&limit=30`, browseConfig)).data;
+      results = items.map(item => formatListing(item, 'ebay-search'));
+    } catch (error) {
+    }
+    return results;
   }
 }
 
-async function handleListing(item, type) {
-  const listing = {
+function formatListing(item, type) {
+  return ({
     title: item.title,
     url: item.itemWebUrl,
     origin: item.itemWebUrl,
@@ -69,7 +78,11 @@ async function handleListing(item, type) {
     imageUrl: item.thumbnailImages[0].imageUrl,
     createdUtc: null,
     type
-  }
+  })
+}
+
+async function handleListing(item, type) {
+  const listing = formatListing(item, type)
   try {
     await FeedItem.create(listing);
   } catch (error) {
