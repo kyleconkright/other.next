@@ -20,6 +20,16 @@ export default class FeedRoutes {
         const deals = await FeedItem.find({type: 'reddit-deal'});
         res.json({ deals });
       } catch(err) {
+        res.status(400).json({message: 'Something went Wrong'});
+        console.error(err);
+      }
+    })
+    
+    app.get('/feed/ebay', async (req: Request, res: Response) => {
+      try {
+        const listings = await FeedItem.find({type: 'ebay-listing'});
+        res.json({ listings });
+      } catch(err) {
         res.status(400).json({message: 'Something went Wrong'})
         console.error(err);
       }

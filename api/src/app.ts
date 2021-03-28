@@ -19,6 +19,7 @@ import Feed from './routes/feed';
 
 import { AlertJob } from './jobs/alerts.job';
 import { RedditJob } from './jobs/feeds/reddit.job';
+import { EbayClient } from './jobs/feeds/ebay.job';
 
 class App {
 
@@ -32,6 +33,7 @@ class App {
 
   public alertJob: AlertJob = new AlertJob();
   public redditJob: RedditJob = new RedditJob();
+  public ebayJob: EbayClient = new EbayClient();
 
   constructor() {
     this.app = express();
@@ -56,6 +58,7 @@ class App {
       console.log('mongoose is connected');
       if (process.env.API_URL !== 'http://localhost:5001') this.alertJob.execute();
       this.redditJob.execute();
+      this.ebayJob.execute();
     });
 
     this.app.use(cookieParser(process.env.SESSION_SECRET));
@@ -75,6 +78,7 @@ class App {
 
     this.app.use(passport.initialize());
     this.app.use(passport.session());
+
   }
 }
 
