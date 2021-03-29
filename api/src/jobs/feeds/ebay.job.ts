@@ -99,5 +99,3 @@ async function handleListing(item, type) {
   }
   return listing;
 }
-
-https://www.ebay.com/itm/BEYONC-LEMONADE-YELLOW-180-GRAM-VINYL-GATEFOLD-COVER-NEW-VINYL/292300000413?hash=item440e700c9d:g:9AkAAOSwj4ldTN8V&mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5338796988&customid=&toolid=10001&mkevt=1
