@@ -13,7 +13,7 @@ export class AlertJob {
     cron.schedule('0 0 */1 * * *', async () => {
       console.log('Run alert check');
       const cursor = Alert.find().cursor();
-      for (let alert = await cursor.next(); alert != null; alert = await cursor.next()) {
+      for (let alert: any = await cursor.next(); alert != null; alert = await cursor.next()) {
         const lowestPrice = await puppeteer(`https://www.discogs.com/sell/release/${alert.item.id}?sort=price%2Casc`, alert.item.artist);
         console.log(lowestPrice, alert.item.artist);
         for (const [price, userObj] of Object.entries(alert.maxPrice)) {
@@ -42,7 +42,7 @@ export class AlertJob {
     cron.schedule("*/30 * * * * *", async () => {
       try {
         const notInStock = await ttl();
-        if(!notInStock) {
+        if (!notInStock) {
           axios.post(
             `${process.env.API_URL}/messages/update`,
             {
@@ -54,7 +54,7 @@ export class AlertJob {
           ).then(() => console.log(`In stock. Text sent.`)
           ).catch(err => console.error(err))
         }
-      } catch(err) {
+      } catch (err) {
         console.error(err);
       }
     });

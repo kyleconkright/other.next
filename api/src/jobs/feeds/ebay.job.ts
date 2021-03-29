@@ -22,13 +22,21 @@ let access_token;
 
 export class EbayClient {
   public async execute() {
-    cron.schedule("0 0 */1 * * *",() => this.update())
+    this.getAccessToken();
+    cron.schedule("0 0 */1 * * *", async () => {
+      try {
+        await this.getAccessToken();
+        await this.defaultListings();
+      } catch (error) {
+        console.error(error);
+        return ({ message: 'Something went wrong: Ebay' })
+      }
+    })
   }
 
-  public async update() {
+  public async getAccessToken() {
     try {
       access_token = (await axios.post(tokenUrl, params, config)).data.access_token;
-      await this.defaultListings();
     } catch (error) {
       console.error(error.response.data);
     }
@@ -38,12 +46,12 @@ export class EbayClient {
     const browseConfig = {
       headers: {
         Authorization: `Bearer ${access_token}`,
-        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"
+        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
       }
     }
     try {
       const { itemSummaries: items } = (await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=&category_ids=176985&limit=30&filter=sellers:{deepdiscount|moviemars|get_importcds}`, browseConfig)).data;
-      await FeedItem.deleteMany({ type: 'ebay-listing' }, () => { });
+      await FeedItem.deleteMany({ type: 'ebay-listing' });
       items.map(async item => handleListing(item, 'ebay-listing'));
     } catch (error) {
       console.error(error.response.data);
@@ -55,7 +63,7 @@ export class EbayClient {
     const browseConfig = {
       headers: {
         Authorization: `Bearer ${access_token}`,
-        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"
+        "X-EBAY-C-MARKETPLACE-ID": "EBAY_US",
       }
     }
     let results;
@@ -71,7 +79,7 @@ export class EbayClient {
 function formatListing(item, type) {
   return ({
     title: item.title,
-    url: item.itemWebUrl,
+    url: `${item.itemWebUrl}&mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5338796988`,
     origin: item.itemWebUrl,
     flair: item.condition,
     price: item.price.value,
@@ -92,3 +100,4 @@ async function handleListing(item, type) {
   return listing;
 }
 
+https://www.ebay.com/itm/BEYONC-LEMONADE-YELLOW-180-GRAM-VINYL-GATEFOLD-COVER-NEW-VINYL/292300000413?hash=item440e700c9d:g:9AkAAOSwj4ldTN8V&mkcid=1&mkrid=711-53200-19255-0&siteid=0&campid=5338796988&customid=&toolid=10001&mkevt=1

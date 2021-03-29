@@ -13,15 +13,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^14.11.10",
-    "ts-node": "^9.0.0"
+    "@types/node": "^14.14.37",
+    "ts-node": "^9.1.1"
   },
   "dependencies": {
-    "@types/mongoose": "^5.7.36",
     "amazon-product-api": "^0.4.4",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "axios-oauth-1.0a": "^0.2.1",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
@@ -33,17 +32,17 @@
     "jsonwebtoken": "^8.5.1",
     "mailgun-js": "^0.22.0",
     "migrate-mongo": "^8.2.2",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.12.2",
     "mongoose-unique-array": "^0.3.4",
-    "node-cron": "^2.0.3",
+    "node-cron": "^3.0.0",
     "node-fetch": "^2.6.1",
     "oauth-1.0a": "^2.2.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-oauth": "^1.0.0",
-    "puppeteer": "^5.5.0",
+    "puppeteer": "^8.0.0",
     "socket.io": "^4.0.0",
-    "twilio": "^3.54.1",
-    "typescript": "^4.0.3"
+    "twilio": "^3.59.0",
+    "typescript": "^4.2.3"
   }
 }
