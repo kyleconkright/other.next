@@ -27,7 +27,7 @@ function Record(props) {
 
       { record.loading ? 'loading' : (
         <Fragment>
-          <h3>{ record.artists ? record.artists[0].name : null }</h3>
+          {/* <h3>{ record.artists ? record.artists[0].name : null }</h3> */}
           <h2>{ record.title }</h2>
         </Fragment>
       ) }

@@ -1,4 +1,5 @@
 export interface User {
+  _id: string,
   email: string,
   username: string,
   loading: boolean,
@@ -12,6 +13,7 @@ export interface User {
 }
 
 export const DefaultUserState: User = {
+  _id: undefined,
   email: undefined,
   username: undefined,
   loading: false,
