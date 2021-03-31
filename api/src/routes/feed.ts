@@ -34,5 +34,15 @@ export default class FeedRoutes {
         console.error(err);
       }
     })
+    
+    app.get('/feed/amazon', async (req: Request, res: Response) => {
+      try {
+        const listings = await FeedItem.find({type: 'amazon-listing'});
+        res.json({ listings });
+      } catch(err) {
+        res.status(400).json({message: 'Something went Wrong'})
+        console.error(err);
+      }
+    })
   }
 }

@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
 import axios from 'axios';
-import { searchAmazon } from './../controllers/amazon/index';
+import { AmazonClient } from './../controllers/amazon/index';
 import { EbayClient } from "../jobs/feeds/ebay.job";
 
 
 export class Routes {
   public routes(app) {
-    app.get('/search/amazon', async (req: Request, res: Response) => {
+    app.post('/search/amazon', async (req: Request, res: Response) => {
+      const amazon = new AmazonClient();
       try {
-        const results = await searchAmazon('green day');
-        res.json({results});
+        const results: any = await amazon.search(req.body.query);
+        res.json({results: results.results.map(item => amazon.formatListing(item, {type: 'amazon-listing'}))});
       } catch(err) {
         res.json({err});
       }
