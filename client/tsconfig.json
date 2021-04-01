@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": [
       "dom",
@@ -23,6 +24,9 @@
     "**/*.ts",
     "**/*.tsx"
   ],
+  "paths": {
+    "@/styles/*": ["styles/*"],
+  },
   "exclude": [
     "node_modules"
   ]

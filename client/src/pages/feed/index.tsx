@@ -4,8 +4,8 @@ import { io } from 'socket.io-client';
 const socket = io("http://127.0.0.1:5001")
 
 import FeedItem from './../../components/feed/feed-item';
-import EbayFeed from '../../components/feed/ebay/ebay-feed';
-import AmazonFeed from '../../components/feed/ebay/amazon-feed';
+import EbayFeed from '../../components/feed/ebay-feed';
+import AmazonFeed from '../../components/feed/amazon-feed';
 
 import styles from './feed.module.scss';
 

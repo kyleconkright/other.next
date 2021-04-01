@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { OtherHttp } from './../../../http';
+import { OtherHttp } from '../../http';
 
-import SearchInput from './../../form/search';
-import SearchItem from './../../../components/search/search-item';
+import SearchInput from './../form/search';
+import SearchItem from './search-item';
 
-import styles from './../../../pages/feed/feed.module.scss';
+import styles from './../../pages/feed/feed.module.scss';
 
 
 export default function AmazonFeed() {

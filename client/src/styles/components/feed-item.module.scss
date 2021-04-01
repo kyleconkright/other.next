@@ -1,4 +1,4 @@
-@import './../../styles/colors';
+@import './../colors';
 
 .searchItem {
   scroll-snap-align: start;
@@ -31,10 +31,12 @@
       align-self: flex-end;
     }
   }
-  div img {
+  div img, div div.imagePlaceholder {
     object-fit: cover;
     object-position: center;
     height: 100px;
     width: 100px;
+    display: block;
+    background-color: $light-gray;
   }
 }

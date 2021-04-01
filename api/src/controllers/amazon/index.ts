@@ -25,7 +25,8 @@ searchRequest['Resources'] = ['Images.Primary.Medium', 'ItemInfo.Title', 'Offers
 export class AmazonClient {
 
   public search = (query) => {
-    if(query.keyword) searchRequest['Keywords'] = query.keyword;
+    searchRequest['Keywords'] = query.keyword;
+    // if(query.keyword) searchRequest['Keywords'] = query.keyword;
     searchRequest['MaxPrice'] = query.price;
     
     return new Promise((resolve, reject) => {
