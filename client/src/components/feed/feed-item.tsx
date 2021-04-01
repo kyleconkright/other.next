@@ -6,7 +6,7 @@ export default function FeedItem(props) {
     <li className={styles.searchItem}>
       <a href={item.url ? item.url : item.origin} target="_blank">
         <div>
-          <h4>{item.title}</h4>
+          <h4 dangerouslySetInnerHTML={{ __html: item.title }}></h4>
         </div>
         <div>
           { item.imageUrl.indexOf('http') !== -1 ? (

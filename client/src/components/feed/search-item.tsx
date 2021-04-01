@@ -6,7 +6,7 @@ export default function SearchItem(props) {
     <li className={styles.searchItem}>
       <a href={item.url} target="_blank">
         <div>
-          <h4>{item.title}</h4>
+          <h4 dangerouslySetInnerHTML={{ __html: item.title }}></h4>
         </div>
         <div>
           <img src={item.imageUrl} />

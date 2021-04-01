@@ -50,7 +50,7 @@ export class EbayClient {
       }
     }
     try {
-      const { itemSummaries: items } = (await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=&category_ids=176985&limit=30&filter=sellers:{beatbreakerz|deepdiscount|moviemars|get_importcds}`, browseConfig)).data;
+      const { itemSummaries: items } = (await axios.get(`https://api.ebay.com/buy/browse/v1/item_summary/search?q=&category_ids=176985&limit=30&filter=sellers:{deepdiscount|moviemars|get_importcds|beatbreakerz}`, browseConfig)).data;
       await FeedItem.deleteMany({ type: 'ebay-listing' });
       items.map(async item => handleListing(item, 'ebay-listing'));
     } catch (error) {
