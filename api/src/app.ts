@@ -21,6 +21,7 @@ import { AlertJob } from './jobs/alerts.job';
 import { RedditJob } from './jobs/feeds/reddit.job';
 import { AmazonJob } from './jobs/feeds/amazon.job';
 import { EbayClient } from './jobs/feeds/ebay.job';
+import { runJobs } from './jobs';
 
 class App {
 
@@ -62,6 +63,7 @@ class App {
       this.redditJob.execute();
       this.ebayJob.execute();
       this.amazonJob.execute();
+      runJobs();
     });
 
     this.app.use(cookieParser(process.env.SESSION_SECRET));

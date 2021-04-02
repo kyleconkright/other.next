@@ -25,6 +25,16 @@ export default class FeedRoutes {
       }
     })
     
+    app.get('/feed/newbury', async (req: Request, res: Response) => {
+      try {
+        const listings = await FeedItem.find({type: 'newbury-exclusive'});
+        res.json({ listings });
+      } catch(err) {
+        res.status(400).json({message: 'Something went Wrong'})
+        console.error(err);
+      }
+    })
+    
     app.get('/feed/ebay', async (req: Request, res: Response) => {
       try {
         const listings = await FeedItem.find({type: 'ebay-listing'});

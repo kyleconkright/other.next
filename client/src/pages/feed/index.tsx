@@ -6,6 +6,7 @@ const socket = io("http://127.0.0.1:5001")
 import FeedItem from './../../components/feed/feed-item';
 import EbayFeed from '../../components/feed/ebay-feed';
 import AmazonFeed from '../../components/feed/amazon-feed';
+import NewburyFeed from 'src/components/feed/newbury-feed';
 
 import styles from './feed.module.scss';
 
@@ -53,6 +54,7 @@ function feed() {
         </ul>
       </section>
 
+      <NewburyFeed></NewburyFeed>
       <EbayFeed></EbayFeed>
       <AmazonFeed></AmazonFeed>
   
