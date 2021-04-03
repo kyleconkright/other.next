@@ -7,10 +7,10 @@ import SearchItem from './search-item';
 
 import styles from './../../pages/feed/feed.module.scss';
 
-export default function NewburyFeed() {
+export default function UrbanOutfittersFeed() {
   const http = new OtherHttp();
 
-  const [newbury, setNewburyResults] = useState([]);
+  const [urbanoutfitters, setUrbanOutfittersResults] = useState([]);
 
   useEffect(() => {
     getFeed();
@@ -18,8 +18,8 @@ export default function NewburyFeed() {
 
   async function getFeed() {
     try {
-      const { listings } = (await http.instance.get(`/feed/newbury`)).data;
-      setNewburyResults(listings);
+      const { listings } = (await http.instance.get(`/feed/urbanoutfitters`)).data;
+      setUrbanOutfittersResults(listings);
     } catch (error) {
       console.error(error);
     }
@@ -29,9 +29,9 @@ export default function NewburyFeed() {
 
   return (
     <section>
-      <h3><a href="https://www.newburycomics.com/collections/exclusive-vinyl" target="_blank">Newbury Comics Exclusives</a></h3>
+      <h3><a href="https://www.urbanoutfitters.com/vinyl-records" target="_blank">Urban Outfitters</a></h3>
       <ul>
-        {newbury && newbury.length ? newbury.map((item, i) => (
+        {urbanoutfitters && urbanoutfitters.length ? urbanoutfitters.map((item, i) => (
           <SearchItem key={item._id ? item._id : i} item={item}></SearchItem>
         )) : 'No results'}
       </ul>
