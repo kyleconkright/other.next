@@ -4,7 +4,7 @@ const random_useragent = require('random-useragent');
 const executablePath = process.env.API_URL === 'http://localhost:5001' ? '/opt/homebrew/bin/chromium' : null;
 
 const options = {
-  executablePath,
+  // executablePath,
   headless: true,
   args: [
     '--no-sandbox',
