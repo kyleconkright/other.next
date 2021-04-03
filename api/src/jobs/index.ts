@@ -8,6 +8,6 @@ const uo = new UrbanOutfittersJob();
 
 export function runJobs() {
   newbury.execute();
-  zia.execute();
+  // zia.execute();
   uo.execute()
 }
