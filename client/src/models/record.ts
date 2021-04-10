@@ -34,3 +34,12 @@ export const DiscogsMediaConditions = {
   'Fair':'Fair (F)',
   'Poor':'Poor (P)',
 }
+
+export function fromDiscogs(record) {
+  return ({
+    title: record.basic_information.artists[0].name + ' - ' + record.basic_information.title,
+    imageUrl: record.basic_information.thumb,
+    url: record.basic_information.resource_url,
+    price: null
+  })
+}

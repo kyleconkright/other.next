@@ -18,9 +18,6 @@ import Messages from './routes/messages';
 import Feed from './routes/feed';
 
 import { AlertJob } from './jobs/alerts.job';
-import { RedditJob } from './jobs/feeds/reddit.job';
-import { AmazonJob } from './jobs/feeds/amazon.job';
-import { EbayClient } from './jobs/feeds/ebay.job';
 import { runJobs } from './jobs';
 
 class App {
@@ -34,9 +31,7 @@ class App {
   public feed: Routes = new Feed();
 
   public alertJob: AlertJob = new AlertJob();
-  public redditJob: RedditJob = new RedditJob();
-  public amazonJob: AmazonJob = new AmazonJob();
-  public ebayJob: EbayClient = new EbayClient();
+
 
   constructor() {
     this.app = express();
@@ -60,9 +55,6 @@ class App {
     }, () => {
       console.log('mongoose is connected');
       if (process.env.API_URL !== 'http://localhost:5001') this.alertJob.execute();
-      this.redditJob.execute();
-      this.ebayJob.execute();
-      this.amazonJob.execute();
       runJobs();
     });
 

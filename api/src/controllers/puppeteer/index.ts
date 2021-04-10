@@ -4,7 +4,7 @@ const random_useragent = require('random-useragent');
 const executablePath = process.env.API_URL === 'http://localhost:5001' ? '/opt/homebrew/bin/chromium' : null;
 
 const options = {
-  // executablePath,
+  executablePath,
   headless: true,
   args: [
     '--no-sandbox',
@@ -27,7 +27,6 @@ export class PuppeteerClient {
       const page: puppeteer.Page = await browser.newPage();
       await page.goto(url, {"waitUntil":["load", "networkidle0"]});
       await page.waitForSelector(selector);
-      await page.screenshot({path: `${Date.now()}.png`});
       const elements = await page.$$eval(selector, grid => grid.map(i => i.outerHTML));
       await browser.close();
       return elements;

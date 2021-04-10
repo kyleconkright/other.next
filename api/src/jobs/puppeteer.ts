@@ -1,8 +1,12 @@
 import * as puppeteer from 'puppeteer';
 
+const executablePath = process.env.API_URL === 'http://localhost:5001' ? '/opt/homebrew/bin/chromium' : null;
+
 async function scrape(url, name) {
   const browser = await puppeteer.launch(
     {
+      executablePath,
+      headless: true,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox'
@@ -26,6 +30,8 @@ async function scrape(url, name) {
 
 export async function ttl() {
   const browser = await puppeteer.launch({
+    executablePath,
+    headless: true,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox'

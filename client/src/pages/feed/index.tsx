@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { OtherHttp } from '../../http';
 import { io } from 'socket.io-client';
 const socket = io("http://127.0.0.1:5001")
 
+import { useSelector } from 'react-redux';
+import { AppState } from 'src/store/reducers';
+
 import FeedItem from './../../components/feed/feed-item';
+import WantListFeed from 'src/components/feed/want-list-feed';
 import EbayFeed from '../../components/feed/ebay-feed';
 import AmazonFeed from '../../components/feed/amazon-feed';
 import NewburyFeed from 'src/components/feed/newbury-feed';
@@ -14,6 +18,7 @@ import styles from './feed.module.scss';
 function feed() {
   const http = new OtherHttp();
 
+  const user = useSelector((state: AppState) => state.user);
   const [releases, setReleases] = useState([]);
   const [deals, setDeals] = useState([]);
 
@@ -37,6 +42,11 @@ function feed() {
 
   return (
     <div id={styles.feedContent}  className={styles.feedList}>
+
+      { user._id ? (
+        <WantListFeed></WantListFeed>
+      ): null }
+
       <section>
         <h3><a href="https://reddit.com/r/VinylReleases/new" target="_blank">r/VinylReleases/new</a></h3>
         <ul>
@@ -56,7 +66,6 @@ function feed() {
       </section>
 
       <NewburyFeed></NewburyFeed>
-      <UrbanOutfittersFeed></UrbanOutfittersFeed>
       <EbayFeed></EbayFeed>
       <AmazonFeed></AmazonFeed>
   

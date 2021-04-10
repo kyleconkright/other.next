@@ -18,8 +18,10 @@ export class AlertJob {
         console.log(lowestPrice, alert.item.artist);
         for (const [price, userObj] of Object.entries(alert.maxPrice)) {
           const userId = Object.keys(alert.maxPrice[price])[0];
+          // update lowest price on alert detail
           const user: any = await User.findById(userId);
           try {
+            if (lowestPrice) updateAlertDetail(alert, lowestPrice);
             if (lowestPrice && lowestPrice <= parseFloat(price)) {
               axios.post(
                 `${process.env.API_URL}/messages/update`,
@@ -61,4 +63,10 @@ export class AlertJob {
   }
 }
 
-// www.discogs.com/sell/release/14314482?price1=&price2={maxPrice}
+async function updateAlertDetail(alert, currentLowPrice) {
+  try {
+    let doc = await Alert.findOneAndUpdate({ _id: alert._id }, { currentLowPrice }, { upsert: true });
+  } catch (error) {
+    console.error(error);
+  }
+}

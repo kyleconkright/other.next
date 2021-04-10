@@ -1,0 +1,18 @@
+@import './../colors';
+
+div.prices {
+  display: flex;
+  div.price {
+    display: flex;
+    flex-direction: column;
+    background: $light-gray;
+    padding: .35rem .45rem;
+    border-radius: .125rem;
+    margin: 0 0 0 .5rem;
+    span {
+      color: $black;
+      font-size: .75rem;
+      align-self: flex-start;
+    }
+  }
+}

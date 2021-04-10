@@ -50,7 +50,8 @@ export class UserRoutes {
           {
             $project: {
               price: 1,
-              item: 1
+              item: 1,
+              currentLowPrice: 1,
             },
           },
           {
