@@ -26,7 +26,6 @@ export class AmazonClient {
 
   public search = (query) => {
     searchRequest['Keywords'] = query.keyword;
-    // if(query.keyword) searchRequest['Keywords'] = query.keyword;
     searchRequest['MaxPrice'] = query.price;
     
     return new Promise((resolve, reject) => {
@@ -40,7 +39,7 @@ export class AmazonClient {
       }
     });
   }
-
+  // https://www.amazon.com/s?i=popular&bbn=14772275011&rh=n%3A14772275011%2Cp_n_availability%3A2661600011%2Cp_n_specials_match%3A21213697011&dc&fs=true&qid=1618089280&rnid=21213696011&ref=sr_nr_p_n_specials_match_1
   formatListing(item, type) {
     return ({
       title: item.ItemInfo.Title.DisplayValue,

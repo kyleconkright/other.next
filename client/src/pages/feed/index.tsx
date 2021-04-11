@@ -11,6 +11,7 @@ import WantListFeed from 'src/components/feed/want-list-feed';
 import EbayFeed from '../../components/feed/ebay-feed';
 import AmazonFeed from '../../components/feed/amazon-feed';
 import NewburyFeed from 'src/components/feed/newbury-feed';
+import VinylMePleaseFeed from 'src/components/feed/vinylmeplease-feed';
 import UrbanOutfittersFeed from 'src/components/feed/uo-feed';
 
 import styles from './feed.module.scss';
@@ -66,6 +67,7 @@ function feed() {
       </section>
 
       <NewburyFeed></NewburyFeed>
+      <VinylMePleaseFeed></VinylMePleaseFeed>
       <EbayFeed></EbayFeed>
       <AmazonFeed></AmazonFeed>
   
