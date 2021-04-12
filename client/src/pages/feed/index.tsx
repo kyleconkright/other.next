@@ -24,22 +24,11 @@ function feed() {
   const [deals, setDeals] = useState([]);
 
   useEffect(() => {
-    // socket.emit('getFeed');
-    // socket.on('release-feed', data => setReleases(data));
-    // socket.on('deal-feed', data => setDeals(data));
-    getFeed();
+    socket.emit('get-releases');
+    socket.emit('get-deals');
+    socket.on('release-feed', data => setReleases(data));
+    socket.on('deal-feed', data => setDeals(data));
   }, [])
-
-  async function getFeed() {
-    try {
-      const { releases } = (await http.instance.get(`/feed/reddit/releases`)).data;
-      const { deals } = (await http.instance.get(`/feed/reddit/deals`)).data;
-      setReleases(releases);
-      setDeals(deals);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <div id={styles.feedContent}  className={styles.feedList}>
