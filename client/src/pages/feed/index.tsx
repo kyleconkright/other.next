@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { OtherHttp } from '../../http';
 import { io } from 'socket.io-client';
-const socket = io("http://127.0.0.1:5001")
+const socket = io(process.env.NEXT_PUBLIC_API_URL)
 
 import { useSelector } from 'react-redux';
 import { AppState } from 'src/store/reducers';
@@ -40,8 +40,8 @@ function feed() {
       <section>
         <h3><a href="https://reddit.com/r/VinylReleases/new" target="_blank">r/VinylReleases/new</a></h3>
         <ul>
-          {releases.length != 0 ? releases.map(item => (
-            <FeedItem key={item._id} item={item}></FeedItem>
+          {releases.length != 0 ? releases.map((item, i) => (
+            <FeedItem key={i} item={item}></FeedItem>
           )) : null}
         </ul>
       </section>
@@ -49,8 +49,8 @@ function feed() {
       <section>
         <h3><a href="https://reddit.com/r/VinylDeals/new" target="_blank">r/VinylDeals/new</a></h3>
         <ul>
-          {deals.length != 0 ? deals.map(item => (
-            <FeedItem key={item._id} item={item}></FeedItem>
+          {deals.length != 0 ? deals.map((item, i) => (
+            <FeedItem key={i} item={item}></FeedItem>
           )) : null}
         </ul>
       </section>
