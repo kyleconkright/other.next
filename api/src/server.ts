@@ -6,7 +6,7 @@ const server = http.createServer(app);
 
 export const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:5000",
+    origin: "https://other.supply",
     methods: ["GET", "POST"]
   }
 });
