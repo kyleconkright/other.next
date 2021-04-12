@@ -6,7 +6,7 @@ const server = http.createServer(app);
 
 export const io = socketIo(server, {
   cors: {
-    origin: "https://other.supply",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"]
   }
 });
