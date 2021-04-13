@@ -70,7 +70,8 @@ function AccountSideBar() {
           </ul>
         </div>
       <div>
-        <a className="underline" onClick={logout}>Logout</a>
+        <a className="underline" onClick={logout}>Logout</a>&nbsp;
+        <a className="underline" href="mailto:kyleconkright@gmail.com">Help</a>
       </div>
     </div>
   )
