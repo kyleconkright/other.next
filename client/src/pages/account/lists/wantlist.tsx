@@ -50,6 +50,13 @@ function AccountPage() {
     <div id="content" className={styles.wants}>
       <h2>Wantlist</h2>
       <ul>
+        <li className={styles.header}>
+          <span></span>
+          <span className={styles.notes}>Notes</span>
+          <span>Max Price</span>
+          <span></span>
+          <span></span>
+        </li>
         { wantList.length !== 0 ? wantList.map(item => (
           <WantListItem key={item.id} item={item}></WantListItem>
         )) : 'Loading...'}
