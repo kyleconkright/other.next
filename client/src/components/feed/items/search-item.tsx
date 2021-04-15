@@ -1,4 +1,4 @@
-import styles from './../../styles/components/feed-item.module.scss';
+import styles from './../../../styles/components/feed-item.module.scss';
 
 export default function SearchItem(props) {
   const { item } = props;

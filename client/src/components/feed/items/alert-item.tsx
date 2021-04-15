@@ -1,6 +1,8 @@
 import styles from './../../../styles/components/feed-item.module.scss';
 import alertStyle from './../../../styles/components/alert-item.module.scss';
 import { fromDiscogs } from 'src/models/record';
+import Link from 'next/link';
+import { Fragment } from 'react';
 
 export default function AlertItem(props) {
   const { item } = props;
@@ -9,24 +11,26 @@ export default function AlertItem(props) {
 
   return (
     <li className={styles.searchItem}>
-      <a href={href} target="_blank">
-        <div>
-          <h4 dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
-        </div>
-        <div>
-          <img src={item.item.cover} />
-          <div className={alertStyle.prices}>
-            <div className={alertStyle.price}>
-              <span>available</span>
-              <span className="number">${item.currentLowPrice}</span>
-            </div>
-            <div className={alertStyle.price}>
-              <span>Alert</span>
-              <span className="number">${item.price}</span>
+      <Link href={`/feed/${item.id}`}>
+        <a>
+          <div>
+            <h4 dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
+          </div>
+          <div>
+            <img src={item.item.cover} />
+            <div className={alertStyle.prices}>
+              <div className={alertStyle.price}>
+                <span>available</span>
+                <span className="number">${item.currentLowPrice}</span>
+              </div>
+              <div className={alertStyle.price}>
+                <span>Alert</span>
+                <span className="number">${item.price}</span>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </Link>
     </li>
   )
 }

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { OtherHttp } from '../../http';
 
 import SearchInput from './../form/search';
-import SearchItem from './search-item';
+import SearchItem from './items/search-item';
 
 import styles from './../../pages/feed/feed.module.scss';
 
