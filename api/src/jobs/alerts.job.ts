@@ -41,25 +41,6 @@ export class AlertJob {
         }
       }
     })
-    cron.schedule("*/30 * * * * *", async () => {
-      try {
-        const notInStock = await ttl();
-        if (!notInStock) {
-          axios.post(
-            `${process.env.API_URL}/messages/update`,
-            {
-              data: {
-                to: '8122397047',
-                body: `https://www.turntablelab.com/products/run-the-jewels-run-the-jewels-2-vinyl-2lp-turntable-lab-exclusive`
-              }
-            }
-          ).then(() => console.log(`In stock. Text sent.`)
-          ).catch(err => console.error(err))
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    });
   }
 }
 
