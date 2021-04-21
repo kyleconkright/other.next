@@ -1,0 +1,19 @@
+@import './../../styles/colors';
+
+#alertDetail {
+  padding: 2rem;
+  h4 {
+    margin: 0 0 1rem;
+  }
+  a {
+    font-size: .925rem;
+  }
+  img {
+    object-fit: cover;
+    object-position: center;
+    height: 100px;
+    width: 100px;
+    display: block;
+    background-color: $light-gray;
+  }
+}

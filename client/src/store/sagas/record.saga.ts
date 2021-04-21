@@ -3,7 +3,6 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 
 import { GET_RECORD, GET_RECORD_SUCCESS } from '../actions/record.actions';
 
-
 function* getRecord(action) {
   try {
     const {id} = action;

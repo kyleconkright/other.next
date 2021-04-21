@@ -2,7 +2,7 @@
 
 div.prices {
   display: flex;
-  div.price {
+  div.price, a.price {
     display: flex;
     flex-direction: column;
     background: $light-gray;
