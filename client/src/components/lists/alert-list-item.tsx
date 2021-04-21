@@ -37,8 +37,6 @@ export default function AlertListItem(alert) {
 
   return (
     <li className={styles.listItem}>
-      {/* <div className={styles.edit}>
-      </div> */}
       <a className={styles.release} onClick={() => toggleEditMode()}>
         <input checked={editMode} readOnly type="checkbox"></input>
         <img style={{ width: '40px', height: '40px' }} src={alert.item.cover} />

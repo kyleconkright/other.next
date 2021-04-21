@@ -11,7 +11,7 @@ export default function AlertItem(props) {
 
   return (
     <li className={styles.searchItem}>
-      <Link href={`/feed/${item.id}`}>
+      <Link href={`/?id=${item._id}`} as={`/feed/${item._id}`}>
         <a>
           <div>
             <h4 dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
