@@ -1,49 +1,42 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AlertItem from './items/alert-item';
+import { OtherHttp } from '../../http';
 
 import styles from './../../pages/feed/feed.module.scss';
 import { useRouter } from 'next/router';
-import { Modal } from '../modal/modal-component';
-import AlertDetail from 'src/pages/feed/[id]';
-import { GET_ALERT_LIST, SET_ALERT_LIST } from 'src/store/actions/list.actions';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from 'src/store/reducers';
 
 export default function WantListFeed() {
+  const http = new OtherHttp();
   const router = useRouter();
-  const dispatch = useDispatch();
 
-  const alerts = Object.values(useSelector((state: AppState) => state.lists.alerts));
-
+  const [alerts, setAlerts] = useState([]);
+  
   useEffect(() => {
     getAlertList();
   }, []);
 
   async function getAlertList() {
     try {
-      dispatch({type: GET_ALERT_LIST});
-    } catch (error) {
+      const alerts = (await http.instance.get("/user/alerts")).data;
+      setAlerts(alerts);
+    } catch(error) {
     }
   }
 
-  const goToAlertList = (e) => {
+  const goToWantlist = (e) => {
     e.preventDefault()
-    router.push("account/lists/alerts");
+    router.push("account/lists/alerts")
   }
 
   return (
     <section>
-      <h3><a onClick={goToAlertList}>Alert List</a></h3>
+      <h3><a onClick={goToWantlist}>Alert List</a></h3>
       <ul>
         {alerts && alerts.length ? alerts.map((item, i) => (
-          <AlertItem key={item._id} item={item} ></AlertItem>
+          <AlertItem key={item._id } item={item}></AlertItem>
         )) : "No results"}
       </ul>
-
-      <Modal isOpen={!!router.query.id}>
-        <AlertDetail />
-      </Modal>
     </section>
   )
 }
