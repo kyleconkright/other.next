@@ -18,6 +18,7 @@ function AlertDetail(props) {
   const { id } = router.query;
   const alert = useSelector((state: AppState) => state.lists.alerts[id as string]);
   const [form, setForm] = useState({ notes: alert?.details.notes, price: alert?.price });
+  const [buttonText, setButtonText] = useState('Save');
 
   useEffect(() => {
     getAlertList();
@@ -45,11 +46,14 @@ function AlertDetail(props) {
   }
 
   async function updateAlert() {
+    setButtonText('Saving...')
     try {
       const res = await http.instance.post('/user/alerts/update', { item: { ...alert.item, ...form } });
       if (res.status === 200) router.push('./')
       dispatch({ type: GET_ALERT_LIST });
+      setButtonText('Save');
     } catch (error) {
+      setButtonText('Save');
       console.error(error);
     }
   }
@@ -75,7 +79,7 @@ function AlertDetail(props) {
             <input onChange={updateForm} name="notes" placeholder="Notes" defaultValue={alert.details.notes} type="text" />
             </label>
           </div>
-          <Button onClick={() => updateAlert()} text="Save"></Button>
+          <Button onClick={() => updateAlert()} text={buttonText}></Button>
         </form>
 
       </div>

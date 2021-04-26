@@ -14,12 +14,12 @@ export class AlertJob {
       console.log('Run alert check');
       const cursor = Alert.find().cursor();
       for (let alert: any = await cursor.next(); alert != null; alert = await cursor.next()) {
-        const lowestPrice = await puppeteer(`https://www.discogs.com/sell/release/${alert.item.id}?sort=price%2Casc`, alert.item.artist);
-        console.log(lowestPrice, alert.item.artist);
         for (const [price, userObj] of Object.entries(alert.maxPrice)) {
           const userId = Object.keys(alert.maxPrice[price])[0];
           // update lowest price on alert detail
           const user: any = await User.findById(userId);
+          const data = await getStats(alert.item.id, user.discogs);
+          const lowestPrice = data.lowest_price.value;
           try {
             if (lowestPrice) updateAlertDetail(alert, lowestPrice);
             if (lowestPrice && lowestPrice <= parseFloat(price)) {
