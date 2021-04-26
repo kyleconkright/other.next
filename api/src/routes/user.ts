@@ -133,12 +133,13 @@ export class UserRoutes {
         try {
           alertDetail = await AlertDetail.findOne({releaseId: item.id, userId});
           if(!alertDetail) {
-            alertDetail = await AlertDetail.create({userId, releaseId: item.id, notes: item.notes});
+            alertDetail = await AlertDetail.create({userId, releaseId: item.id, notes: item.notes, asin: item.asin});
           }
         } catch(err) {
           console.error(err);
         }
         alertDetail.notes = item.notes;
+        alertDetail.asin = item.asin;
         alert.maxPrice = updateMaxPrice(alert, item.price, userId);
         await alert.save();
         await alertDetail.save();

@@ -10,6 +10,7 @@ import FeedItem from './../../components/feed/feed-item';
 import WantListFeed from 'src/components/feed/want-list-feed';
 import EbayFeed from '../../components/feed/ebay-feed';
 import AmazonFeed from '../../components/feed/amazon-feed';
+import AmoebaFeed from 'src/components/feed/amoeba-feed';
 import NewburyFeed from 'src/components/feed/newbury-feed';
 import VinylMePleaseFeed from 'src/components/feed/vinylmeplease-feed';
 import UrbanOutfittersFeed from 'src/components/feed/uo-feed';
@@ -55,6 +56,7 @@ function feed() {
         </ul>
       </section>
 
+      <AmoebaFeed></AmoebaFeed>
       <NewburyFeed></NewburyFeed>
       <VinylMePleaseFeed></VinylMePleaseFeed>
       <EbayFeed></EbayFeed>

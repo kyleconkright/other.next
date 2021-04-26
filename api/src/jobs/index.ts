@@ -1,3 +1,4 @@
+import { AmoebaJob } from './feeds/amoeba.job';
 import { NewburyJob } from './feeds/newbury.job';
 import { VinylMePleaseJob } from './feeds/vinylmeplease.job';
 import { ZiaJob } from './feeds/zia.job';
@@ -6,6 +7,7 @@ import { RedditJob } from './feeds/reddit.job';
 import { AmazonJob } from './feeds/amazon.job';
 import { EbayClient } from './feeds/ebay.job';
 
+const amoeba = new AmoebaJob();
 const newbury = new NewburyJob();
 const vinylmeplease = new VinylMePleaseJob();
 const zia = new ZiaJob();
@@ -15,6 +17,7 @@ const amazonJob = new AmazonJob();
 const ebayJob = new EbayClient();
 
 export function runJobs() {
+  amoeba.execute();
   newbury.execute();
   vinylmeplease.execute();
   // zia.execute();

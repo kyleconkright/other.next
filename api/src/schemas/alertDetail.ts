@@ -5,6 +5,7 @@ export const alertDetail = new mongoose.Schema({
   releaseId: String,
   alertId: String,
   notes: String,
+  asin: String,
   frequency: String,
   paused: Number,
 })

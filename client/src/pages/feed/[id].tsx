@@ -17,7 +17,7 @@ function AlertDetail(props) {
 
   const { id } = router.query;
   const alert = useSelector((state: AppState) => state.lists.alerts[id as string]);
-  const [form, setForm] = useState({ notes: alert?.details.notes, price: alert?.price });
+  const [form, setForm] = useState({ notes: alert?.details.notes, price: alert?.price, asin: alert?.asin });
   const [buttonText, setButtonText] = useState('Save');
 
   useEffect(() => {
@@ -71,6 +71,12 @@ function AlertDetail(props) {
             <label htmlFor="wantprice">
               Price you want to pay
             <input onKeyDown={onlyNumbers} onChange={updateForm} name="price" placeholder="e.g. 20" defaultValue={alert.price} type="text" />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="asin">
+              Amazon ASIN
+            <input onChange={updateForm} name="asin" placeholder="e.g. B004WBC46Q" defaultValue={alert.details.asin} type="text" />
             </label>
           </div>
           <div>

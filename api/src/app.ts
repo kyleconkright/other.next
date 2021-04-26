@@ -54,8 +54,7 @@ class App {
       pass: process.env.DB_PASS
     }, () => {
       console.log('mongoose is connected');
-      this.alertJob.execute();
-      // if (process.env.API_URL !== 'http://localhost:5001') this.alertJob.execute();
+      if (process.env.API_URL !== 'http://localhost:5001') this.alertJob.execute();
       runJobs();
     });
 
