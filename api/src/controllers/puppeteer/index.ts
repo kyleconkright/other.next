@@ -26,6 +26,7 @@ export class PuppeteerClient {
     try {
       const page: puppeteer.Page = await browser.newPage();
       await page.goto(url, {"waitUntil":["load", "networkidle0"]});
+      // await page.screenshot({path: 'example.png'})
       await page.waitForSelector(selector);
       const elements = await page.$$eval(selector, grid => grid.map(i => i.outerHTML));
       await browser.close();

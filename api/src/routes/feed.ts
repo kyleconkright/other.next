@@ -45,6 +45,16 @@ export default class FeedRoutes {
       }
     })
     
+    app.get('/feed/roughtrade', async (req: Request, res: Response) => {
+      try {
+        const listings = await FeedItem.find({type: 'rough-trade'});
+        res.json({ listings });
+      } catch(err) {
+        res.status(400).json({message: 'Something went Wrong'})
+        console.error(err);
+      }
+    })
+    
     app.get('/feed/vinylmeplease', async (req: Request, res: Response) => {
       try {
         const listings = await FeedItem.find({type: 'vmp-exclusive'});
