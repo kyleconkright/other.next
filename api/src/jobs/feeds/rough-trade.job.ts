@@ -14,9 +14,7 @@ export class RoughTradeJob {
   }
 
   async getListings() {
-    console.log('Rough Trade ', new Date().toISOString());
     cron.schedule("30 0 */1 * * *", async () => {
-      console.log('Rough Trade ', new Date().toISOString());
       try {
         const result = await puppeteer.scrape("https://www.roughtrade.com/us/s/item-type/music/format/lp?_=1619576920999&sort=created_at_desc", '#product-list');
         await FeedItem.deleteMany({ type });

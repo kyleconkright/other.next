@@ -10,7 +10,8 @@ import * as cron from 'node-cron';
 export class AlertJob {
   public async execute() {
     console.log('Running alert jobs every 60 minutes');
-    cron.schedule('0 0 */1 * * *', async () => {
+    cron.schedule('30 * * * * *', async () => {
+    // cron.schedule('0 0 */1 * * *', async () => {
       console.log('Run alert check');
       const cursor = Alert.find().cursor();
       for (let alert: any = await cursor.next(); alert != null; alert = await cursor.next()) {
@@ -19,7 +20,8 @@ export class AlertJob {
           // update lowest price on alert detail
           const user: any = await User.findById(userId);
           const data = await getStats(alert.item.id, user.discogs);
-          const lowestPrice = data.lowest_price.value;
+          console.log({user: user.username, data});
+          const lowestPrice = data.lowest_price ? data.lowest_price.value : null;
           try {
             if (lowestPrice) updateAlertDetail(alert, lowestPrice);
             if (lowestPrice && lowestPrice <= parseFloat(price)) {
