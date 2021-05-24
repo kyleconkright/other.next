@@ -6,7 +6,7 @@ import Button from './../../components/button/button';
 import { UserContext } from '../../contexts/user.context';
 
 import Layout from './../../components/layouts';
-import styles from './../../styles/pages/register-login.module.scss';
+import styles from './../../styles/pages/register-login.module.css';
 
 
 function RegisterPage() {

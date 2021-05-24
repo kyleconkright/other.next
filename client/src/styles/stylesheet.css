@@ -1,0 +1,29 @@
+@import '_layout.css';
+@import '_typography.css';
+@import '_form.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  font-size: 16px;
+  color: #333;
+}
+
+body {
+  font-size: 1em;
+  font-family: "Verlag A", "Verlag B", sans-serif;
+  font-weight:400;
+}
+
+:root {
+  --colors-olive:  #8b8d7d;
+  --colors-green2: #e3eadc;
+  --colors-green: #b3b5a6;
+  --colors-black: #1d1d1d;
+  --colors-light-gray: #f3f3f3;
+}

@@ -1,0 +1,19 @@
+div.prices {
+  display: flex;
+}
+
+.prices div.price, .prices a.price {
+  display: flex;
+  flex-direction: column;
+  background: var(--colors-light-gray);
+  padding: .35rem .45rem;
+  border-radius: .125rem;
+  margin: 0 0 0 .5rem;
+}
+
+.prices .price span {
+  text-transform: lowercase;
+  color: var(--colors-black);
+  font-size: .75rem;
+  align-self: flex-start;
+}

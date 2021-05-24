@@ -1,4 +1,5 @@
-import './../styles/stylesheet.scss';
+// import './../styles/stylesheet.scss';
+import './../styles/stylesheet.css';
 
 import { Provider } from "react-redux";
 import store from '../store';

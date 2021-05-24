@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { OtherHttp } from '../../http';
-
 import SearchItem from './items/search-item';
 
 import { io } from 'socket.io-client';
 const socket = io(process.env.NEXT_PUBLIC_API_URL)
-
-import styles from './../../pages/feed/feed.module.scss';
 
 export default function RoughTradeFeed() {
   const http = new OtherHttp();

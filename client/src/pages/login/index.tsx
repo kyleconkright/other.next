@@ -6,7 +6,7 @@ import axios from 'axios';
 import Button from './../../components/button/button';
 
 import Layout from './../../components/layouts';
-import styles from './../../styles/pages/register-login.module.scss';
+import styles from './../../styles/pages/register-login.module.css';
 import { CHECK_FOR_LOGGED_IN_USER, SET_USER } from '../../store/actions/user.actions';
 import { AppState } from '../../store/reducers';
 

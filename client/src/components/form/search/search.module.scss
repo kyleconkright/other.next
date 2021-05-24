@@ -1,10 +1,8 @@
-@import './../../../styles/colors';
-
 input.otherSearch {
-  border: 2px solid $light-gray;
+  border: 2px solid var(--colors-light-gray);
   border-radius: 4px;
   font-size: 1rem;
-  outline-color: adjust-color($color: $light-gray, $lightness: -2%);
+  outline-color: transparent;
   font-family: inherit;
   outline: none;
 }
