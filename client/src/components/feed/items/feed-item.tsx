@@ -1,20 +1,20 @@
-import styles from './../../styles/components/feed-item.module.scss';
+import styles from './../../../styles/components/feed-item.module.css';
 
 export default function FeedItem(props) {
   const { item } = props;
   return (
     <li className={styles.searchItem}>
-      <a href={item.url ? item.url : item.origin} target="_blank">
+      <a className={styles.itemLink} href={item.url ? item.url : item.origin} target="_blank">
         <div>
-          <h4 dangerouslySetInnerHTML={{ __html: item.title }}></h4>
+          <h4 className={styles.itemTitle} dangerouslySetInnerHTML={{ __html: item.title }}></h4>
         </div>
-        <div>
+        <div className={styles.itemImage}>
           { item.imageUrl.indexOf('http') !== -1 ? (
             <img src={item.imageUrl} />
           ) : (
             <div className={styles.imagePlaceholder}></div>
           )}
-          <span>{item.flair}</span>
+          <span className={styles.meta}>{item.flair}</span>
         </div>
       </a>
     </li>

@@ -1,8 +1,6 @@
-@import './../../styles/colors';
-
 button.otherButton {
   color: #ffffff;
-  background-color: $green;
+  background-color: var(--colors-green);
   border: none;
   padding: .65rem 1rem;
   border-radius: 2px;
@@ -13,8 +11,8 @@ button.otherButton {
 
 button.otherSecondaryButton {
   background-color: #ffffff;
-  color: $green;
-  border: $green 1px solid;
+  color: var(--colors-green);
+  border: var(--colors-green) 1px solid;
   padding: .65rem 1rem;
   border-radius: 2px;
   cursor: pointer;

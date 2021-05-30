@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import { OtherHttp } from "../../http";
-import styles from './list-item.module.scss';
+import styles from './list-item.module.css';
 
 
 export default function AlertListItem(alert) {
@@ -37,9 +37,9 @@ export default function AlertListItem(alert) {
 
   return (
     <li className={styles.listItem}>
-      <a className={styles.release} onClick={() => toggleEditMode()}>
+      <a className={styles.releaseInfo} onClick={() => toggleEditMode()}>
         <input checked={editMode} readOnly type="checkbox"></input>
-        <img style={{ width: '40px', height: '40px' }} src={alert.item.cover} />
+        <img className="cover" style={{ width: '40px', height: '40px' }} src={alert.item.cover} />
         <div>
           <p>{alert.item.artist}</p>
           <p className={styles.title}>{ alert.item.title }</p>
@@ -47,11 +47,11 @@ export default function AlertListItem(alert) {
       </a>
 
       <div className={styles.notes}>
-        <input disabled={disabled} name="notes" onChange={updateForm} defaultValue={alert.details ? alert.details.notes : alert.item.notes} type="text" />
+        <input className="editInput" disabled={disabled} name="notes" onChange={updateForm} defaultValue={alert.details ? alert.details.notes : alert.item.notes} type="text" />
       </div>
       
       <div className={styles.price}>
-        <input disabled={disabled} name="price" onChange={updateForm} defaultValue={alert.item.price} type="text" />
+        <input className="editInput" disabled={disabled} name="price" onChange={updateForm} defaultValue={alert.item.price} type="text" />
       </div>
 
       <div className={styles.update}>

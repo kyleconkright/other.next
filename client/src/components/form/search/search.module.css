@@ -1,0 +1,8 @@
+input.otherSearch {
+  border: 2px solid var(--colors-light-gray);
+  border-radius: 4px;
+  font-size: 1rem;
+  outline-color: transparent;
+  font-family: inherit;
+  outline: none;
+}

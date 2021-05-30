@@ -11,7 +11,6 @@ class OtherDocument extends Document {
     return (
       <Html>
         <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6637836/7151992/css/fonts.css" />
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
         <script
           async
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}

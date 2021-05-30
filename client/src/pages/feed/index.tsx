@@ -6,7 +6,7 @@ const socket = io(process.env.NEXT_PUBLIC_API_URL)
 import { useSelector } from 'react-redux';
 import { AppState } from 'src/store/reducers';
 
-import FeedItem from './../../components/feed/feed-item';
+import FeedItem from '../../components/feed/items/feed-item';
 import WantListFeed from 'src/components/feed/want-list-feed';
 import EbayFeed from '../../components/feed/ebay-feed';
 import AmazonFeed from '../../components/feed/amazon-feed';
@@ -14,9 +14,8 @@ import AmoebaFeed from 'src/components/feed/amoeba-feed';
 import RoughTradeFeed from 'src/components/feed/rough-trade-feed';
 import NewburyFeed from 'src/components/feed/newbury-feed';
 import VinylMePleaseFeed from 'src/components/feed/vinylmeplease-feed';
-import UrbanOutfittersFeed from 'src/components/feed/uo-feed';
 
-import styles from './feed.module.scss';
+import styles from './feed.module.css';
 
 function feed() {
   const http = new OtherHttp();

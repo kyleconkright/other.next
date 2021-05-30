@@ -1,29 +1,29 @@
-@import 'colors';
-
 input[type="text"], input[type="email"], input[type="password"] {
+  color: var(--colors-black);
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
   border: none;
   border-radius: 2px;
-  &:disabled {
-    background: transparent;
-  }
+}
+
+input:disabled {
+  background: transparent;
 }
 
 label {
   font-size: .825rem;
-  color: $olive;
+  color: var(--colors-olive);
   input[type="text"], input[type="email"], input[type="password"] {
     padding: .5rem 0rem;
     opacity: 1;
-    color: $black;
-    outline: transparent;
+    color: var(--colors-black);
+    outline: none;
   }
 }
 
 form div {
   margin: 1rem 0;
-  border-left: 2px solid $green2;
+  color: var(--colors-green2);
   padding: 0 0 0 .5rem;
 }

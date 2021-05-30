@@ -1,8 +1,6 @@
-import styles from './../../../styles/components/feed-item.module.scss';
-import alertStyle from './../../../styles/components/alert-item.module.scss';
-import { fromDiscogs } from 'src/models/record';
+import styles from './../../../styles/components/feed-item.module.css';
+import alertStyle from './../../../styles/components/alert-item.module.css';
 import Link from 'next/link';
-import { Fragment } from 'react';
 
 export default function AlertItem(props) {
   const { item } = props;
@@ -12,11 +10,11 @@ export default function AlertItem(props) {
   return (
     <li className={styles.searchItem}>
       <Link href={`/?id=${item._id}`} as={`/feed/${item._id}`}>
-        <a>
+        <a className={styles.itemLink}>
           <div>
-            <h4 dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
+            <h4 className={styles.itemTitle} dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
           </div>
-          <div>
+          <div className={styles.itemImage}>
             <img src={item.item.cover} />
             <div className={alertStyle.prices}>
               <div className={alertStyle.price}>

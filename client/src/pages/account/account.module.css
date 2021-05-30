@@ -1,0 +1,36 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 2rem 2rem;
+}
+
+.sidebar ul {
+  padding: 1rem 0 0;
+}
+
+.sidebar ul h3 {
+  margin: 16px 0 8px;
+}
+
+.wants ul li.header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 80px 1fr;
+  font-size: 0.825rem;
+  opacity: 0.825;
+  .notes {
+    padding: 0 16px;
+  }
+}
+
+.wants h2 {
+  margin: 0 0 .5rem;
+}
+
+#discogsSync p {
+  margin: 0 0 .5rem;
+}
+
+#discogsSync b {
+  color: var(--colors-olive);
+}

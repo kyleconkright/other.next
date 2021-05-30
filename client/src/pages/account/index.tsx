@@ -8,7 +8,7 @@ import withAccountLayout from './accountLayout';
 import { AppState } from '../../store/reducers';
 import { UPDATE_USER } from '../../store/actions/user.actions';
 
-import styles from './account.module.scss';
+import styles from './account.module.css';
 
 function SettingsPage() {
   const user = useSelector((state: AppState) => state.user);

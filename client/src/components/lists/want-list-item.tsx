@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 
 import { Fragment } from "react";
-import styles from './list-item.module.scss';
+import styles from './list-item.module.css';
 import axios from 'axios';
 import { AppState } from "../../store/reducers";
 import { OtherHttp } from "../../http";
@@ -37,7 +37,7 @@ export default function WantListItem(alert) {
 
   return (
     <li className={styles.listItem}>
-      <a className={styles.release}>
+      <a className={styles.releaseInfo}>
         <img style={{ width: '40px', height: '40px' }} src={alert.item.basic_information.thumb} />
         <div>
           <p>{alert.item.artist}</p>
@@ -55,7 +55,7 @@ export default function WantListItem(alert) {
 
       <div className={styles.update}>
           <Fragment>
-            <a onClick={() => setAlert()}>Setup Alert</a>&nbsp;/&nbsp; 
+            <a onClick={() => setAlert()}>Create Notification</a>&nbsp;/&nbsp; 
             <a onClick={() => removeFromWantlist()}>Remove</a>&nbsp;
           </Fragment>
       </div>
