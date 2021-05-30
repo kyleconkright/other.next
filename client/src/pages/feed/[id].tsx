@@ -8,7 +8,7 @@ import { GET_ALERT_LIST } from "src/store/actions/list.actions";
 
 import Button from './../../components/button/button';
 
-import styles from './alert-detail.module.scss';
+import styles from './alert-detail.module.css';
 
 function AlertDetail(props) {
   const http = new OtherHttp();

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import AlertItem from './items/alert-item';
 
-import styles from './../../pages/feed/feed.module.scss';
+import styles from './../../pages/feed/feed.module.css';
 import { useRouter } from 'next/router';
 import { Modal } from '../modal/modal-component';
 import AlertDetail from 'src/pages/feed/[id]';

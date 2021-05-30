@@ -5,7 +5,7 @@ import { OtherHttp } from '../../http';
 import SearchInput from './../form/search';
 import SearchItem from './items/search-item';
 
-import styles from './../../pages/feed/feed.module.scss';
+import styles from './../../pages/feed/feed.module.css';
 
 export default function UrbanOutfittersFeed() {
   const http = new OtherHttp();

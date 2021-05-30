@@ -65,7 +65,7 @@ function AccountPage() {
  
   return (
     <div id="content" className={styles.wants}>
-      <h2>Alert List</h2>
+      <h2>Notification List</h2>
       <ul>
         <li className={styles.header}>
           <span>Release</span>

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux';
 
-import styles from './header.module.scss';
+import styles from './header.module.css';
 
 import Button from './../../components/button/button';
 import { AppState } from '../../store/reducers';

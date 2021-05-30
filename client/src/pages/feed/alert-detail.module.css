@@ -1,0 +1,18 @@
+#alertDetail {
+  padding: 2rem;
+}
+
+#alertDetail h4 {
+  margin: 0 0 1rem;
+}
+#alertDetail a {
+  font-size: .925rem;
+}
+#alertDetail img {
+  object-fit: cover;
+  object-position: center;
+  height: 100px;
+  width: 100px;
+  display: block;
+  background-color: var(--colors-light-gray);
+}

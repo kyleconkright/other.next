@@ -12,7 +12,7 @@ export default function AlertItem(props) {
       <Link href={`/?id=${item._id}`} as={`/feed/${item._id}`}>
         <a className={styles.itemLink}>
           <div>
-            <h4 dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
+            <h4 className={styles.itemTitle} dangerouslySetInnerHTML={{ __html: item.item.artist + ' - ' + item.item.title }}></h4>
           </div>
           <div className={styles.itemImage}>
             <img src={item.item.cover} />

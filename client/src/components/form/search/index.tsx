@@ -1,4 +1,4 @@
-import styles from './search.module.scss';
+import styles from './search.module.css';
 
 export interface SearchProps {
   placeholder?: string;

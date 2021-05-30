@@ -48,7 +48,7 @@ function AccountPage() {
 
   return (
     <div id="content" className={styles.wants}>
-      <h2>Wantlist</h2>
+      <h2>Discogs Wantlist</h2>
       <ul>
         <li className={styles.header}>
           <span></span>

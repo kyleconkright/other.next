@@ -15,7 +15,7 @@ import RoughTradeFeed from 'src/components/feed/rough-trade-feed';
 import NewburyFeed from 'src/components/feed/newbury-feed';
 import VinylMePleaseFeed from 'src/components/feed/vinylmeplease-feed';
 
-import styles from './feed.module.scss';
+import styles from './feed.module.css';
 
 function feed() {
   const http = new OtherHttp();

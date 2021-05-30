@@ -44,12 +44,12 @@ function AccountSideBar() {
             </li>
             <li>
               <Link href="/account/lists/alerts">
-                Alerts
+                Notification List
               </Link>
             </li>
             <li>
               <Link href="/account/lists/wantlist">
-                Wantlist
+                Discogs Wantlist
               </Link>
             </li>
           </ul>
