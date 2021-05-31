@@ -2,7 +2,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import withLayout from "../../../../components/layouts";
-import styles from './../../../../styles/pages/register-login.module.scss';
+import styles from './../../../../styles/pages/register-login.module.css';
 import Button from './../../../../components/button/button';
 
 function ResetPasswordPage() {
