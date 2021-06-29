@@ -31,8 +31,8 @@ export class AmazonClient {
     return new Promise((resolve, reject) => {
       try {
         api.searchItems(searchRequest, (error, data, response) => {
-          console.log({error, searchRequest, data});
-          // resolve({results: data.SearchResult?.Items});
+          // console.log({error, searchRequest, data});
+          resolve({results: data.SearchResult?.Items});
         });
       } catch (ex) {
         console.log('Exception: ' + ex);
