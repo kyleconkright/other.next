@@ -35,10 +35,17 @@
 .feedList section form.search {
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: 275px;
+  grid-template-columns: 275px 275px;
   margin: 0 0 16px;
 }
 
-.feedList section form.search input[type="search"] {
+.feedList section form.search input {
   padding: .5rem;
+}
+
+.feedList section form.search button[type="submit"] {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
