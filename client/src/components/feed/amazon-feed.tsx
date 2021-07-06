@@ -9,18 +9,19 @@ import SearchItem from './items/search-item';
 
 import styles from './../../pages/feed/feed.module.css';
 
+
 export default function AmazonFeed() {
   const http = new OtherHttp();
 
   const [amazon, setAmazonResults] = useState([]);
-  const [amazonSearchValue, setAmazonSearchValue] = useState({keyword: '', price: '' });
+  const [amazonSearchKeyword, setAmazonSearchKeyword] = useState({keyword: null});
+  const [amazonSearchPrice, setAmazonSearchPrice] = useState({price: null });
 
   useEffect(() => {
     getFeed();
   }, []);
 
   async function getFeed() {
-    console.log(amazonSearchValue);
     try {
       const { listings } = (await http.instance.get(`/feed/amazon`)).data;
       setAmazonResults(listings);
@@ -29,20 +30,26 @@ export default function AmazonFeed() {
     }
   }
 
-  const updateAmazonValue = (event) => {
-    const { name, value } = event.target;
-    const searchFields = {
-      ...amazonSearchValue,
-      [name]: value,
-    } as any
-    setAmazonSearchValue(searchFields);
+  const updateKeyword = (event) => {
+    const { value } = event.target;
+    setAmazonSearchKeyword(value);
+  }
+  
+  const updatePrice = (e) => {
+    if ((e.keyCode > 47 && e.keyCode < 58) || e.keyCode === 8 || e.keyCode === 13) {
+      const { value } = e.target;
+      const price = value.replace(/\D/g, "")
+      setAmazonSearchPrice(price);
+    } else {
+      e.preventDefault()
+    }
   }
   
   const searchAmazon = async(e) => {
     e.preventDefault();
-    const price = amazonSearchValue.price !== "" ? Number(amazonSearchValue.price) * 100 : null;
-    const keyword = amazonSearchValue.keyword !== "" ? amazonSearchValue.keyword : null;
-    const { results, error } = (await http.instance.post('/search/amazon', { query: {keyword, price }})).data;
+    const price = amazonSearchPrice ? Number(amazonSearchPrice) * 100 : null;
+    const keyword = amazonSearchKeyword ? amazonSearchKeyword : null;
+    const { results } = (await http.instance.post('/search/amazon', { query: {keyword, price }})).data;
     setAmazonResults(results);
   }
 
@@ -50,8 +57,8 @@ export default function AmazonFeed() {
     <section>
       <h3><a href="https://amzn.to/3cwZC8z" target="_blank">Amazon</a></h3>
       <form className={styles.search} onSubmit={searchAmazon}>
-        <SearchInput placeholder="Search..." type="search" name="keyword" onChange={updateAmazonValue}></SearchInput>
-        <OtherNumberInput placeholder="Price Limit..." type="search" name="price" onChange={updateAmazonValue}></OtherNumberInput>
+        <SearchInput placeholder="Search..." type="search" name="keyword" onChange={updateKeyword}></SearchInput>
+        <OtherNumberInput placeholder="Price Limit..." type="search" name="price" onChange={updatePrice}></OtherNumberInput>
         <button type='submit' className={styles.submitButton} />
       </form>
       <ul>
