@@ -1,9 +1,9 @@
 import axios from 'axios';
 import FeedItem from './../../schemas/feedItem';
+import { RedditAlert } from '../../controllers/alerts/reddit';
 
 import { io } from './../../server';
 
-import * as cron from 'node-cron';
 export class RedditJob {
   public async execute() {
 
@@ -31,6 +31,7 @@ export class RedditJob {
         return item;
       });
       io.emit('release-feed', results);
+      // new RedditAlert(results);
       await FeedItem.create(results);
     };
 

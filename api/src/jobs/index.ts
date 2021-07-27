@@ -27,6 +27,6 @@ export function runJobs() {
   // uo.execute();
 
   redditJob.execute();
-  amazonJob.execute();
+  // amazonJob.execute();
   ebayJob.execute();
 }

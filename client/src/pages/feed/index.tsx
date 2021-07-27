@@ -61,7 +61,7 @@ function feed() {
       <NewburyFeed></NewburyFeed>
       <VinylMePleaseFeed></VinylMePleaseFeed>
       <EbayFeed></EbayFeed>
-      <AmazonFeed></AmazonFeed>
+      {/* <AmazonFeed></AmazonFeed> */}
       
     </div>
   )
