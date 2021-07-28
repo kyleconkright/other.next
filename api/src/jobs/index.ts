@@ -7,11 +7,13 @@ import { UrbanOutfittersJob } from './feeds/urban-outfitters.job';
 import { RedditJob } from './feeds/reddit.job';
 import { AmazonJob } from './feeds/amazon.job';
 import { EbayClient } from './feeds/ebay.job';
+import { TurntableLabJob } from './feeds/turntablelab.job';
 
 const amoeba = new AmoebaJob();
 const newbury = new NewburyJob();
 const roughtrade = new RoughTradeJob();
 const vinylmeplease = new VinylMePleaseJob();
+const ttl = new TurntableLabJob();
 const zia = new ZiaJob();
 const uo = new UrbanOutfittersJob();
 const redditJob = new RedditJob();
@@ -23,6 +25,7 @@ export function runJobs() {
   newbury.execute();
   roughtrade.execute();
   vinylmeplease.execute();
+  ttl.execute();
   // zia.execute();
   // uo.execute();
 

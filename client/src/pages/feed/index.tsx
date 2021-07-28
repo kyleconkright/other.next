@@ -13,6 +13,7 @@ import AmazonFeed from '../../components/feed/amazon-feed';
 import AmoebaFeed from 'src/components/feed/amoeba-feed';
 import RoughTradeFeed from 'src/components/feed/rough-trade-feed';
 import NewburyFeed from 'src/components/feed/newbury-feed';
+import TurntableLabFeed from 'src/components/feed/turntablelab-feed';
 import VinylMePleaseFeed from 'src/components/feed/vinylmeplease-feed';
 
 import styles from './feed.module.css';
@@ -60,6 +61,7 @@ function feed() {
       <RoughTradeFeed></RoughTradeFeed>
       <NewburyFeed></NewburyFeed>
       <VinylMePleaseFeed></VinylMePleaseFeed>
+      <TurntableLabFeed></TurntableLabFeed>
       <EbayFeed></EbayFeed>
       {/* <AmazonFeed></AmazonFeed> */}
       
